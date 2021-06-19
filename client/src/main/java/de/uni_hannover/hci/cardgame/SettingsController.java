@@ -5,7 +5,6 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -42,7 +41,7 @@ public class SettingsController {
 	public void ChangeResolution(ActionEvent event) throws IOException {
 		if(event.getSource().equals(res_1)){
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.MAIN));
-	    	VBox mainPane = (VBox)loader.load();
+	    	VBox mainPane = loader.load();
 	    	MainController mainController = loader.getController();
 	    	System.out.println(mainController);
 	    	fxmlNavigator.setMainController(mainController);
@@ -52,7 +51,7 @@ public class SettingsController {
 		}
 		else if (event.getSource().equals(res_2)){
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.MAIN));
-	    	VBox mainPane = (VBox)loader.load();
+	    	VBox mainPane = loader.load();
 	    	MainController mainController = loader.getController();
 	    	System.out.println(mainController);
 	    	fxmlNavigator.setMainController(mainController);

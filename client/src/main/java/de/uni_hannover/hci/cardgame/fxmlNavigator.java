@@ -3,7 +3,7 @@ package de.uni_hannover.hci.cardgame;
 import java.io.IOException;
 
 /**
- * This class is The giver of all navigations that will be used to hcnage the overlay/gui dynamically
+ * This class is The giver of all navigations that will be used to change the overlay/gui dynamically
  * @author catgrilll
  *
  */

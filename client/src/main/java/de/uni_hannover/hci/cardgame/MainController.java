@@ -14,9 +14,7 @@ public class MainController {
 	private StackPane fxmlHolder;
 	
 	public void setFxml(String fxml) throws IOException {
-		System.out.println("I have been here");
 		Node debugging_helper = FXMLLoader.load(fxmlNavigator.class.getClassLoader().getResource(fxml));
-		System.out.println(debugging_helper);
 		fxmlHolder.getChildren().setAll(debugging_helper);
 	}
 }

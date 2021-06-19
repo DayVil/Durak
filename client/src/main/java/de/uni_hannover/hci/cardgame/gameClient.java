@@ -4,9 +4,7 @@ import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -24,7 +22,7 @@ public class gameClient extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
     	try {
     		this.javaVersion_ = System.getProperty("java.version");
             this.javafxVersion_ = System.getProperty("javafx.version");
@@ -42,9 +40,8 @@ public class gameClient extends Application {
     
 	public VBox loadMainPane() throws IOException {
     	FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.MAIN));
-    	VBox mainPane = (VBox)loader.load();
+    	VBox mainPane = loader.load();
     	MainController mainController = loader.getController();
-    	System.out.println(mainController);
     	fxmlNavigator.setMainController(mainController);
     	fxmlNavigator.loadFxml(fxmlNavigator.STARTUP);
     	return mainPane;

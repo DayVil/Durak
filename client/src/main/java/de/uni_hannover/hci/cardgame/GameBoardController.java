@@ -18,10 +18,6 @@ public class GameBoardController {
     @FXML
     private StackPane GameBoard;
 
-    // public void initialize() {
-    //     //TODO
-    // }
-
     // handle needs to be the action on the scenebuilder e.g. in this case handleButtonAction for the menu button
     @FXML
     private void openMenu(ActionEvent event) {

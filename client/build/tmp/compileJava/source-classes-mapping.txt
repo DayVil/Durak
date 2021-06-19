@@ -1,16 +1,16 @@
-de/uni_hannover/hci/cardgame/gameClient.java
- de.uni_hannover.hci.cardgame.gameClient
+de/uni_hannover/hci/cardgame/HomeScreenController.java
+ de.uni_hannover.hci.cardgame.HomeScreenController
+de/uni_hannover/hci/cardgame/fxmlNavigator.java
+ de.uni_hannover.hci.cardgame.fxmlNavigator
 de/uni_hannover/hci/cardgame/GameBoardController.java
  de.uni_hannover.hci.cardgame.GameBoardController
-de/uni_hannover/hci/cardgame/SettingsController.java
- de.uni_hannover.hci.cardgame.SettingsController
 de/uni_hannover/hci/cardgame/MainController.java
  de.uni_hannover.hci.cardgame.MainController
 de/uni_hannover/hci/cardgame/LoadingScreenController.java
  de.uni_hannover.hci.cardgame.LoadingScreenController
 de/uni_hannover/hci/cardgame/StartupScreenController.java
  de.uni_hannover.hci.cardgame.StartupScreenController
-de/uni_hannover/hci/cardgame/fxmlNavigator.java
- de.uni_hannover.hci.cardgame.fxmlNavigator
-de/uni_hannover/hci/cardgame/HomeScreenController.java
- de.uni_hannover.hci.cardgame.HomeScreenController
+de/uni_hannover/hci/cardgame/gameClient.java
+ de.uni_hannover.hci.cardgame.gameClient
+de/uni_hannover/hci/cardgame/SettingsController.java
+ de.uni_hannover.hci.cardgame.SettingsController
