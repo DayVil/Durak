@@ -6,18 +6,21 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HomeScreenController {
+public class HomeScreenController
+{
 	
 	@FXML
 	private Label label;
 
 	@FXML
-	public void goToGame(ActionEvent event) throws IOException {
+	public void goToGame(ActionEvent event) throws IOException
+	{
 		fxmlNavigator.loadFxml(fxmlNavigator.GAME);
 	}
 	
 	@FXML 
-	public void goToSettings(ActionEvent event) throws IOException {
+	public void goToSettings(ActionEvent event) throws IOException
+	{
 		fxmlNavigator.loadFxml(fxmlNavigator.SETTINGS);
 	}
 }

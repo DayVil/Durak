@@ -7,7 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.StackPane;
 
-public class LoadingScreenController {
+public class LoadingScreenController
+{
 	
 	@FXML
 	private StackPane LoadingScreen;
@@ -17,7 +18,8 @@ public class LoadingScreenController {
 	
 
 	@FXML
-	public void goToHome(ActionEvent event) throws IOException {
+	public void goToHome(ActionEvent event) throws IOException
+	{
 		fxmlNavigator.loadFxml(fxmlNavigator.HOME);
 	}
 }

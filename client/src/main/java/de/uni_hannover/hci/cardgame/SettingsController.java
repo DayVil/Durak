@@ -9,10 +9,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 
-public class SettingsController {
+public class SettingsController
+{
 	
 	@FXML
 	private StackPane Settings;
@@ -30,18 +31,18 @@ public class SettingsController {
 	private Label label;
 	
 	@FXML
-	public void goToHome(ActionEvent event) throws IOException {
+	public void goToHome(ActionEvent event) throws IOException
+	{
 		fxmlNavigator.loadFxml(fxmlNavigator.HOME);
 	}
-	
-	/*
-	 * TODO: Implement
-	 */
+
 	@FXML
-	public void ChangeResolution(ActionEvent event) throws IOException {
-		if(event.getSource().equals(res_1)){
+	public void ChangeResolution(ActionEvent event) throws IOException
+	{
+		if(event.getSource().equals(res_1))
+		{
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.MAIN));
-	    	VBox mainPane = loader.load();
+	    	Pane mainPane = loader.load();
 	    	MainController mainController = loader.getController();
 	    	System.out.println(mainController);
 	    	fxmlNavigator.setMainController(mainController);
@@ -49,9 +50,10 @@ public class SettingsController {
 	    	Scene MainPage = new Scene(mainPane, 600, 400);
             gameClient.setScene(MainPage);
 		}
-		else if (event.getSource().equals(res_2)){
+		else if (event.getSource().equals(res_2))
+		{
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.MAIN));
-	    	VBox mainPane = loader.load();
+	    	Pane mainPane = loader.load();
 	    	MainController mainController = loader.getController();
 	    	System.out.println(mainController);
 	    	fxmlNavigator.setMainController(mainController);
