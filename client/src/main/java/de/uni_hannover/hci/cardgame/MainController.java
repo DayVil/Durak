@@ -15,10 +15,13 @@ public class MainController
 	@FXML
 	public void setFxml(String fxml)
 	{
-		try {
-			Node debugging_helper = debugging_helper = FXMLLoader.load(fxmlNavigator.class.getClassLoader().getResource(fxml));
+		try
+		{
+			Node debugging_helper = FXMLLoader.load(fxmlNavigator.class.getClassLoader().getResource(fxml));
 			fxmlHolder.getChildren().setAll(debugging_helper);
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
 		}
 	}

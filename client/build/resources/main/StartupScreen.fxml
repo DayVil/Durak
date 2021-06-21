@@ -11,7 +11,7 @@
             <Font name="Felix Titling" size="22.0" />
          </font>
       </Text>
-      <Text fx:id="CreatorTitle" layoutX="154.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="created by Yann, Robert, Patrick and Sebastian" textAlignment="CENTER" />
+      <Text fx:id="CreatorTitle" layoutX="154.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="by Yann, Robert, Patrick and Sebastian" textAlignment="CENTER" />
       <Text fx:id="ContinueTitle" layoutX="220.0" layoutY="311.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Press to Continue" />
       <Button fx:id="NextPaneButton" layoutX="226.0" layoutY="327.0" mnemonicParsing="false" onAction="#goToLoading" text="To Loading Screen" />
    </children>

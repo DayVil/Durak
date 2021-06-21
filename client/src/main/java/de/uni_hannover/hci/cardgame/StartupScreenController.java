@@ -1,6 +1,5 @@
 package de.uni_hannover.hci.cardgame;
 
-import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -12,15 +11,15 @@ import javafx.stage.Stage;
 public class StartupScreenController
 {
 	@FXML
-	private Pane Startup;
+	public Pane Startup;
 	@FXML
-	private Text StartupTitle;
+	public Text StartupTitle;
 	@FXML
-	private Text CreatorTitle;
+	public Text StartupSubTitle;
 	@FXML
-	private Text ContinueTitle;
+	public Text StartupPressX;
 	@FXML
-	private Button NextPaneButton;
+	public Button StartupContinueButton;
 
 	@FXML
 	public void goToLoading(ActionEvent event)
@@ -44,24 +43,24 @@ public class StartupScreenController
 		title.setLayoutY((startupPane.getHeight() - titleHeight) / 5.0);
 
 		// The Creator Title stating who created the game
-		Text creatorTitle = (Text) scene.lookup("#CreatorTitle");
-		double creatorTitleWidth = creatorTitle.getBoundsInLocal().getWidth();
-		double creatorTitleHeight = creatorTitle.getBoundsInLocal().getHeight();
-		creatorTitle.setLayoutX((startupPane.getWidth() - creatorTitleWidth) / 2.0);
-		creatorTitle.setLayoutY(((startupPane.getHeight() - creatorTitleHeight) / 5.0) + titleHeight);
+		Text subTitle = (Text) scene.lookup("#StartupSubTitle");
+		double subTitleWidth = subTitle.getBoundsInLocal().getWidth();
+		double subTitleHeight = subTitle.getBoundsInLocal().getHeight();
+		subTitle.setLayoutX((startupPane.getWidth() - subTitleWidth) / 2.0);
+		subTitle.setLayoutY(((startupPane.getHeight() - subTitleHeight) / 5.0) + titleHeight);
 
 		// The Button to click to go to the next Pane				// Done before the title down below as title down below is dependant on button
-		Button but = (Button) scene.lookup("#NextPaneButton");
-		double butWidth = but.getBoundsInLocal().getWidth();
-		double butHeight = but.getBoundsInLocal().getHeight();
-		but.setLayoutX((startupPane.getWidth() - butWidth) / 2.0);
-		but.setLayoutY((startupPane.getHeight() - butHeight) / 1.2);
+		Button ContinueButton = (Button) scene.lookup("StartupContinueButton");
+		double ContinueButtonWidth = ContinueButton.getWidth();
+		double ContinueButtonHeight = ContinueButton.getHeight();
+		ContinueButton.setLayoutX((startupPane.getWidth() - ContinueButtonWidth) / 2.0);
+		ContinueButton.setLayoutY((startupPane.getHeight() - ContinueButtonHeight) / 1.2);
 
 		// The Continue Title stating what to do to continue to the next Pane
-		Text continueTitle = (Text) scene.lookup("#ContinueTitle");
-		double continueTitleWidth = continueTitle.getBoundsInLocal().getWidth();
-		//double continueTitleHeight = continueTitle.getBoundsInLocal().getHeight();	// Unused as dependant on button height
-		continueTitle.setLayoutX((startupPane.getWidth() - continueTitleWidth) / 2.0);
-		continueTitle.setLayoutY(((startupPane.getHeight() - butHeight) / 1.25) );
+		Text continueMessage = (Text) scene.lookup("#StartupPressX");
+		double continueMessageWidth = continueMessage.getBoundsInLocal().getWidth();
+		//double continueMessageHeight = continueMessage.getBoundsInLocal().getHeight();	// Unused as dependant on button height
+		continueMessage.setLayoutX((startupPane.getWidth() - continueMessageWidth) / 2.0);
+		continueMessage.setLayoutY(((startupPane.getHeight() - ContinueButtonHeight) / 1.25) );
 	}
 }
