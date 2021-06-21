@@ -36,35 +36,12 @@ public class gameClient extends Application
 		{
 			Scene MainPage = new Scene(loadMainPane());
 			stage_.setScene(MainPage);
-			// TODO Migrate Listener into seperate function and add calls to the separate controllers
-			ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) ->
-			{
-				System.out.println("Height: " +  stage_.getHeight() + " Width: " +  stage_.getWidth());
-
-				Scene scene = stage_.getScene();
-				Pane startupPane = (Pane) scene.lookup("#Startup");
-				if (startupPane != null)
-				{
-					// Needed when porting to controllerPane startupPane = (Pane) scene.lookup("#Startup");
-					startupPane.setPrefWidth(stage_.getWidth());
-					startupPane.setPrefHeight(stage_.getHeight());
-
-					/* needed for childs of pane in controller
-					double startupPaneWidth = startupPane.getWidth();
-					double startupPaneHeight = startupPane.getHeight();
-					startupPane.setLayoutX((stage_.getWidth() - startupPaneWidth) / 2.0);
-					startupPane.setLayoutY(stage_.getHeight() * 0.95 - startupPaneHeight);*/
-				}
-			};
-			stage_.widthProperty().addListener(stageSizeListener);
-			stage_.heightProperty().addListener(stageSizeListener);
-
-
+			sizeChangeListener();
 			stage_.show();
 		}
 		catch (Exception e)
 		{
-		e.printStackTrace();
+			e.printStackTrace();
 		}
     }
     
@@ -83,5 +60,31 @@ public class gameClient extends Application
 		stage_.setScene(scene);
 	}
 
+	private void sizeChangeListener ()
+	{
+		ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) ->
+		{
+			System.out.println("Height: " +  stage_.getHeight() + " Width: " +  stage_.getWidth());
 
+			Scene scene = stage_.getScene();
+			Pane startupPane = (Pane) scene.lookup("#Startup");
+			FXMLLoader loader = null;
+			try
+			{
+				if (startupPane != null)
+				{
+					loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.STARTUP));
+					loader.load();
+					StartupScreenController Controller = loader.getController();
+					Controller.resize(stage_);
+				}
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		};
+		stage_.widthProperty().addListener(stageSizeListener);
+		stage_.heightProperty().addListener(stageSizeListener);
+	}
 }

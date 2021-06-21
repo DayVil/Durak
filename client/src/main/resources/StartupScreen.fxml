@@ -6,7 +6,7 @@
 
 <Pane fx:id="Startup" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ff0000;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.uni_hannover.hci.cardgame.StartupScreenController">
    <children>
-      <Text layoutX="117.0" layoutY="57.0" text="The best cardgame ever created" textAlignment="CENTER">
+      <Text fx:id="StartupTitle" layoutX="116.0" layoutY="38.0" text="The best cardgame ever created" textAlignment="CENTER">
          <font>
             <Font name="Felix Titling" size="22.0" />
          </font>
