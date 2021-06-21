@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -32,6 +33,7 @@ public class gameClient extends Application
 		stage_.setMinWidth(600.0);
 		stage_.setMinHeight(400.0);
 		stage_.setTitle("Cardgame");
+		stage_.getIcons().add(new Image(gameClient.class.getClassLoader().getResourceAsStream("textures/cards/card_back_highsat.png")));
 
 
 		Scene MainPage = new Scene(loadMainPane());
