@@ -7,8 +7,8 @@ import java.io.IOException;
  * @author catgrilll
  *
  */
-public class fxmlNavigator {
-
+public class fxmlNavigator
+{
 	public static final String MAIN = "Main.fxml";
 	public static final String STARTUP = "StartupScreen.fxml";
 	public static final String LOADING = "LoadingScreen.fxml";
