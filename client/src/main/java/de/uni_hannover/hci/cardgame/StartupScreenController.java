@@ -50,7 +50,7 @@ public class StartupScreenController
 		subTitle.setLayoutY(((startupPane.getHeight() - subTitleHeight) / 5.0) + titleHeight);
 
 		// The Button to click to go to the next Pane				// Done before the title down below as title down below is dependant on button
-		Button ContinueButton = (Button) scene.lookup("StartupContinueButton");
+		Button ContinueButton = (Button) scene.lookup("#StartupContinueButton");
 		double ContinueButtonWidth = ContinueButton.getWidth();
 		double ContinueButtonHeight = ContinueButton.getHeight();
 		ContinueButton.setLayoutX((startupPane.getWidth() - ContinueButtonWidth) / 2.0);
