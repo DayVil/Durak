@@ -2,6 +2,7 @@ package de.uni_hannover.hci.cardgame;
 
 import java.io.IOException;
 
+import de.uni_hannover.hci.cardgame.Controller.*;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +16,7 @@ import javafx.stage.Stage;
 public class gameClient extends Application
 {
 	
-	protected static Stage stage_;
+	public static Stage stage_;
 	
     public static void main(String[] args)
 	{
@@ -83,37 +84,29 @@ public class gameClient extends Application
 				{
 					loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.STARTUP));
 					loader.load();
-					StartupScreenController controller = loader.getController();
-					controller.resize(stage_);
 				}
 				else if (loadingPane != null)
 				{
 					loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.LOADING));
 					loader.load();
-					LoadingScreenController controller = loader.getController();
-					controller.resize(stage_);
 				}
 				else if (homePane != null)
 				{
 					loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.HOME));
 					loader.load();
-					HomeScreenController controller = loader.getController();
-					controller.resize(stage_);
 				}
 				else if (settingsPane != null)
 				{
 					loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.SETTINGS));
 					loader.load();
-					SettingsController controller = loader.getController();
-					controller.resize(stage_);
 				}
 				else if (gamePane != null)
 				{
 					loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.GAME));
 					loader.load();
-					GameBoardController controller = loader.getController();
-					controller.resize(stage_);
 				}
+				ControllerInterface controller = loader.getController();
+				controller.resize(stage_);
 			}
 			catch (IOException e)
 			{

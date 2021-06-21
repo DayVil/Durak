@@ -1,7 +1,11 @@
-package de.uni_hannover.hci.cardgame;
+package de.uni_hannover.hci.cardgame.Controller;
 
 import java.io.IOException;
 
+import de.uni_hannover.hci.cardgame.Controller.MainController;
+import de.uni_hannover.hci.cardgame.ControllerInterface;
+import de.uni_hannover.hci.cardgame.fxmlNavigator;
+import de.uni_hannover.hci.cardgame.gameClient;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class SettingsController
+public class SettingsController implements ControllerInterface
 {
 	
 	@FXML
@@ -39,7 +43,7 @@ public class SettingsController
 	private ImageView picture;
 	
 	@FXML
-	public void goToHome(ActionEvent event)
+	private void goToHome(ActionEvent event)
 	{
 		fxmlNavigator.loadFxml(fxmlNavigator.HOME);
 	}
@@ -47,23 +51,21 @@ public class SettingsController
 	@FXML
 	public void ChangeResolution(ActionEvent event) throws IOException
 	{
-		if(event.getSource().equals(res_1))
+		if(event.getSource().equals(res_1))		// If event source (selected button of resolution changer) is res_1 (600 x 400) do following
 		{
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.MAIN));
 	    	Pane mainPane = loader.load();
 	    	MainController mainController = loader.getController();
-	    	System.out.println(mainController);
 	    	fxmlNavigator.setMainController(mainController);
 	    	fxmlNavigator.loadFxml(fxmlNavigator.SETTINGS);
 	    	Scene MainPage = new Scene(mainPane, 600, 400);
             gameClient.setScene(MainPage);
 		}
-		else if (event.getSource().equals(res_2))
+		else if (event.getSource().equals(res_2))	// If event source (selected button of resolution changer) is res_2 (1200 x 800) do following
 		{
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.MAIN));
 	    	Pane mainPane = loader.load();
 	    	MainController mainController = loader.getController();
-	    	System.out.println(mainController);
 	    	fxmlNavigator.setMainController(mainController);
 	    	fxmlNavigator.loadFxml(fxmlNavigator.SETTINGS);
 	    	Scene MainPage = new Scene(mainPane, 1200, 800);
@@ -71,13 +73,14 @@ public class SettingsController
 		}
 	}
 
+	@Override
 	public void resize(Stage stage)
 	{
 		// The Pane of the Scene, that has got everything
 		Scene scene = stage.getScene();
 		Settings = (Pane) scene.lookup("#Settings");
-		Settings.setPrefWidth(stage.getWidth());
-		Settings.setPrefHeight(stage.getHeight());
+		Settings.setPrefWidth(scene.getWidth());
+		Settings.setPrefHeight(scene.getHeight());
 
 		Resolution = (SplitMenuButton) scene.lookup("#Resolution");
 		double resolutionWidth = Resolution.getWidth();
@@ -102,5 +105,12 @@ public class SettingsController
 		double pictureHeight = picture.getFitHeight();
 		picture.setLayoutX((Settings.getWidth() - pictureWidth) / 1.1);
 		picture.setLayoutY((Settings.getHeight() - pictureHeight) / 2.0);
+	}
+
+	@Override
+	public void init()
+	{
+		Stage stage = gameClient.stage_;
+		resize(stage);
 	}
 }

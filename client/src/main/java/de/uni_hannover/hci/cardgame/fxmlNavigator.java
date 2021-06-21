@@ -1,6 +1,6 @@
 package de.uni_hannover.hci.cardgame;
 
-import java.io.IOException;
+import de.uni_hannover.hci.cardgame.Controller.MainController;
 
 /**
  * This class is The giver of all navigations that will be used to change the overlay/gui dynamically

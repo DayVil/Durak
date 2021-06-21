@@ -1,5 +1,8 @@
-package de.uni_hannover.hci.cardgame;
+package de.uni_hannover.hci.cardgame.Controller;
 
+import de.uni_hannover.hci.cardgame.ControllerInterface;
+import de.uni_hannover.hci.cardgame.fxmlNavigator;
+import de.uni_hannover.hci.cardgame.gameClient;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -9,7 +12,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class LoadingScreenController
+public class LoadingScreenController implements ControllerInterface
 {
 	
 	@FXML
@@ -26,18 +29,23 @@ public class LoadingScreenController
 	
 
 	@FXML
-	public void goToHome(ActionEvent event)
+	private void goToHome(ActionEvent event)
 	{
 		fxmlNavigator.loadFxml(fxmlNavigator.HOME);
 	}
 
+	@Override
 	public void resize(Stage stage)
 	{
 		// The Pane of the Scene, that has got everything
 		Scene scene = stage.getScene();
 		Loading = (Pane) scene.lookup("#Loading");
-		double sceneWidth = stage.getWidth() - 16;
-		double sceneHeight = stage.getHeight() - 39;
+		//System.out.println("Scene height:    " + scene.getHeight() + "\n\n");
+		//System.out.println("Scene width:    " + scene.getWidth() + "\n\n");
+		//System.out.println("Stage height:    " + stage.getHeight() + "\n\n");
+		//System.out.println("Stage width:    " + stage.getWidth() + "\n\n");
+		double sceneWidth = scene.getWidth();
+		double sceneHeight = scene.getHeight();
 		Loading.setPrefWidth(sceneWidth);
 		Loading.setPrefHeight(sceneHeight);
 
@@ -67,6 +75,7 @@ public class LoadingScreenController
 		LoadingNextButton.setLayoutY((sceneHeight - loadingNextButtonHeight) / 1.2);
 	}
 
+	@Override
 	public void init ()
 	{
 		Stage stage = gameClient.stage_;

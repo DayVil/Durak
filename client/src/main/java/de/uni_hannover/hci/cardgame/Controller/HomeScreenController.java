@@ -1,7 +1,10 @@
-package de.uni_hannover.hci.cardgame;
+package de.uni_hannover.hci.cardgame.Controller;
 
 import java.io.IOException;
 
+import de.uni_hannover.hci.cardgame.ControllerInterface;
+import de.uni_hannover.hci.cardgame.fxmlNavigator;
+import de.uni_hannover.hci.cardgame.gameClient;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -10,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class HomeScreenController
+public class HomeScreenController implements ControllerInterface
 {
 
 	@FXML
@@ -26,24 +29,25 @@ public class HomeScreenController
 	private Label label;
 
 	@FXML
-	public void goToGame(ActionEvent event)
+	private void goToGame(ActionEvent event)
 	{
 		fxmlNavigator.loadFxml(fxmlNavigator.GAME);
 	}
 	
 	@FXML 
-	public void goToSettings(ActionEvent event)
+	private void goToSettings(ActionEvent event)
 	{
 		fxmlNavigator.loadFxml(fxmlNavigator.SETTINGS);
 	}
 
+	@Override
 	public void resize(Stage stage)
 	{
 		// The Pane of the Scene, that has got everything
 		Scene scene = stage.getScene();
 		Home = (Pane) scene.lookup("#Home");
-		Home.setPrefWidth(stage.getWidth());
-		Home.setPrefHeight(stage.getHeight());
+		Home.setPrefWidth(scene.getWidth());
+		Home.setPrefHeight(scene.getHeight());
 
 		// The button that will bring the user to the next pane
 		SettingsButton = (Button) scene.lookup("#SettingsButton");
@@ -64,5 +68,12 @@ public class HomeScreenController
 		double labelHeight = label.getHeight();
 		label.setLayoutX((Home.getWidth() - labelWidth) / 2.0);
 		label.setLayoutY((Home.getHeight() - labelHeight) / 2.0);
+	}
+
+	@Override
+	public void init()
+	{
+		Stage stage = gameClient.stage_;
+		resize(stage);
 	}
 }
