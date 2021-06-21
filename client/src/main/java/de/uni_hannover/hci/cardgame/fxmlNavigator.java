@@ -22,7 +22,7 @@ public class fxmlNavigator
 		fxmlNavigator.mainController_ = mainController;
 	}
 	
-	public static void loadFxml(String fxml) throws IOException
+	public static void loadFxml(String fxml)
 	{
 		mainController_.setFxml(fxml);
 	}

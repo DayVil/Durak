@@ -32,27 +32,31 @@ public class gameClient extends Application
 		stage_.setMinHeight(400.0);
 		stage_.setTitle("Cardgame");
 
+
+		Scene MainPage = new Scene(loadMainPane());
+		stage_.setScene(MainPage);
+		sizeChangeListener();
+		stage_.show();
+
+    }
+    
+	public Pane loadMainPane()
+	{
 		try
 		{
-			Scene MainPage = new Scene(loadMainPane());
-			stage_.setScene(MainPage);
-			sizeChangeListener();
-			stage_.show();
+			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.MAIN));
+			Pane mainPane = loader.load();
+			MainController mainController = loader.getController();
+			fxmlNavigator.setMainController(mainController);
+			fxmlNavigator.loadFxml(fxmlNavigator.STARTUP);
+			return mainPane;
 		}
-		catch (Exception e)
+		catch (IOException e)
 		{
 			e.printStackTrace();
 		}
-    }
-    
-	public Pane loadMainPane() throws IOException
-	{
-    	FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.MAIN));
-    	Pane mainPane = loader.load();
-    	MainController mainController = loader.getController();
-    	fxmlNavigator.setMainController(mainController);
-    	fxmlNavigator.loadFxml(fxmlNavigator.STARTUP);
-    	return mainPane;
+
+    	return new Pane();
     }
 	
 	public static void setScene(Scene scene)
@@ -68,6 +72,10 @@ public class gameClient extends Application
 
 			Scene scene = stage_.getScene();
 			Pane startupPane = (Pane) scene.lookup("#Startup");
+			Pane loadingPane = (Pane) scene.lookup("#Loading");
+			Pane homePane = (Pane) scene.lookup("#Home");
+			Pane settingsPane = (Pane) scene.lookup("#Settings");
+			Pane gamePane = (Pane) scene.lookup("#GameBoard");
 			FXMLLoader loader = null;
 			try
 			{
@@ -75,8 +83,36 @@ public class gameClient extends Application
 				{
 					loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.STARTUP));
 					loader.load();
-					StartupScreenController Controller = loader.getController();
-					Controller.resize(stage_);
+					StartupScreenController controller = loader.getController();
+					controller.resize(stage_);
+				}
+				else if (loadingPane != null)
+				{
+					loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.LOADING));
+					loader.load();
+					LoadingScreenController controller = loader.getController();
+					controller.resize(stage_);
+				}
+				else if (homePane != null)
+				{
+					loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.HOME));
+					loader.load();
+					HomeScreenController controller = loader.getController();
+					controller.resize(stage_);
+				}
+				else if (settingsPane != null)
+				{
+					loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.SETTINGS));
+					loader.load();
+					SettingsController controller = loader.getController();
+					controller.resize(stage_);
+				}
+				else if (gamePane != null)
+				{
+					loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.GAME));
+					loader.load();
+					GameBoardController controller = loader.getController();
+					controller.resize(stage_);
 				}
 			}
 			catch (IOException e)

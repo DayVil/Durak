@@ -6,7 +6,8 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 
 public class GameBoardController
@@ -17,7 +18,7 @@ public class GameBoardController
     private Label label;
     
     @FXML
-    private StackPane GameBoard;
+    private Pane GameBoard;
 
     // handle needs to be the action on the scenebuilder e.g. in this case handleButtonAction for the menu button
     @FXML
@@ -27,9 +28,14 @@ public class GameBoardController
     }
     
     @FXML
-    private void goToHome(ActionEvent event) throws IOException
+    private void goToHome(ActionEvent event)
     {
     	fxmlNavigator.loadFxml(fxmlNavigator.HOME);
+    }
+
+    public void resize(Stage stage)
+    {
+
     }
 
 }

@@ -13,9 +13,13 @@ public class MainController
 	private Pane fxmlHolder;
 
 	@FXML
-	public void setFxml(String fxml) throws IOException
+	public void setFxml(String fxml)
 	{
-		Node debugging_helper = FXMLLoader.load(fxmlNavigator.class.getClassLoader().getResource(fxml));
-		fxmlHolder.getChildren().setAll(debugging_helper);
+		try {
+			Node debugging_helper = debugging_helper = FXMLLoader.load(fxmlNavigator.class.getClassLoader().getResource(fxml));
+			fxmlHolder.getChildren().setAll(debugging_helper);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

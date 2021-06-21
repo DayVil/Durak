@@ -10,13 +10,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 public class SettingsController
 {
 	
 	@FXML
-	private StackPane Settings;
+	private Pane Settings;
 	
 	@FXML
 	private SplitMenuButton Resolution;
@@ -31,7 +31,7 @@ public class SettingsController
 	private Label label;
 	
 	@FXML
-	public void goToHome(ActionEvent event) throws IOException
+	public void goToHome(ActionEvent event)
 	{
 		fxmlNavigator.loadFxml(fxmlNavigator.HOME);
 	}
@@ -61,5 +61,10 @@ public class SettingsController
 	    	Scene MainPage = new Scene(mainPane, 1200, 800);
             gameClient.setScene(MainPage);
 		}
+	}
+
+	public void resize(Stage stage)
+	{
+
 	}
 }
