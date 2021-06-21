@@ -36,27 +36,40 @@ public class LoadingScreenController
 		// The Pane of the Scene, that has got everything
 		Scene scene = stage.getScene();
 		Loading = (Pane) scene.lookup("#Loading");
-		Loading.setPrefWidth(stage.getWidth());
-		Loading.setPrefHeight(stage.getHeight());
+		double sceneWidth = stage.getWidth() - 16;
+		double sceneHeight = stage.getHeight() - 39;
+		Loading.setPrefWidth(sceneWidth);
+		Loading.setPrefHeight(sceneHeight);
+
 
 		// The progressbar, that has not yet been correctly implemented
 		LoadingBar = (ProgressBar) scene.lookup("#LoadingBar");
-		double loadingBarWidth = LoadingBar.getBoundsInLocal().getWidth();
-		double loadingBarHeight = LoadingBar.getBoundsInLocal().getHeight();
-		LoadingBar.setLayoutX((Loading.getWidth() - loadingBarWidth) / 2.0);
-		LoadingBar.setLayoutY((Loading.getHeight() - loadingBarHeight) / 2.0);
+		double loadingBarWidth = sceneWidth * 0.99;
+		double loadingBarHeight = sceneHeight * 0.05;
+		LoadingBar.setPrefWidth(loadingBarWidth);
+		LoadingBar.setPrefHeight(loadingBarHeight);
+		LoadingBar.setLayoutX((sceneWidth - loadingBarWidth) / 2.0);
+		LoadingBar.setLayoutY((sceneHeight - loadingBarHeight) / 2.0);
 
 		// The text that is hovering above the loading bar
 		LoadingTitle = (Text) scene.lookup("#LoadingTitle");
 		double loadingTitleWidth = LoadingTitle.getBoundsInLocal().getWidth();
-		LoadingTitle.setLayoutX((Loading.getWidth() - loadingTitleWidth) / 2.0);
-		LoadingTitle.setLayoutY(((Loading.getHeight() - loadingBarHeight) / 2.0) - loadingBarHeight);
+		LoadingTitle.setLayoutX((sceneWidth - loadingTitleWidth) / 2.0);
+		LoadingTitle.setLayoutY(((sceneHeight - loadingBarHeight) / 2.0) - loadingBarHeight);
 
 		// The button that will bring the user to the next pane
 		LoadingNextButton = (Button) scene.lookup("#LoadingNextButton");
-		double LoadingNextButtonWidth = LoadingNextButton.getWidth();
-		double LoadingNextButtonHeight = LoadingNextButton.getHeight();
-		LoadingNextButton.setLayoutX((Loading.getWidth() - LoadingNextButtonWidth) / 2.0);
-		LoadingNextButton.setLayoutY((Loading.getHeight() - LoadingNextButtonHeight) / 1.2);
+		double loadingNextButtonWidth = 550;
+		double loadingNextButtonHeight = 120;
+		LoadingNextButton.setPrefWidth(loadingNextButtonWidth);
+		LoadingNextButton.setPrefHeight(loadingNextButtonHeight);
+		LoadingNextButton.setLayoutX((sceneWidth - loadingNextButtonWidth) / 2.0);
+		LoadingNextButton.setLayoutY((sceneHeight - loadingNextButtonHeight) / 1.2);
+	}
+
+	public void init ()
+	{
+		Stage stage = gameClient.stage_;
+		resize(stage);
 	}
 }

@@ -19,10 +19,21 @@ public class MainController
 		{
 			Node debugging_helper = FXMLLoader.load(fxmlNavigator.class.getClassLoader().getResource(fxml));
 			fxmlHolder.getChildren().setAll(debugging_helper);
+			if (fxml.equals(fxmlNavigator.LOADING))
+			{
+				FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxml));
+				loader.load();
+				LoadingScreenController Controller = loader.getController();
+
+				Controller.init();
+			}
 		}
 		catch (IOException e)
 		{
 			e.printStackTrace();
 		}
+
+
+
 	}
 }
