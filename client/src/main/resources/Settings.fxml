@@ -5,28 +5,20 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane fx:id="Settings" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.uni_hannover.hci.cardgame.SettingsController">
-   <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ADD8E6;">
-         <children>
-            <SplitMenuButton fx:id="Resolution" layoutX="244.0" layoutY="188.0" mnemonicParsing="false" text="Resolution">
-              <items>
-                <MenuItem fx:id="res_1" mnemonicParsing="false" onAction="#ChangeResolution" text="600 x 400" />
-                <MenuItem fx:id="res_2" mnemonicParsing="false" onAction="#ChangeResolution" text="1200 x 800" />
-              </items>
-            </SplitMenuButton>
-            <Label layoutX="231.0" layoutY="79.0" text="Settings Menu" textFill="RED">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="93.0" fitWidth="94.0" layoutX="433.0" layoutY="107.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@textures/cards/card_back_lowsat.png" />
-               </image>
-            </ImageView>
-            <Button layoutX="246.0" layoutY="308.0" mnemonicParsing="false" onAction="#goToHome" text="Back to Home" />
-         </children>
-      </AnchorPane>
-   </children>
+<Pane fx:id="Settings" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #f0f000;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.uni_hannover.hci.cardgame.SettingsController">
+      <SplitMenuButton fx:id="Resolution" layoutX="57.0" layoutY="128.0" mnemonicParsing="false" text="Resolution">
+        <items>
+          <MenuItem fx:id="res_1" mnemonicParsing="false" onAction="#ChangeResolution" text="600 x 400" />
+          <MenuItem fx:id="res_2" mnemonicParsing="false" onAction="#ChangeResolution" text="1200 x 800" />
+        </items>
+      </SplitMenuButton>
+      <Button fx:id="HomeButton" layoutX="59.0" layoutY="234.0" mnemonicParsing="false" onAction="#goToHome" text="Back to Home" />
+      <Label fx:id="label" layoutX="231.0" layoutY="26.0" text="Settings Menu" textFill="RED">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="picture" fitHeight="93.0" fitWidth="94.0" layoutX="468.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@textures/cards/card_back_lowsat.png" />
+      </ImageView>
 </Pane>

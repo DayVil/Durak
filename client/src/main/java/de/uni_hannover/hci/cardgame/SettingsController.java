@@ -6,9 +6,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -29,6 +31,12 @@ public class SettingsController
 
 	@FXML
 	private Label label;
+
+	@FXML
+	private Button HomeButton;
+
+	@FXML
+	private ImageView picture;
 	
 	@FXML
 	public void goToHome(ActionEvent event)
@@ -65,6 +73,34 @@ public class SettingsController
 
 	public void resize(Stage stage)
 	{
+		// The Pane of the Scene, that has got everything
+		Scene scene = stage.getScene();
+		Settings = (Pane) scene.lookup("#Settings");
+		Settings.setPrefWidth(stage.getWidth());
+		Settings.setPrefHeight(stage.getHeight());
 
+		Resolution = (SplitMenuButton) scene.lookup("#Resolution");
+		double resolutionWidth = Resolution.getWidth();
+		double resolutionHeight = Resolution.getHeight();
+		Resolution.setLayoutX((Settings.getWidth() - resolutionWidth) / 10.0);
+		Resolution.setLayoutY((Settings.getHeight() - resolutionHeight) / 4.0);
+
+		label = (Label) scene.lookup("#label");
+		double labelWidth = label.getWidth();
+		double labelHeight = label.getHeight();
+		label.setLayoutX((Settings.getWidth() - labelWidth) / 2.0);
+		label.setLayoutY((Settings.getHeight() - labelHeight) / 10.0);
+
+		HomeButton = (Button) scene.lookup("#HomeButton");
+		double homeButtonWidth = HomeButton.getWidth();
+		double homeButtonHeight = HomeButton.getHeight();
+		HomeButton.setLayoutX((Settings.getWidth() - homeButtonWidth) / 10.0);
+		HomeButton.setLayoutY((Settings.getHeight() - homeButtonHeight) / 1.4);
+
+		picture = (ImageView) scene.lookup("#picture");
+		double pictureWidth = picture.getFitWidth();
+		double pictureHeight = picture.getFitHeight();
+		picture.setLayoutX((Settings.getWidth() - pictureWidth) / 1.1);
+		picture.setLayoutY((Settings.getHeight() - pictureHeight) / 2.0);
 	}
 }
