@@ -83,28 +83,34 @@ public class SettingsController implements ControllerInterface
 		Settings.setPrefHeight(scene.getHeight());
 
 		Resolution = (SplitMenuButton) scene.lookup("#Resolution");
-		double resolutionWidth = Resolution.getWidth();
-		double resolutionHeight = Resolution.getHeight();
-		Resolution.setLayoutX((Settings.getWidth() - resolutionWidth) / 10.0);
-		Resolution.setLayoutY((Settings.getHeight() - resolutionHeight) / 4.0);
+		double resolutionWidth = 125;
+		double resolutionHeight = 25;
+		Resolution.setPrefWidth(resolutionWidth);
+		Resolution.setPrefHeight(resolutionHeight);
+		Resolution.setLayoutX((scene.getWidth() - resolutionWidth) / 10.0);
+		Resolution.setLayoutY((scene.getHeight() - resolutionHeight) / 4.0);
 
 		label = (Label) scene.lookup("#label");
-		double labelWidth = label.getWidth();
-		double labelHeight = label.getHeight();
-		label.setLayoutX((Settings.getWidth() - labelWidth) / 2.0);
-		label.setLayoutY((Settings.getHeight() - labelHeight) / 10.0);
+		double labelWidth = 125;
+		double labelHeight = 55;
+		label.setPrefWidth(labelWidth);
+		label.setPrefHeight(labelHeight);
+		label.setLayoutX((scene.getWidth() - labelWidth) / 2.0);
+		label.setLayoutY((scene.getHeight() - labelHeight) / 10.0);
 
 		HomeButton = (Button) scene.lookup("#HomeButton");
-		double homeButtonWidth = HomeButton.getWidth();
-		double homeButtonHeight = HomeButton.getHeight();
-		HomeButton.setLayoutX((Settings.getWidth() - homeButtonWidth) / 10.0);
-		HomeButton.setLayoutY((Settings.getHeight() - homeButtonHeight) / 1.4);
+		double homeButtonWidth = 100;
+		double homeButtonHeight = 25;
+		HomeButton.setPrefWidth(homeButtonWidth);
+		HomeButton.setPrefHeight(homeButtonHeight);
+		HomeButton.setLayoutX((scene.getWidth() - homeButtonWidth) / 10.0);
+		HomeButton.setLayoutY((scene.getHeight() - homeButtonHeight) / 1.4);
 
 		picture = (ImageView) scene.lookup("#picture");
-		double pictureWidth = picture.getFitWidth();
-		double pictureHeight = picture.getFitHeight();
-		picture.setLayoutX((Settings.getWidth() - pictureWidth) / 1.1);
-		picture.setLayoutY((Settings.getHeight() - pictureHeight) / 2.0);
+		double pictureWidth = 75; //picture.getFitWidth();
+		double pictureHeight = 200; //picture.getFitHeight();
+		picture.setLayoutX((scene.getWidth() - pictureWidth) / 1.1);
+		picture.setLayoutY((scene.getHeight() - pictureHeight) / 2.0);
 	}
 
 	@Override

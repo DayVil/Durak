@@ -51,23 +51,29 @@ public class HomeScreenController implements ControllerInterface
 
 		// The button that will bring the user to the next pane
 		SettingsButton = (Button) scene.lookup("#SettingsButton");
-		double SettingsButtonWidth = SettingsButton.getWidth();
-		double SettingsButtonHeight = SettingsButton.getHeight();
-		SettingsButton.setLayoutX((Home.getWidth() - SettingsButtonWidth) / 1.05);
-		SettingsButton.setLayoutY(Home.getHeight() - ((Home.getHeight() - SettingsButtonHeight)));
+		double SettingsButtonWidth = 75;
+		double SettingsButtonHeight = 25;
+		SettingsButton.setPrefWidth(SettingsButtonWidth);
+		SettingsButton.setPrefHeight(SettingsButtonHeight);
+		SettingsButton.setLayoutX((scene.getWidth() - SettingsButtonWidth) / 1.05);
+		SettingsButton.setLayoutY(scene.getHeight() - ((scene.getHeight() - SettingsButtonHeight)));
 
 		// The button that will bring the user to the next pane
 		GameBoardButton = (Button) scene.lookup("#GameBoardButton");
-		double GameBoardButtonWidth = GameBoardButton.getWidth();
-		double GameBoardButtonHeight = GameBoardButton.getHeight();
-		GameBoardButton.setLayoutX((Home.getWidth() - GameBoardButtonWidth) / 2.0);
-		GameBoardButton.setLayoutY((Home.getHeight() - GameBoardButtonHeight) / 1.2);
+		double GameBoardButtonWidth = 100;
+		double GameBoardButtonHeight = 25;
+		GameBoardButton.setPrefWidth(GameBoardButtonWidth);
+		GameBoardButton.setPrefHeight(GameBoardButtonHeight);
+		GameBoardButton.setLayoutX((scene.getWidth() - GameBoardButtonWidth) / 2.0);
+		GameBoardButton.setLayoutY((scene.getHeight() - GameBoardButtonHeight) / 1.2);
 
 		label = (Label) scene.lookup("#label");
-		double labelWidth = label.getWidth();
-		double labelHeight = label.getHeight();
-		label.setLayoutX((Home.getWidth() - labelWidth) / 2.0);
-		label.setLayoutY((Home.getHeight() - labelHeight) / 2.0);
+		double labelWidth = 275;
+		double labelHeight = 55;
+		label.setPrefWidth(labelWidth);
+		label.setPrefHeight(labelHeight);
+		label.setLayoutX((scene.getWidth() - labelWidth) / 2.0);
+		label.setLayoutY((scene.getHeight() - labelHeight) / 2.0);
 	}
 
 	@Override

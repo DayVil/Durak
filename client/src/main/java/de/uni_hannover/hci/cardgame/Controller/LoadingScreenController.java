@@ -40,10 +40,6 @@ public class LoadingScreenController implements ControllerInterface
 		// The Pane of the Scene, that has got everything
 		Scene scene = stage.getScene();
 		Loading = (Pane) scene.lookup("#Loading");
-		//System.out.println("Scene height:    " + scene.getHeight() + "\n\n");
-		//System.out.println("Scene width:    " + scene.getWidth() + "\n\n");
-		//System.out.println("Stage height:    " + stage.getHeight() + "\n\n");
-		//System.out.println("Stage width:    " + stage.getWidth() + "\n\n");
 		double sceneWidth = scene.getWidth();
 		double sceneHeight = scene.getHeight();
 		Loading.setPrefWidth(sceneWidth);
