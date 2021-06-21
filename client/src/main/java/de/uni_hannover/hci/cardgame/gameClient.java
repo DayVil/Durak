@@ -68,7 +68,7 @@ public class gameClient extends Application
 	{
 		ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) ->
 		{
-			//System.out.println("Height: " +  stage_.getHeight() + " Width: " +  stage_.getWidth());
+			// DEBUG System.out.println("Height: " +  stage_.getHeight() + " Width: " +  stage_.getWidth());
 
 			Scene scene = stage_.getScene();
 			Pane startupPane = (Pane) scene.lookup("#Startup");

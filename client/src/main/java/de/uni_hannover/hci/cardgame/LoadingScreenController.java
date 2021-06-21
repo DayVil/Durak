@@ -50,7 +50,7 @@ public class LoadingScreenController
 		LoadingTitle = (Text) scene.lookup("#LoadingTitle");
 		double loadingTitleWidth = LoadingTitle.getBoundsInLocal().getWidth();
 		LoadingTitle.setLayoutX((Loading.getWidth() - loadingTitleWidth) / 2.0);
-		LoadingTitle.setLayoutY((Loading.getHeight() - loadingBarHeight) / 2.15);
+		LoadingTitle.setLayoutY(((Loading.getHeight() - loadingBarHeight) / 2.0) - loadingBarHeight);
 
 		// The button that will bring the user to the next pane
 		LoadingNextButton = (Button) scene.lookup("#LoadingNextButton");

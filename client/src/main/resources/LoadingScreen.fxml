@@ -6,7 +6,7 @@
 
 <Pane fx:id="Loading" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #00ff00;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.uni_hannover.hci.cardgame.LoadingScreenController">
       <ProgressBar fx:id="LoadingBar" layoutX="145.0" layoutY="190.0" prefHeight="20.0" prefWidth="310.0" progress="0.0" />
-      <Text fx:id="LoadingTitle" fill="RED" layoutX="268.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Loading" wrappingWidth="63.40625">
+      <Text fx:id="LoadingTitle" fill="RED" layoutX="268.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Loading" >
          <font>
             <Font size="16.0" />
          </font>
