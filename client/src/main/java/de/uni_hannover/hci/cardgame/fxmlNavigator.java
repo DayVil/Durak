@@ -17,11 +17,13 @@ public class fxmlNavigator {
 	public static final String SETTINGS = "Settings.fxml";
 	private static MainController mainController_;
 	
-	public static void setMainController(MainController mainController) {
+	public static void setMainController(MainController mainController)
+	{
 		fxmlNavigator.mainController_ = mainController;
 	}
 	
-	public static void loadFxml(String fxml) throws IOException {
+	public static void loadFxml(String fxml) throws IOException
+	{
 		mainController_.setFxml(fxml);
 	}
 }
