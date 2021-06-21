@@ -69,53 +69,56 @@ public class gameClient extends Application
 
 	private void sizeChangeListener ()
 	{
-		ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) ->
-		{
-			// DEBUG System.out.println("Height: " +  stage_.getHeight() + " Width: " +  stage_.getWidth());
+		ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) -> changeSize();
 
-			Scene scene = stage_.getScene();
-			Pane startupPane = (Pane) scene.lookup("#Startup");
-			Pane loadingPane = (Pane) scene.lookup("#Loading");
-			Pane homePane = (Pane) scene.lookup("#Home");
-			Pane settingsPane = (Pane) scene.lookup("#Settings");
-			Pane gamePane = (Pane) scene.lookup("#GameBoard");
-			FXMLLoader loader = null;
-			try
-			{
-				if (startupPane != null)
-				{
-					loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.STARTUP));
-					loader.load();
-				}
-				else if (loadingPane != null)
-				{
-					loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.LOADING));
-					loader.load();
-				}
-				else if (homePane != null)
-				{
-					loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.HOME));
-					loader.load();
-				}
-				else if (settingsPane != null)
-				{
-					loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.SETTINGS));
-					loader.load();
-				}
-				else if (gamePane != null)
-				{
-					loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.GAME));
-					loader.load();
-				}
-				ControllerInterface controller = loader.getController();
-				controller.resize(stage_);
-			}
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			}
-		};
 		stage_.widthProperty().addListener(stageSizeListener);
 		stage_.heightProperty().addListener(stageSizeListener);
+	}
+
+	private void changeSize()
+	{
+		// DEBUG System.out.println("Height: " +  stage_.getHeight() + " Width: " +  stage_.getWidth());
+
+		Scene scene = stage_.getScene();
+		Pane startupPane = (Pane) scene.lookup("#Startup");
+		Pane loadingPane = (Pane) scene.lookup("#Loading");
+		Pane homePane = (Pane) scene.lookup("#Home");
+		Pane settingsPane = (Pane) scene.lookup("#Settings");
+		Pane gamePane = (Pane) scene.lookup("#GameBoard");
+		FXMLLoader loader = null;
+		try
+		{
+			if (startupPane != null)
+			{
+				loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.STARTUP));
+				loader.load();
+			}
+			else if (loadingPane != null)
+			{
+				loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.LOADING));
+				loader.load();
+			}
+			else if (homePane != null)
+			{
+				loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.HOME));
+				loader.load();
+			}
+			else if (settingsPane != null)
+			{
+				loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.SETTINGS));
+				loader.load();
+			}
+			else if (gamePane != null)
+			{
+				loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.GAME));
+				loader.load();
+			}
+			ControllerInterface controller = loader.getController();
+			controller.resize(stage_);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 }
