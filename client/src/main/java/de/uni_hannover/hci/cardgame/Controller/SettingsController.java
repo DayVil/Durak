@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -71,6 +72,7 @@ public class SettingsController implements ControllerInterface
 	    	Scene MainPage = new Scene(mainPane, 1200, 800);
             gameClient.setScene(MainPage);
 		}
+		gameClient.stage_.centerOnScreen();
 	}
 
 	@Override
@@ -107,10 +109,13 @@ public class SettingsController implements ControllerInterface
 		HomeButton.setLayoutY((scene.getHeight() - homeButtonHeight) / 1.4);
 
 		picture = (ImageView) scene.lookup("#picture");
-		double pictureWidth = 75; //picture.getFitWidth();
-		double pictureHeight = 200; //picture.getFitHeight();
+		double pictureWidth = picture.getFitWidth();
+		double pictureHeight = picture.getFitHeight();
+		picture.setFitWidth(pictureWidth);
+		picture.setFitHeight(pictureHeight);
 		picture.setLayoutX((scene.getWidth() - pictureWidth) / 1.1);
 		picture.setLayoutY((scene.getHeight() - pictureHeight) / 2.0);
+
 	}
 
 	@Override

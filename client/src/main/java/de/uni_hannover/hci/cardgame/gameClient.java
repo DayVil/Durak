@@ -33,7 +33,7 @@ public class gameClient extends Application
 		stage_.setMinWidth(600.0);
 		stage_.setMinHeight(400.0);
 		stage_.setTitle("Cardgame");
-		stage_.getIcons().add(new Image(gameClient.class.getClassLoader().getResourceAsStream("textures/cards/card_back_highsat.png")));
+		stage_.getIcons().add(new Image("textures/game_symbol.png", 100, 100, true, true, false));
 
 
 		Scene MainPage = new Scene(loadMainPane());
@@ -71,14 +71,20 @@ public class gameClient extends Application
 	{
 		ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) -> changeSize();
 
+		// TODO: get this to work, listener itself is working, resizing not due to scene not maximizing to stage width and height
+		ChangeListener<? super Boolean> maximizeListener = (observable, oldValue, newValue) -> changeSize();
+
 		stage_.widthProperty().addListener(stageSizeListener);
 		stage_.heightProperty().addListener(stageSizeListener);
+		stage_.maximizedProperty().addListener(maximizeListener);
+		// If we don't use a key pressed (like Minecraft F11) this is not needed
+		// stage_.fullScreenProperty().addListener(maximizeListener);
 	}
 
 	private void changeSize()
 	{
-		// DEBUG System.out.println("Height: " +  stage_.getHeight() + " Width: " +  stage_.getWidth());
-
+		//System.out.println("Stage Height: " + stage_.getHeight() + " Stage Width: " + stage_.getWidth());
+		//System.out.println("Scene Height: " + stage_.getScene().getHeight() + " Scene Width: " + stage_.getScene().getWidth());
 		Scene scene = stage_.getScene();
 		Pane startupPane = (Pane) scene.lookup("#Startup");
 		Pane loadingPane = (Pane) scene.lookup("#Loading");

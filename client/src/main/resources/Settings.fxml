@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -19,10 +18,7 @@
             <Font name="System Bold" size="17.0" />
          </font>
       </Label>
-      <ImageView fx:id="picture" cache="true" cacheHint="SPEED" fitHeight="93.0" fitWidth="94.0" layoutX="468.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@textures/cards/card_back_highsat.png" />
-      <viewport>
-         <Rectangle2D />
-      </viewport>
-      </ImageView>
+   <ImageView fx:id="picture" fitHeight="150.0" fitWidth="200.0" layoutX="435.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
+         <Image url="@textures/cards/card_back_lowsat.png" />
+   </ImageView>
 </Pane>
