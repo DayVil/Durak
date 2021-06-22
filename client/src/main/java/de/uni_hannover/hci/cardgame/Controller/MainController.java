@@ -2,7 +2,6 @@ package de.uni_hannover.hci.cardgame.Controller;
 
 import java.io.IOException;
 
-import de.uni_hannover.hci.cardgame.Controller.LoadingScreenController;
 import de.uni_hannover.hci.cardgame.ControllerInterface;
 import de.uni_hannover.hci.cardgame.fxmlNavigator;
 import de.uni_hannover.hci.cardgame.gameClient;

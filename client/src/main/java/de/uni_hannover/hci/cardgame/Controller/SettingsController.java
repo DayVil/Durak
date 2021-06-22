@@ -2,7 +2,6 @@ package de.uni_hannover.hci.cardgame.Controller;
 
 import java.io.IOException;
 
-import de.uni_hannover.hci.cardgame.Controller.MainController;
 import de.uni_hannover.hci.cardgame.ControllerInterface;
 import de.uni_hannover.hci.cardgame.fxmlNavigator;
 import de.uni_hannover.hci.cardgame.gameClient;
@@ -14,7 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;

@@ -18,6 +18,26 @@ public class gameClient extends Application
 {
 	
 	public static Stage stage_;
+
+	private void stageResizable(Boolean resizable)
+	{
+		stage_.setResizable(resizable);
+	}
+
+	private void stageMinWidth(double width)
+	{
+		stage_.setMinWidth(width);
+	}
+
+	private void stageMinHeight(double height)
+	{
+		stage_.setMinHeight(height);
+	}
+
+	public void stageTitle(String title)
+	{
+		stage_.setTitle(title);
+	}
 	
     public static void main(String[] args)
 	{
@@ -27,20 +47,19 @@ public class gameClient extends Application
     @Override
     public void start(Stage stage)
 	{
-		/* TODO add setters and getters for stage_ access */
 		gameClient.stage_ = stage;
-		stage_.setResizable(true);
-		stage_.setMinWidth(600.0);
-		stage_.setMinHeight(400.0);
-		stage_.setTitle("Cardgame");
+		stageResizable(true);
+		stageMinWidth(600.0);
+		stageMinHeight(400.0);
+		stageTitle("Cardgame");
 		stage_.getIcons().add(new Image("textures/game_symbol.png", 100, 100, true, true, false));
 
 
 		Scene MainPage = new Scene(loadMainPane());
-		stage_.setScene(MainPage);
+		setScene(MainPage);
 		sizeChangeListener();
-		stage_.show();
 
+		stage_.show();
     }
     
 	public Pane loadMainPane()
@@ -83,8 +102,9 @@ public class gameClient extends Application
 
 	private void changeSize()
 	{
-		//System.out.println("Stage Height: " + stage_.getHeight() + " Stage Width: " + stage_.getWidth());
-		//System.out.println("Scene Height: " + stage_.getScene().getHeight() + " Scene Width: " + stage_.getScene().getWidth());
+		// Added for debugging the maximizeListener
+		// System.out.println("Stage Height: " + stage_.getHeight() + " Stage Width: " + stage_.getWidth());
+		// System.out.println("Scene Height: " + stage_.getScene().getHeight() + " Scene Width: " + stage_.getScene().getWidth());
 		Scene scene = stage_.getScene();
 		Pane startupPane = (Pane) scene.lookup("#Startup");
 		Pane loadingPane = (Pane) scene.lookup("#Loading");
