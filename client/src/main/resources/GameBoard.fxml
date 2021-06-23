@@ -12,7 +12,7 @@
             <Button fx:id="HomeButton" layoutX="14.0" layoutY="33.0" mnemonicParsing="false" onAction="#goToHome" text="Home" />
    </Pane>
    <Pane fx:id="DeckBackground" layoutX="488.0" layoutY="115.0" prefHeight="120.0" prefWidth="79.0" style="-fx-background-color: black;">
-            <ImageView fx:id="leftoverDeck" fitHeight="84.0" fitWidth="43.0" layoutX="18.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="leftoverDeck" fitHeight="84.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
                   <Image url="@textures/cards/card_back_lowsat.png" />
             </ImageView>
             <Label fx:id="label" layoutX="16.0" layoutY="86.0" prefHeight="21.0" prefWidth="47.0" text="Number" textFill="RED" />

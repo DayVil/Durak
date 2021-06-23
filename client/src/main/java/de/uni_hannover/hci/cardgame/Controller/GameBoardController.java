@@ -59,7 +59,8 @@ public class GameBoardController implements ControllerInterface
     @Override
     public void resize(Stage stage)
     {
-        // TODO: Resize in a better manner, too tired to work on it right now. Resizing works but isn't what it was supposed to be
+        // TODO: ImageView is resizing very strange on initial load of it, afterwards on manual resizing it's fine
+        //       It seems like the two extra panes arent loaded when resize is called for the first time through init
         // The Pane of the Scene, that has got everything
         Scene scene = stage.getScene();
         GameBoard = (Pane) scene.lookup("#GameBoard");
@@ -79,7 +80,7 @@ public class GameBoardController implements ControllerInterface
         double deckBackHeight = DeckBackground.getHeight();
         DeckBackground.setPrefWidth(scene.getWidth() / 7.0);
         DeckBackground.setPrefHeight(scene.getHeight() / 3.3333);
-        DeckBackground.setLayoutX(((scene.getWidth() - deckBackWidth) / 7.0) * 5.0);
+        DeckBackground.setLayoutX(((scene.getWidth() - deckBackWidth) / 10.0) * 9.0);
         DeckBackground.setLayoutY((scene.getHeight() - deckBackHeight) / 2.0);
 
         Take = (Button) scene.lookup("#Take");
@@ -87,46 +88,46 @@ public class GameBoardController implements ControllerInterface
         double TakeButtonHeight = 25;
         Take.setPrefWidth(TakeButtonWidth);
         Take.setPrefHeight(TakeButtonHeight);
-        Take.setLayoutX((scene.getWidth() - TakeButtonWidth) / 1.05);
-        Take.setLayoutY((scene.getHeight() - TakeButtonHeight));
+        Take.setLayoutX(((scene.getWidth() - TakeButtonWidth) / 10.0) * 1.25);
+        Take.setLayoutY(((scene.getHeight() - TakeButtonHeight) / 10.0) * 9.0);
 
         Pass = (Button) scene.lookup("#Pass");
         double PassButtonWidth = 75;
         double PassButtonHeight = 25;
         Pass.setPrefWidth(PassButtonWidth);
         Pass.setPrefHeight(PassButtonHeight);
-        Pass.setLayoutX((scene.getWidth() - PassButtonWidth) / 1.05);
-        Pass.setLayoutY(scene.getHeight() - ((scene.getHeight() - PassButtonHeight)));
+        Pass.setLayoutX(((scene.getWidth() - PassButtonWidth) / 10.0 ) * 9.0);
+        Pass.setLayoutY(((scene.getHeight() - PassButtonHeight) / 10.0) * 9.0);
 
         HomeButton = (Button) scene.lookup("#HomeButton");
         double HomeButtonWidth = 75;
         double HomeButtonHeight = 25;
         HomeButton.setPrefWidth(HomeButtonWidth);
         HomeButton.setPrefHeight(HomeButtonHeight);
-        HomeButton.setLayoutX((deckBackWidth - HomeButtonWidth) / 1.05);
-        HomeButton.setLayoutY((deckBackHeight - HomeButtonHeight) / 2.0);
+        HomeButton.setLayoutX(((actionsBackWidth - HomeButtonWidth) / 10.0 ) * 1.25);
+        HomeButton.setLayoutY((actionsBackHeight - HomeButtonHeight) / 2.0);
 
         Menu = (Button) scene.lookup("#Menu");
         double MenuButtonWidth = 75;
         double MenuButtonHeight = 25;
         Menu.setPrefWidth(MenuButtonWidth);
         Menu.setPrefHeight(MenuButtonHeight);
-        Menu.setLayoutX((deckBackWidth - MenuButtonWidth) / 8.0);
-        Menu.setLayoutY((deckBackHeight - MenuButtonHeight) / 2.0);
+        Menu.setLayoutX(((actionsBackWidth - MenuButtonWidth) / 10.0) * 9.0);
+        Menu.setLayoutY((actionsBackHeight - MenuButtonHeight) / 2.0);
 
         leftoverDeck = (ImageView) scene.lookup("#leftoverDeck");
-        leftoverDeck.setFitWidth(actionsBackWidth - ((actionsBackWidth / 7.0) * 2.0));
-        leftoverDeck.setFitHeight(actionsBackHeight - ((actionsBackHeight / 10.0) * 6.0));
-        leftoverDeck.setLayoutX((actionsBackWidth - leftoverDeck.getFitWidth()) / 2.0);
-        leftoverDeck.setLayoutY((actionsBackHeight - leftoverDeck.getFitHeight()) / 2.0);
+        leftoverDeck.setFitWidth((deckBackWidth / 4.0) * 2.0);
+        leftoverDeck.setFitHeight((deckBackHeight / 10.0) * 6.0);
+        leftoverDeck.setLayoutX((deckBackWidth - leftoverDeck.getFitWidth()) / 2.0);
+        leftoverDeck.setLayoutY((deckBackHeight - leftoverDeck.getFitHeight()) / 2.0);
 
         label = (Label) scene.lookup("#label");
         double labelWidth = 70;
         double labelHeight = 35;
         label.setPrefWidth(labelWidth);
         label.setPrefHeight(labelHeight);
-        label.setLayoutX((actionsBackWidth - labelWidth) / 2.0);
-        label.setLayoutY(leftoverDeck.getFitHeight() - labelHeight);
+        label.setLayoutX(leftoverDeck.getLayoutX());
+        label.setLayoutY(leftoverDeck.getLayoutY() + leftoverDeck.getFitHeight());
 
     }
 
