@@ -12,6 +12,7 @@ public class fxmlNavigator
 	public static final String MAIN = "Main.fxml";
 	public static final String STARTUP = "StartupScreen.fxml";
 	public static final String LOADING = "LoadingScreen.fxml";
+	public static final String LOGIN = "loginScreen.fxml";
 	public static final String HOME = "HomeScreen.fxml";
 	public static final String GAME = "GameBoard.fxml";
 	public static final String SETTINGS = "Settings.fxml";

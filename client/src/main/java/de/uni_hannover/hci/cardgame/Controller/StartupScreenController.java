@@ -38,7 +38,7 @@ public class StartupScreenController implements ControllerInterface
 	@FXML
 	private void goToLoading()
 	{
-		fxmlNavigator.loadFxml(fxmlNavigator.LOADING);
+		fxmlNavigator.loadFxml(fxmlNavigator.LOGIN);
 	}
 
 	@Override

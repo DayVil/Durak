@@ -56,7 +56,7 @@ public class gameClient extends Application
 		stageMinWidth(600.0);
 		stageMinHeight(400.0);
 		stageTitle("Cardgame");
-		stage_.getIcons().add(new Image("textures/game_symbol.png", 32, 32, true, true, false));
+//		stage_.getIcons().add(new Image("textures/game_symbol.png", 32, 32, true, true, false)); // does not work on linux version
 
 		setScene(new Scene(loadMainPane()));
 		fxmlNavigator.loadFxml(fxmlNavigator.STARTUP);
