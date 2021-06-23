@@ -4,7 +4,6 @@ import de.uni_hannover.hci.cardgame.ControllerInterface;
 import de.uni_hannover.hci.cardgame.fxmlNavigator;
 import de.uni_hannover.hci.cardgame.gameClient;
 import javafx.animation.PauseTransition;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -37,14 +36,15 @@ public class LoadingScreenController implements ControllerInterface
 	
 
 	@FXML
-	private void goToHome(ActionEvent event)
+	private void goToHome()
 	{
 		fxmlNavigator.loadFxml(fxmlNavigator.HOME);
 	}
 
 	@Override
-	public void resize(Stage stage)
+	public void resize (Number newValue, Boolean isHeight)
 	{
+		Stage stage = gameClient.stage_;
 		// The Pane of the Scene, that has got everything
 		Scene scene = stage.getScene();
 		Loading = (Pane) scene.lookup("#Loading");
@@ -83,46 +83,48 @@ public class LoadingScreenController implements ControllerInterface
 	public void init ()
 	{
 		Stage stage = gameClient.stage_;
-		resize(stage);
 		double sW = stage.getWidth();
 		double sH = stage.getHeight();
+
+		resize(stage.getScene().getHeight(), true);
+
 		PauseTransition pause = new PauseTransition(Duration.millis(500));
 		pause.setOnFinished
-				(
-						e ->
-						{
-							if (ImageNr < ImageNameList.length)
-							{
-								System.out.println(String.format("Nach Pause Bild %d", ImageNr));
+		(
+			e ->
+			{
+				if (ImageNr < ImageNameList.length)
+				{
+					System.out.printf("Nach Pause Bild %d%n", ImageNr);
 
-								Image i = new Image(ImageNameList[ImageNr], sW / 10.0, sH, true, true);
-								ImageView iv = new ImageView();
-								iv.setImage(i);
-								iv.setCache(true);
-								iv.setLayoutX(sW * 0.1 + sW * 0.05 * ImageNr);
-								iv.setLayoutY(sH * 0.6);
-								Loading.getChildren().add(iv);
-								ImageNr++;
-								progressBarValue = progressBarValue + 1.0 * ImageNr / ImageNameList.length;
-							}
-							else
-							{
-								System.out.println(String.format("Pause %.3f", progressBarValue));
-								progressBarValue = progressBarValue + 0.1;
-							}
+					Image i = new Image(ImageNameList[ImageNr], sW / 10.0, sH, true, true);
+					ImageView iv = new ImageView();
+					iv.setImage(i);
+					iv.setCache(true);
+					iv.setLayoutX(sW * 0.1 + sW * 0.05 * ImageNr);
+					iv.setLayoutY(sH * 0.6);
+					Loading.getChildren().add(iv);
+					ImageNr++;
+					progressBarValue = progressBarValue + 1.0 * ImageNr / ImageNameList.length;
+				}
+				else
+				{
+					System.out.printf("Pause %.3f%n", progressBarValue);
+					progressBarValue = progressBarValue + 0.1;
+				}
 
-							if (ImageNr ==  ImageNameList.length)
-							{
-								System.out.println(String.format("Nun nur Pause %.3f", progressBarValue));
-								ImageNr++;
-								progressBarValue = 0.0;
-							}
+				if (ImageNr ==  ImageNameList.length)
+				{
+					System.out.printf("Nun nur Pause %.3f%n", progressBarValue);
+					ImageNr++;
+					progressBarValue = 0.0;
+				}
 
-							LoadingBar.setProgress(progressBarValue);
+				LoadingBar.setProgress(progressBarValue);
 
-							if (ImageNr < ImageNameList.length || progressBarValue < 1.0)    pause.playFromStart();
-						}
-				);
+				if (ImageNr < ImageNameList.length || progressBarValue < 1.0)    pause.playFromStart();
+			}
+		);
 
 		pause.play();
 	}

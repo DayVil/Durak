@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
 public class MainController implements ControllerInterface
 {
@@ -21,10 +20,9 @@ public class MainController implements ControllerInterface
 	{
 		try
 		{
-			Node debugging_helper = FXMLLoader.load(fxmlNavigator.class.getClassLoader().getResource(fxml));
-			fxmlHolder.getChildren().setAll(debugging_helper);
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxml));
-			loader.load();
+			Node debugging_helper = loader.load();
+			fxmlHolder.getChildren().setAll(debugging_helper);
 			ControllerInterface Controller = loader.getController();
 
 			Controller.init();
@@ -33,13 +31,10 @@ public class MainController implements ControllerInterface
 		{
 			e.printStackTrace();
 		}
-
-
-
 	}
 
 	@Override
-	public void resize(Stage stage)
+	public void resize (Number newValue, Boolean isHeight)
 	{
 
 	}
@@ -47,7 +42,6 @@ public class MainController implements ControllerInterface
 	@Override
 	public void init()
 	{
-		Stage stage = gameClient.stage_;
-		resize(stage);
+
 	}
 }

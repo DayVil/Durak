@@ -27,20 +27,21 @@ public class HomeScreenController implements ControllerInterface
 	private Label label;
 
 	@FXML
-	private void goToGame(ActionEvent event)
+	private void goToGame()
 	{
 		fxmlNavigator.loadFxml(fxmlNavigator.GAME);
 	}
 	
 	@FXML 
-	private void goToSettings(ActionEvent event)
+	private void goToSettings()
 	{
 		fxmlNavigator.loadFxml(fxmlNavigator.SETTINGS);
 	}
 
 	@Override
-	public void resize(Stage stage)
+	public void resize (Number newValue, Boolean isHeight)
 	{
+		Stage stage = gameClient.stage_;
 		// The Pane of the Scene, that has got everything
 		Scene scene = stage.getScene();
 		Home = (Pane) scene.lookup("#Home");
@@ -78,6 +79,7 @@ public class HomeScreenController implements ControllerInterface
 	public void init()
 	{
 		Stage stage = gameClient.stage_;
-		resize(stage);
+		Scene scene = stage.getScene();
+		resize(scene.getHeight(), true);
 	}
 }

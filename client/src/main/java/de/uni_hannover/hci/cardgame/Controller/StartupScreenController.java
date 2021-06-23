@@ -3,16 +3,22 @@ package de.uni_hannover.hci.cardgame.Controller;
 import de.uni_hannover.hci.cardgame.ControllerInterface;
 import de.uni_hannover.hci.cardgame.fxmlNavigator;
 import de.uni_hannover.hci.cardgame.gameClient;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class StartupScreenController implements ControllerInterface
 {
+
+	private static double originalSceneWidth = 600;
+	private static double originalSceneHeight = 400;
+
 	@FXML
 	private Pane Startup;
 	@FXML
@@ -24,58 +30,164 @@ public class StartupScreenController implements ControllerInterface
 	@FXML
 	private Button StartupContinueButton;
 
+	private ImageView iv1;
+	private ImageView iv2;
+	private ImageView iv3;
+	private ImageView iv4;
+
 	@FXML
-	private void goToLoading(ActionEvent event)
+	private void goToLoading()
 	{
 		fxmlNavigator.loadFxml(fxmlNavigator.LOADING);
 	}
 
 	@Override
-	public void resize (Stage stage)
+	public void resize (Number newValue, Boolean isHeight)
 	{
+		Stage stage = gameClient.stage_;
 		if (stage.getScene() != null)
 		{
 			// The Pane of the Scene, that has got everything
 			Scene scene = stage.getScene();
+
+			double sW = scene.getWidth();
+			double sH = scene.getHeight();
+
+			if (isHeight) {
+				sH = (double) newValue;
+			}
+			else
+			{
+				sW = (double) newValue;
+			}
+
+			if (sH <= 0.0 || sW <= 0.0)
+			{
+				return;
+			}
+
 			Startup = (Pane) scene.lookup("#Startup");
 
-			Startup.setPrefWidth(stage.getWidth());
-			Startup.setPrefHeight(stage.getHeight());
+			Startup.setPrefWidth(sW);
+			Startup.setPrefHeight(sH);
 
 			// The Main Title stating the name of the game
 			StartupTitle = (Text) scene.lookup("#StartupTitle");
-			double titleWidth = StartupTitle.getBoundsInLocal().getWidth();
-			double titleHeight = StartupTitle.getBoundsInLocal().getHeight();
-			StartupTitle.setLayoutX((Startup.getWidth() - titleWidth) / 2.0);
-			StartupTitle.setLayoutY((Startup.getHeight() - titleHeight) / 5.0);
+			resizeObject(sW, sH, StartupTitle, false);
+			//double titleWidth = StartupTitle.getBoundsInLocal().getWidth();
+			//double titleHeight = StartupTitle.getBoundsInLocal().getHeight();
+			//StartupTitle.setLayoutX((Startup.getWidth() - titleWidth) / 2.0);
+			//StartupTitle.setLayoutY((Startup.getHeight() - titleHeight) / 5.0);
 
 			// The Creator Title stating who created the game
 			StartupSubTitle = (Text) scene.lookup("#StartupSubTitle");
 			double subTitleWidth = StartupSubTitle.getBoundsInLocal().getWidth();
 			double subTitleHeight = StartupSubTitle.getBoundsInLocal().getHeight();
-			StartupSubTitle.setLayoutX((Startup.getWidth() - subTitleWidth) / 2.0);
-			StartupSubTitle.setLayoutY(((Startup.getHeight() - subTitleHeight) / 5.0) + titleHeight);
+			StartupSubTitle.setLayoutX((sW - subTitleWidth) / 2.0);
+			StartupSubTitle.setLayoutY(((sH - subTitleHeight) / 5.0) + 35);
 
 			// The Button to click to go to the next Pane				// Done before the StartupTitle down below as StartupTitle down below is dependant on button
 			StartupContinueButton = (Button) scene.lookup("#StartupContinueButton");
 			double ContinueButtonWidth = StartupContinueButton.getWidth();
 			double ContinueButtonHeight = StartupContinueButton.getHeight();
-			StartupContinueButton.setLayoutX((Startup.getWidth() - ContinueButtonWidth) / 2.0);
-			StartupContinueButton.setLayoutY((Startup.getHeight() - ContinueButtonHeight) / 1.2);
+			StartupContinueButton.setLayoutX((sW - ContinueButtonWidth) / 2.0);
+			StartupContinueButton.setLayoutY((sH - ContinueButtonHeight) / 1.2);
 
 			// The Continue Title stating what to do to continue to the next Pane
 			StartupPressX = (Text) scene.lookup("#StartupPressX");
 			double continueMessageWidth = StartupPressX.getBoundsInLocal().getWidth();
 			//double continueMessageHeight = continueMessage.getBoundsInLocal().getHeight();	// Unused as dependant on button height
-			StartupPressX.setLayoutX((Startup.getWidth() - continueMessageWidth) / 2.0);
-			StartupPressX.setLayoutY(((Startup.getHeight() - ContinueButtonHeight) / 1.25) );
+			StartupPressX.setLayoutX((sW - continueMessageWidth) / 2.0);
+			StartupPressX.setLayoutY(((sH - ContinueButtonHeight) / 1.25));
+
+			iv1 = (ImageView) scene.lookup("#iv1");
+			resizeObject(sW, sH, iv1, true);
+
+			iv2 = (ImageView) scene.lookup("#iv2");
+			resizeObject(sW, sH, iv2, true);
+
+			iv3 = (ImageView) scene.lookup("#iv3");
+			resizeObject(sW, sH, iv3, true);
+
+			iv4 = (ImageView) scene.lookup("#iv4");
+			resizeObject(sW, sH, iv4, true);
+
+			originalSceneWidth = sW;
+			originalSceneHeight = sH;
+		}
+		else
+		{
+			System.out.println("Scene was null");
 		}
 	}
 
 	@Override
 	public void init()
 	{
-		Stage stage = gameClient.stage_;
-		resize(stage);
+		//Stage stage = gameClient.stage_;
+		//Scene scene = stage.getScene();
+
+		iv1 = new ImageView();
+		Image image = new Image("/textures/cards/diamonds/ace_of_diamonds.png", 75, 200, true, true);
+		iv1.setImage(image);
+		iv1.setCache(true);
+		iv1.setLayoutX(150.0);
+		iv1.setLayoutY(150.0);
+		iv1.setRotate(330.0);
+		iv1.setId("iv1");
+		Startup.getChildren().add(iv1);
+
+		iv2 = new ImageView();
+		image = new Image("/textures/cards/hearts/ace_of_hearts.png", 75, 200, true, true);
+		iv2.setImage(image);
+		iv2.setCache(true);
+		iv2.setLayoutX(190.0);
+		iv2.setLayoutY(150.0);
+		iv2.setRotate(350.0);
+		iv2.setId("iv2");
+		Startup.getChildren().add(iv2);
+
+		iv3 = new ImageView();
+		image = new Image("/textures/cards/clubs/ace_of_clubs.png", 75, 200, true, true);
+		iv3.setImage(image);
+		iv3.setCache(true);
+		iv3.setLayoutX(230.0);
+		iv3.setLayoutY(150.0);
+		iv3.setRotate(10.0);
+		iv3.setId("iv3");
+		Startup.getChildren().add(iv3);
+
+		iv4 = new ImageView();
+		image = new Image("/textures/cards/spades/ace_of_spades.png", 75, 200, true, true);
+		iv4.setImage(image);
+		iv4.setCache(true);
+		iv4.setLayoutX(270.0);
+		iv4.setLayoutY(150.0);
+		iv4.setRotate(30.0);
+		iv4.setId("iv4");
+		Startup.getChildren().add(iv4);
+	}
+
+	public void resizeObject(double sW, double sH, Node node, Boolean isGettingRescaled)
+	{
+		double oW = node.getBoundsInLocal().getWidth();
+		double oH = node.getBoundsInLocal().getHeight();
+
+		double newX = ((node.getLayoutX() + oW / 2.0) * (sW / originalSceneWidth)) - oW / 2.0;
+		double newY = ((node.getLayoutY() + oH / 2.0) * (sH / originalSceneHeight)) - oH / 2.0;
+
+		node.setLayoutX(newX);
+		node.setLayoutY(newY);
+
+		if(isGettingRescaled)
+		{
+			double factor = sW / 600.0;
+			if (factor > sH / 400.0)
+			{
+				factor = sH / 400.0;
+			}
+			node.setScaleX(factor);
+			node.setScaleY(factor);
+		}
 	}
 }

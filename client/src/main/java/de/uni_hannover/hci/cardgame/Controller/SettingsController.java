@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -42,7 +43,7 @@ public class SettingsController implements ControllerInterface
 	private ImageView picture;
 	
 	@FXML
-	private void goToHome(ActionEvent event)
+	private void goToHome()
 	{
 		fxmlNavigator.loadFxml(fxmlNavigator.HOME);
 	}
@@ -52,30 +53,21 @@ public class SettingsController implements ControllerInterface
 	{
 		if(event.getSource().equals(res_1))		// If event source (selected button of resolution changer) is res_1 (600 x 400) do following
 		{
-			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.MAIN));
-	    	Pane mainPane = loader.load();
-	    	MainController mainController = loader.getController();
-	    	fxmlNavigator.setMainController(mainController);
-	    	fxmlNavigator.loadFxml(fxmlNavigator.SETTINGS);
-	    	Scene MainPage = new Scene(mainPane, 600, 400);
-            gameClient.setScene(MainPage);
+			gameClient.stage_.setWidth(600);
+			gameClient.stage_.setHeight(400);
 		}
 		else if (event.getSource().equals(res_2))	// If event source (selected button of resolution changer) is res_2 (1200 x 800) do following
 		{
-			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.MAIN));
-	    	Pane mainPane = loader.load();
-	    	MainController mainController = loader.getController();
-	    	fxmlNavigator.setMainController(mainController);
-	    	fxmlNavigator.loadFxml(fxmlNavigator.SETTINGS);
-	    	Scene MainPage = new Scene(mainPane, 1200, 800);
-            gameClient.setScene(MainPage);
+			gameClient.stage_.setWidth(1200);
+			gameClient.stage_.setHeight(800);
 		}
 		gameClient.stage_.centerOnScreen();
 	}
 
 	@Override
-	public void resize(Stage stage)
+	public void resize (Number newValue, Boolean isHeight)
 	{
+		Stage stage = gameClient.stage_;
 		// The Pane of the Scene, that has got everything
 		Scene scene = stage.getScene();
 		Settings = (Pane) scene.lookup("#Settings");
@@ -120,6 +112,12 @@ public class SettingsController implements ControllerInterface
 	public void init()
 	{
 		Stage stage = gameClient.stage_;
-		resize(stage);
+		Scene scene = stage.getScene();
+
+		picture = (ImageView) scene.lookup("#picture");
+		Image image = new Image("/textures/cards/card_back_lowsat.png", 75, 200, true, false);
+		picture.setImage(image);
+
+		resize(scene.getHeight(), true);
 	}
 }

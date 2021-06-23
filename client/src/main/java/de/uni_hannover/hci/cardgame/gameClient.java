@@ -6,6 +6,7 @@ import de.uni_hannover.hci.cardgame.Controller.*;
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -21,16 +22,17 @@ public class gameClient extends Application
 	
 	public static Stage stage_;
 
+	// for @Sebaty who added the to-do for this: this throws a IntelliJ warning as the parameter never changes
 	private void stageResizable(Boolean resizable)
 	{
 		stage_.setResizable(resizable);
 	}
-
+	// for @Sebaty who added the to-do for this: this throws a IntelliJ warning as the parameter never changes
 	private void stageMinWidth(double width)
 	{
 		stage_.setMinWidth(width);
 	}
-
+	// for @Sebaty who added the to-do for this: this throws a IntelliJ warning as the parameter never changes
 	private void stageMinHeight(double height)
 	{
 		stage_.setMinHeight(height);
@@ -54,12 +56,11 @@ public class gameClient extends Application
 		stageMinWidth(600.0);
 		stageMinHeight(400.0);
 		stageTitle("Cardgame");
-		stage_.getIcons().add(new Image("textures/game_symbol.png", 100, 100, true, true, false));
+		stage_.getIcons().add(new Image("textures/game_symbol.png", 32, 32, true, true, false));
 
-
-		Scene MainPage = new Scene(loadMainPane());
-		setScene(MainPage);
-		sizeChangeListener();
+		setScene(new Scene(loadMainPane()));
+		fxmlNavigator.loadFxml(fxmlNavigator.STARTUP);
+		setEventListener();
 
 		stage_.show();
     }
@@ -72,23 +73,23 @@ public class gameClient extends Application
 			Pane mainPane = loader.load();
 			MainController mainController = loader.getController();
 			fxmlNavigator.setMainController(mainController);
-			fxmlNavigator.loadFxml(fxmlNavigator.STARTUP);
-			PauseTransition pause = new PauseTransition(Duration.millis(4000));
-			pause.setOnFinished
-					(
-							pauseFinishedEvent ->
-							{
-								try
-								{
-									fxmlNavigator.loadFxml(fxmlNavigator.LOADING);
-								}
-								catch (Exception e)
-								{
-									e.printStackTrace();
-								}
-							}
-					);
-			pause.play();
+
+			//PauseTransition pause = new PauseTransition(Duration.millis(4000));
+			//pause.setOnFinished
+			//(
+			//	pauseFinishedEvent ->
+			//	{
+			//		try
+			//		{
+			//			fxmlNavigator.loadFxml(fxmlNavigator.LOADING);
+			//		}
+			//		catch (Exception e)
+			//		{
+			//			e.printStackTrace();
+			//		}
+			//	}
+			//);
+			//pause.play();
 			return mainPane;
 		}
 		catch (IOException e)
@@ -104,62 +105,63 @@ public class gameClient extends Application
 		stage_.setScene(scene);
 	}
 
-	private void sizeChangeListener ()
+	private void setEventListener ()
 	{
-		ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) -> changeSize();
+		Scene scene = stage_.getScene();
 
-		// TODO: get this to work, listener itself is working, resizing not due to scene not maximizing to stage width and height
-		ChangeListener<? super Boolean> maximizeListener = (observable, oldValue, newValue) -> changeSize();
+		scene.widthProperty().addListener(new ChangeListener<Number>()
+		{
+			@Override
+			public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth)
+			{
+				changeSize(oldSceneWidth, newSceneWidth, false);
+			}
+		});
 
-		stage_.widthProperty().addListener(stageSizeListener);
-		stage_.heightProperty().addListener(stageSizeListener);
-		stage_.maximizedProperty().addListener(maximizeListener);
-		// If we don't use a key pressed (like Minecraft F11) this is not needed
-		// stage_.fullScreenProperty().addListener(maximizeListener);
+		scene.heightProperty().addListener(new ChangeListener<Number>()
+		{
+			@Override
+			public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth)
+			{
+				changeSize(oldSceneWidth, newSceneWidth, true);
+			}
+		});
 	}
 
-	/* TODO: Creting a method for easier resizing of objects. */
-	private void changeSize()
+	private void changeSize(Number oldValue, Number newValue, Boolean isHeight)
 	{
-		// Added for debugging the maximizeListener
-		// System.out.println("Stage Height: " + stage_.getHeight() + " Stage Width: " + stage_.getWidth());
-		// System.out.println("Scene Height: " + stage_.getScene().getHeight() + " Scene Width: " + stage_.getScene().getWidth());
 		Scene scene = stage_.getScene();
-		Pane startupPane = (Pane) scene.lookup("#Startup");
-		Pane loadingPane = (Pane) scene.lookup("#Loading");
-		Pane homePane = (Pane) scene.lookup("#Home");
-		Pane settingsPane = (Pane) scene.lookup("#Settings");
-		Pane gamePane = (Pane) scene.lookup("#GameBoard");
-		FXMLLoader loader = null;
+		String fxml = "";
 		try
 		{
-			if (startupPane != null)
+			if (scene.lookup("#Startup") != null)
 			{
-				loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.STARTUP));
-				loader.load();
+				fxml = fxmlNavigator.STARTUP;
 			}
-			else if (loadingPane != null)
+			else if (scene.lookup("#Loading") != null)
 			{
-				loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.LOADING));
-				loader.load();
+				fxml = fxmlNavigator.LOADING;
 			}
-			else if (homePane != null)
+			else if (scene.lookup("#Home") != null)
 			{
-				loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.HOME));
-				loader.load();
+				fxml = fxmlNavigator.HOME;
 			}
-			else if (settingsPane != null)
+			else if (scene.lookup("#Settings") != null)
 			{
-				loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.SETTINGS));
-				loader.load();
+				fxml = fxmlNavigator.SETTINGS;
 			}
-			else if (gamePane != null)
+			else if (scene.lookup("#GameBoard") != null)
 			{
-				loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.GAME));
-				loader.load();
+				fxml = fxmlNavigator.GAME;
 			}
-			ControllerInterface controller = loader.getController();
-			controller.resize(stage_);
+
+			if(!(fxml.equals("")))
+			{
+				FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxml));
+				loader.load();
+				ControllerInterface controller = loader.getController();
+				controller.resize(newValue, isHeight);
+			}
 		}
 		catch (IOException e)
 		{

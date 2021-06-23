@@ -7,6 +7,6 @@ public interface ControllerInterface
 
     void init();
 
-    void resize(Stage stage);
+    void resize (Number newValue, Boolean isHeight);
 
 }

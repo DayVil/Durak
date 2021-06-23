@@ -5,16 +5,14 @@
 <?import javafx.scene.layout.*?>
 
 <Pane fx:id="GameBoard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #00f0f0;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.uni_hannover.hci.cardgame.Controller.GameBoardController">
-      <Button fx:id="Take" layoutX="110.0" layoutY="348.0" mnemonicParsing="false" text="Take" />
-      <Button fx:id="Pass" layoutX="458.0" layoutY="348.0" mnemonicParsing="false" text="Pass" />
+      <Button fx:id="Take" layoutX="55.0" layoutY="348.0" mnemonicParsing="false" text="Take" />
+      <Button fx:id="Pass" layoutX="508.0" layoutY="348.0" mnemonicParsing="false" text="Pass" />
    <Pane fx:id="GameActionsBackground" layoutY="-4.0" prefHeight="89.0" prefWidth="600.0" style="-fx-background-color: black;">
-            <Button fx:id="Menu" layoutX="528.0" layoutY="32.0" mnemonicParsing="false" onAction="#openMenu" style="-fx-opacity: 100%;" text="Menu" />
-            <Button fx:id="HomeButton" layoutX="14.0" layoutY="33.0" mnemonicParsing="false" onAction="#goToHome" text="Home" />
+            <Button fx:id="Menu" layoutX="504.0" layoutY="32.0" mnemonicParsing="false" onAction="#openMenu" style="-fx-opacity: 100%;" text="Menu" />
+            <Button fx:id="HomeButton" layoutX="56.0" layoutY="32.0" mnemonicParsing="false" onAction="#goToHome" text="Home" />
    </Pane>
    <Pane fx:id="DeckBackground" layoutX="488.0" layoutY="115.0" prefHeight="120.0" prefWidth="79.0" style="-fx-background-color: black;">
-            <ImageView fx:id="leftoverDeck" fitHeight="84.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
-                  <Image url="@textures/cards/card_back_lowsat.png" />
-            </ImageView>
-            <Label fx:id="label" layoutX="16.0" layoutY="86.0" prefHeight="21.0" prefWidth="47.0" text="Number" textFill="RED" />
+            <ImageView fx:id="leftoverDeck" fitHeight="84.0" fitWidth="43.0" layoutX="18.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="label" alignment="CENTER" layoutX="16.0" layoutY="86.0" prefHeight="21.0" prefWidth="47.0" text="Number" textFill="RED" />
    </Pane>
 </Pane>

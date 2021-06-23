@@ -18,7 +18,5 @@
             <Font name="System Bold" size="17.0" />
          </font>
       </Label>
-   <ImageView fx:id="picture" fitHeight="150.0" fitWidth="200.0" layoutX="435.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
-         <Image url="@textures/cards/card_back_lowsat.png" />
-   </ImageView>
+   <ImageView fx:id="picture" fitHeight="150.0" fitWidth="200.0" layoutX="435.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" />
 </Pane>

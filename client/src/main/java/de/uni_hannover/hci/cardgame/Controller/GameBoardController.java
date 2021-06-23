@@ -4,11 +4,11 @@ package de.uni_hannover.hci.cardgame.Controller;
 import de.uni_hannover.hci.cardgame.ControllerInterface;
 import de.uni_hannover.hci.cardgame.fxmlNavigator;
 import de.uni_hannover.hci.cardgame.gameClient;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -45,20 +45,21 @@ public class GameBoardController implements ControllerInterface
     private ImageView leftoverDeck;
 
     @FXML
-    private void openMenu(ActionEvent event)
+    private void openMenu()
     {
         System.out.println("I am the menu button!");
     }
     
     @FXML
-    private void goToHome(ActionEvent event)
+    private void goToHome()
     {
     	fxmlNavigator.loadFxml(fxmlNavigator.HOME);
     }
 
     @Override
-    public void resize(Stage stage)
+    public void resize (Number newValue, Boolean isHeight)
     {
+        Stage stage = gameClient.stage_;
         // TODO: ImageView is resizing very strange on initial load of it, afterwards on manual resizing it's fine
         //       It seems like the two extra panes arent loaded when resize is called for the first time through init
         // The Pane of the Scene, that has got everything
@@ -135,7 +136,13 @@ public class GameBoardController implements ControllerInterface
     public void init()
     {
         Stage stage = gameClient.stage_;
-        resize(stage);
+        Scene scene = stage.getScene();
+
+        leftoverDeck = (ImageView) scene.lookup("#leftoverDeck");
+        Image image = new Image("/textures/cards/card_back_lowsat.png", 75, 200, true, false);
+        leftoverDeck.setImage(image);
+
+        resize(scene.getHeight(), true);
     }
 
 }
