@@ -3,6 +3,7 @@ package de.uni_hannover.hci.cardgame;
 import java.io.IOException;
 
 import de.uni_hannover.hci.cardgame.Controller.*;
+import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  * gameClient
@@ -71,6 +73,22 @@ public class gameClient extends Application
 			MainController mainController = loader.getController();
 			fxmlNavigator.setMainController(mainController);
 			fxmlNavigator.loadFxml(fxmlNavigator.STARTUP);
+			PauseTransition pause = new PauseTransition(Duration.millis(4000));
+			pause.setOnFinished
+					(
+							pauseFinishedEvent ->
+							{
+								try
+								{
+									fxmlNavigator.loadFxml(fxmlNavigator.LOADING);
+								}
+								catch (Exception e)
+								{
+									e.printStackTrace();
+								}
+							}
+					);
+			pause.play();
 			return mainPane;
 		}
 		catch (IOException e)
@@ -100,6 +118,7 @@ public class gameClient extends Application
 		// stage_.fullScreenProperty().addListener(maximizeListener);
 	}
 
+	/* TODO: Creting a method for easier resizing of objects. */
 	private void changeSize()
 	{
 		// Added for debugging the maximizeListener
