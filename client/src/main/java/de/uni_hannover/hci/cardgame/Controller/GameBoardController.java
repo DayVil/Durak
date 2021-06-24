@@ -60,7 +60,7 @@ public class GameBoardController implements ControllerInterface
     public void resize (Number newValue, Boolean isHeight)
     {
         Stage stage = gameClient.stage_;
-        // TODO: ImageView is resizing very strange on initial load of it, afterwards on manual resizing it's fine
+        // FIXME: ImageView is resizing very strange on initial load of it, afterwards on manual resizing it's fine
         //       It seems like the two extra panes arent loaded when resize is called for the first time through init
         // The Pane of the Scene, that has got everything
         Scene scene = stage.getScene();

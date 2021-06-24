@@ -15,7 +15,6 @@ public class MainController implements ControllerInterface
 	@FXML
 	private Pane fxmlHolder;
 
-	@FXML
 	public void setFxml(String fxml)
 	{
 		try
