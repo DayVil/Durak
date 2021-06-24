@@ -32,43 +32,12 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@styles/cardGameStyle.css" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.uni_hannover.hci.cardgame.Controller.LoginController">
-   <children>
-      <GridPane hgap="20.0" vgap="20.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Label alignment="TOP_CENTER" prefHeight="17.0" prefWidth="104.0" text="User" textAlignment="CENTER" GridPane.rowIndex="1">
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin>
-            </Label>
-            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#goToLoading" prefHeight="25.0" prefWidth="242.0" text="Login" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label alignment="CENTER" prefHeight="17.0" prefWidth="410.0" stylesheets="@styles/cardGameStyle.css" text="Cardgame login" GridPane.columnSpan="2" />
-         </children>
-         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding>
-         <HBox.margin>
-            <Insets bottom="20.0" />
-         </HBox.margin>
-      </GridPane>
-   </children>
-</HBox>
+<Pane fx:id="Login" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@styles/cardGameStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.uni_hannover.hci.cardgame.Controller.LoginController">
+    <Label fx:id="UserTitle" alignment="TOP_CENTER" layoutX="80.0" layoutY="145.0" prefHeight="20.0" prefWidth="105.0" text="User" textAlignment="CENTER" />
+    <Button fx:id="LoginButton" layoutX="180.0" layoutY="310.0" mnemonicParsing="false" onAction="#goToLoading" prefHeight="25.0" prefWidth="242.0" text="Login" />
+    <TextField fx:id="UserTextField" layoutX="290.0" layoutY="140.0" />
+    <Label fx:id="LoginTitle" alignment="CENTER" layoutX="100.0" layoutY="20.0" prefHeight="17.0" prefWidth="410.0" stylesheets="@styles/cardGameStyle.css" text="Cardgame login" />
+</Pane>

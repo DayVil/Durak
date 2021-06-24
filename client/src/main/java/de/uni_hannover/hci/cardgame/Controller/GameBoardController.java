@@ -2,6 +2,7 @@ package de.uni_hannover.hci.cardgame.Controller;
 //This class will Control every action of the GameBoard.fxml file
 
 import de.uni_hannover.hci.cardgame.ControllerInterface;
+import de.uni_hannover.hci.cardgame.NodeResizer;
 import de.uni_hannover.hci.cardgame.fxmlNavigator;
 import de.uni_hannover.hci.cardgame.gameClient;
 import javafx.fxml.FXML;
@@ -60,86 +61,66 @@ public class GameBoardController implements ControllerInterface
     public void resize (Number newValue, Boolean isHeight)
     {
         Stage stage = gameClient.stage_;
-        // FIXME: ImageView is resizing very strange on initial load of it, afterwards on manual resizing it's fine
-        //       It seems like the two extra panes arent loaded when resize is called for the first time through init
+        // FIXME: ImageView and label of ImageView not resizing correctly
         // The Pane of the Scene, that has got everything
         Scene scene = stage.getScene();
-        GameBoard = (Pane) scene.lookup("#GameBoard");
-        GameBoard.setPrefWidth(scene.getWidth());
-        GameBoard.setPrefHeight(scene.getHeight());
 
-        GameActionsBackground = (Pane) scene.lookup("#GameActionsBackground");
-        double actionsBackWidth = GameActionsBackground.getWidth();
-        double actionsBackHeight = GameActionsBackground.getHeight();
-        GameActionsBackground.setPrefWidth(scene.getWidth());
-        GameActionsBackground.setPrefHeight(scene.getHeight() / 5.0);
-        GameActionsBackground.setLayoutX(0.0);
-        GameActionsBackground.setLayoutY(0.0);
+        double sW = scene.getWidth();
+        double sH = scene.getHeight();
+
+        if (isHeight) {
+            sH = (double) newValue;
+        }
+        else
+        {
+            sW = (double) newValue;
+        }
+
+        if (sH <= 0.0 || sW <= 0.0)
+        {
+            return;
+        }
+
+        GameBoard = (Pane) scene.lookup("#GameBoard");
+        GameBoard.setPrefWidth(sW);
+        GameBoard.setPrefHeight(sH);
 
         DeckBackground = (Pane) scene.lookup("#DeckBackground");
-        double deckBackWidth = DeckBackground.getWidth();
-        double deckBackHeight = DeckBackground.getHeight();
-        DeckBackground.setPrefWidth(scene.getWidth() / 7.0);
-        DeckBackground.setPrefHeight(scene.getHeight() / 3.3333);
-        DeckBackground.setLayoutX(((scene.getWidth() - deckBackWidth) / 10.0) * 9.0);
-        DeckBackground.setLayoutY((scene.getHeight() - deckBackHeight) / 2.0);
+        NodeResizer.resizeObject(sW, sH, DeckBackground, true);
 
         Take = (Button) scene.lookup("#Take");
-        double TakeButtonWidth = 75;
-        double TakeButtonHeight = 25;
-        Take.setPrefWidth(TakeButtonWidth);
-        Take.setPrefHeight(TakeButtonHeight);
-        Take.setLayoutX(((scene.getWidth() - TakeButtonWidth) / 10.0) * 1.25);
-        Take.setLayoutY(((scene.getHeight() - TakeButtonHeight) / 10.0) * 9.0);
+        NodeResizer.resizeObject(sW, sH, Take, true);
 
         Pass = (Button) scene.lookup("#Pass");
-        double PassButtonWidth = 75;
-        double PassButtonHeight = 25;
-        Pass.setPrefWidth(PassButtonWidth);
-        Pass.setPrefHeight(PassButtonHeight);
-        Pass.setLayoutX(((scene.getWidth() - PassButtonWidth) / 10.0 ) * 9.0);
-        Pass.setLayoutY(((scene.getHeight() - PassButtonHeight) / 10.0) * 9.0);
+        NodeResizer.resizeObject(sW, sH, Pass, true);
 
         HomeButton = (Button) scene.lookup("#HomeButton");
-        double HomeButtonWidth = 75;
-        double HomeButtonHeight = 25;
-        HomeButton.setPrefWidth(HomeButtonWidth);
-        HomeButton.setPrefHeight(HomeButtonHeight);
-        HomeButton.setLayoutX(((actionsBackWidth - HomeButtonWidth) / 10.0 ) * 1.25);
-        HomeButton.setLayoutY((actionsBackHeight - HomeButtonHeight) / 2.0);
+        NodeResizer.resizeObject(sW, sH, HomeButton, true);
 
         Menu = (Button) scene.lookup("#Menu");
-        double MenuButtonWidth = 75;
-        double MenuButtonHeight = 25;
-        Menu.setPrefWidth(MenuButtonWidth);
-        Menu.setPrefHeight(MenuButtonHeight);
-        Menu.setLayoutX(((actionsBackWidth - MenuButtonWidth) / 10.0) * 9.0);
-        Menu.setLayoutY((actionsBackHeight - MenuButtonHeight) / 2.0);
+        NodeResizer.resizeObject(sW, sH, Menu, true);
 
         leftoverDeck = (ImageView) scene.lookup("#leftoverDeck");
-        leftoverDeck.setFitWidth((deckBackWidth / 4.0) * 2.0);
-        leftoverDeck.setFitHeight((deckBackHeight / 10.0) * 6.0);
-        leftoverDeck.setLayoutX((deckBackWidth - leftoverDeck.getFitWidth()) / 2.0);
-        leftoverDeck.setLayoutY((deckBackHeight - leftoverDeck.getFitHeight()) / 2.0);
+        NodeResizer.resizeObject(sW, sH, leftoverDeck, false);
 
         label = (Label) scene.lookup("#label");
-        double labelWidth = 70;
-        double labelHeight = 35;
-        label.setPrefWidth(labelWidth);
-        label.setPrefHeight(labelHeight);
-        label.setLayoutX(leftoverDeck.getLayoutX());
-        label.setLayoutY(leftoverDeck.getLayoutY() + leftoverDeck.getFitHeight());
+        NodeResizer.resizeObject(sW, sH, label, false);
+
+        NodeResizer.originalSceneWidth = sW;
+        NodeResizer.originalSceneHeight = sH;
 
     }
 
     @Override
     public void init()
     {
+        NodeResizer.originalSceneHeight = 400.0;
+        NodeResizer.originalSceneWidth = 600.0;
         Stage stage = gameClient.stage_;
         Scene scene = stage.getScene();
 
         leftoverDeck = (ImageView) scene.lookup("#leftoverDeck");
-        Image image = new Image("/textures/cards/card_back_lowsat.png", 75, 200, true, false);
+        Image image = new Image("/textures/cards/card_back_lowsat.png", 75, 200, true, true);
         leftoverDeck.setImage(image);
 
         resize(scene.getHeight(), true);

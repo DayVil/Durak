@@ -1,6 +1,7 @@
 package de.uni_hannover.hci.cardgame.Controller;
 
 import de.uni_hannover.hci.cardgame.ControllerInterface;
+import de.uni_hannover.hci.cardgame.NodeResizer;
 import de.uni_hannover.hci.cardgame.fxmlNavigator;
 import de.uni_hannover.hci.cardgame.gameClient;
 import javafx.event.ActionEvent;
@@ -44,40 +45,47 @@ public class HomeScreenController implements ControllerInterface
 		Stage stage = gameClient.stage_;
 		// The Pane of the Scene, that has got everything
 		Scene scene = stage.getScene();
+
+		double sW = scene.getWidth();
+		double sH = scene.getHeight();
+
+		if (isHeight) {
+			sH = (double) newValue;
+		}
+		else
+		{
+			sW = (double) newValue;
+		}
+
+		if (sH <= 0.0 || sW <= 0.0)
+		{
+			return;
+		}
+
 		Home = (Pane) scene.lookup("#Home");
-		Home.setPrefWidth(scene.getWidth());
-		Home.setPrefHeight(scene.getHeight());
+		Home.setPrefWidth(sW);
+		Home.setPrefHeight(sH);
 
 		// The button that will bring the user to the next pane
 		SettingsButton = (Button) scene.lookup("#SettingsButton");
-		double SettingsButtonWidth = 75;
-		double SettingsButtonHeight = 25;
-		SettingsButton.setPrefWidth(SettingsButtonWidth);
-		SettingsButton.setPrefHeight(SettingsButtonHeight);
-		SettingsButton.setLayoutX((scene.getWidth() - SettingsButtonWidth) / 1.05);
-		SettingsButton.setLayoutY(scene.getHeight() - ((scene.getHeight() - SettingsButtonHeight)));
+		NodeResizer.resizeObject(sW, sH, SettingsButton, true);
 
 		// The button that will bring the user to the next pane
 		GameBoardButton = (Button) scene.lookup("#GameBoardButton");
-		double GameBoardButtonWidth = 100;
-		double GameBoardButtonHeight = 25;
-		GameBoardButton.setPrefWidth(GameBoardButtonWidth);
-		GameBoardButton.setPrefHeight(GameBoardButtonHeight);
-		GameBoardButton.setLayoutX((scene.getWidth() - GameBoardButtonWidth) / 2.0);
-		GameBoardButton.setLayoutY((scene.getHeight() - GameBoardButtonHeight) / 1.2);
+		NodeResizer.resizeObject(sW, sH, GameBoardButton, true);
 
 		label = (Label) scene.lookup("#label");
-		double labelWidth = 275;
-		double labelHeight = 55;
-		label.setPrefWidth(labelWidth);
-		label.setPrefHeight(labelHeight);
-		label.setLayoutX((scene.getWidth() - labelWidth) / 2.0);
-		label.setLayoutY((scene.getHeight() - labelHeight) / 2.0);
+		NodeResizer.resizeObject(sW, sH, label, true);
+
+		NodeResizer.originalSceneWidth = sW;
+		NodeResizer.originalSceneHeight = sH;
 	}
 
 	@Override
 	public void init()
 	{
+		NodeResizer.originalSceneHeight = 400.0;
+		NodeResizer.originalSceneWidth = 600.0;
 		Stage stage = gameClient.stage_;
 		Scene scene = stage.getScene();
 		resize(scene.getHeight(), true);

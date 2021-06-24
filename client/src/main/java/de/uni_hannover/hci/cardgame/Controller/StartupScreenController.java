@@ -1,6 +1,7 @@
 package de.uni_hannover.hci.cardgame.Controller;
 
 import de.uni_hannover.hci.cardgame.ControllerInterface;
+import de.uni_hannover.hci.cardgame.NodeResizer;
 import de.uni_hannover.hci.cardgame.fxmlNavigator;
 import de.uni_hannover.hci.cardgame.gameClient;
 import javafx.fxml.FXML;
@@ -15,9 +16,6 @@ import javafx.stage.Stage;
 
 public class StartupScreenController implements ControllerInterface
 {
-
-	private static double originalSceneWidth = 600;
-	private static double originalSceneHeight = 400;
 
 	@FXML
 	private Pane Startup;
@@ -73,34 +71,34 @@ public class StartupScreenController implements ControllerInterface
 
 			// The Main Title stating the name of the game
 			StartupTitle = (Text) scene.lookup("#StartupTitle");
-			resizeObject(sW, sH, StartupTitle, true);
+			NodeResizer.resizeObject(sW, sH, StartupTitle, true);
 
 			// The Creator Title stating who created the game
 			StartupSubTitle = (Text) scene.lookup("#StartupSubTitle");
-			resizeObject(sW, sH, StartupSubTitle, true);
+			NodeResizer.resizeObject(sW, sH, StartupSubTitle, true);
 
 			// The Button to click to go to the next Pane				// Done before the StartupTitle down below as StartupTitle down below is dependant on button
 			StartupContinueButton = (Button) scene.lookup("#StartupContinueButton");
-			resizeObject(sW, sH, StartupContinueButton, true);
+			NodeResizer.resizeObject(sW, sH, StartupContinueButton, true);
 
 			// The Continue Title stating what to do to continue to the next Pane
 			StartupPressX = (Text) scene.lookup("#StartupPressX");
-			resizeObject(sW, sH, StartupPressX, true);
+			NodeResizer.resizeObject(sW, sH, StartupPressX, true);
 
 			iv1 = (ImageView) scene.lookup("#iv1");
-			resizeObject(sW, sH, iv1, true);
+			NodeResizer.resizeObject(sW, sH, iv1, true);
 
 			iv2 = (ImageView) scene.lookup("#iv2");
-			resizeObject(sW, sH, iv2, true);
+			NodeResizer.resizeObject(sW, sH, iv2, true);
 
 			iv3 = (ImageView) scene.lookup("#iv3");
-			resizeObject(sW, sH, iv3, true);
+			NodeResizer.resizeObject(sW, sH, iv3, true);
 
 			iv4 = (ImageView) scene.lookup("#iv4");
-			resizeObject(sW, sH, iv4, true);
+			NodeResizer.resizeObject(sW, sH, iv4, true);
 
-			originalSceneWidth = sW;
-			originalSceneHeight = sH;
+			NodeResizer.originalSceneWidth = sW;
+			NodeResizer.originalSceneHeight = sH;
 		}
 		else
 		{
@@ -111,6 +109,8 @@ public class StartupScreenController implements ControllerInterface
 	@Override
 	public void init()
 	{
+		NodeResizer.originalSceneHeight = 400.0;
+		NodeResizer.originalSceneWidth = 600.0;
 		//Stage stage = gameClient.stage_;
 		//Scene scene = stage.getScene();
 
@@ -153,28 +153,5 @@ public class StartupScreenController implements ControllerInterface
 		iv4.setRotate(30.0);
 		iv4.setId("iv4");
 		Startup.getChildren().add(iv4);
-	}
-
-	public void resizeObject(double sW, double sH, Node node, Boolean isGettingRescaled)
-	{
-		double oW = node.getBoundsInLocal().getWidth();
-		double oH = node.getBoundsInLocal().getHeight();
-
-		double newX = ((node.getLayoutX() + oW / 2.0) * (sW / originalSceneWidth)) - oW / 2.0;
-		double newY = ((node.getLayoutY() + oH / 2.0) * (sH / originalSceneHeight)) - oH / 2.0;
-
-		node.setLayoutX(newX);
-		node.setLayoutY(newY);
-
-		if(isGettingRescaled)
-		{
-			double factor = sW / 600.0;
-			if (factor > sH / 400.0)
-			{
-				factor = sH / 400.0;
-			}
-			node.setScaleX(factor);
-			node.setScaleY(factor);
-		}
 	}
 }

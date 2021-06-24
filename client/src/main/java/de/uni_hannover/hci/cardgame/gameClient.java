@@ -37,6 +37,8 @@ public class gameClient extends Application
 		stage_.setResizable(true);
 		stage_.setMinWidth(600.0);
 		stage_.setMinHeight(400.0);
+		NodeResizer.originalSceneHeight = 400.0;
+		NodeResizer.originalSceneWidth = 600.0;
 		stageTitle("Cardgame");
 		String os = System.getProperty("os.name").toLowerCase();
 		if (os.contains("win"))
@@ -136,6 +138,10 @@ public class gameClient extends Application
 			else if (scene.lookup("#GameBoard") != null)
 			{
 				fxml = fxmlNavigator.GAME;
+			}
+			else if (scene.lookup("#Login") != null)
+			{
+				fxml = fxmlNavigator.LOGIN;
 			}
 
 			if(!(fxml.equals("")))

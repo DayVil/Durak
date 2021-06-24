@@ -5,11 +5,11 @@
 <?import javafx.scene.text.*?>
 
 <Pane fx:id="Loading" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@styles/cardGameStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.uni_hannover.hci.cardgame.Controller.LoadingScreenController">
-      <ProgressBar fx:id="LoadingBar" layoutX="145.0" layoutY="190.0" prefHeight="20.0" prefWidth="310.0" progress="0.0" />
-      <Text fx:id="LoadingTitle" fill="RED" layoutX="268.0" layoutY="174.0" text="Loading">
+      <ProgressBar fx:id="LoadingBar" layoutX="150.0" layoutY="200.0" prefHeight="20.0" prefWidth="300.0" progress="0.0" />
+      <Text fx:id="LoadingTitle" fill="RED" layoutX="270.0" layoutY="160.0" text="Loading">
          <font>
             <Font size="16.0" />
          </font>
       </Text>
-      <Button fx:id="LoadingNextButton" layoutX="262.0" layoutY="340.0" mnemonicParsing="false" onAction="#goToHome" text="go To Home" />
+      <Button fx:id="LoadingNextButton" layoutX="240.0" layoutY="340.0" mnemonicParsing="false" onAction="#goToHome" text="go To Home" />
 </Pane>
