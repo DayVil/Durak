@@ -1,9 +1,12 @@
 /.idea/
 /.gradle/
+/.run/
+/gradle/
 
 ### Java template
 # Compiled class file
 *.class
+*.properties
 
 # Log file
 *.log
@@ -29,4 +32,3 @@ hs_err_pid*
 *.iml
 /build/
 /client/build/
-/.idea/

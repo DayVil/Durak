@@ -5,8 +5,6 @@ import java.io.IOException;
 import de.uni_hannover.hci.cardgame.Controller.*;
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -22,22 +20,6 @@ public class gameClient extends Application
 	
 	public static Stage stage_;
 
-	// for @Sebaty who added the to-do for this: this throws a IntelliJ warning as the parameter never changes
-	private void stageResizable(Boolean resizable)
-	{
-		stage_.setResizable(resizable);
-	}
-	// for @Sebaty who added the to-do for this: this throws a IntelliJ warning as the parameter never changes
-	private void stageMinWidth(double width)
-	{
-		stage_.setMinWidth(width);
-	}
-	// for @Sebaty who added the to-do for this: this throws a IntelliJ warning as the parameter never changes
-	private void stageMinHeight(double height)
-	{
-		stage_.setMinHeight(height);
-	}
-
 	public void stageTitle(String title)
 	{
 		stage_.setTitle(title);
@@ -52,11 +34,26 @@ public class gameClient extends Application
     public void start(Stage stage)
 	{
 		gameClient.stage_ = stage;
-		stageResizable(true);
-		stageMinWidth(600.0);
-		stageMinHeight(400.0);
+		stage_.setResizable(true);
+		stage_.setMinWidth(600.0);
+		stage_.setMinHeight(400.0);
 		stageTitle("Cardgame");
-//		stage_.getIcons().add(new Image("textures/game_symbol.png", 32, 32, true, true, false)); // does not work on linux version
+		String os = System.getProperty("os.name").toLowerCase();
+		if (os.contains("win"))
+		{
+			//This is windows os
+			stage_.getIcons().add(new Image("/textures/game_symbol.png", 32, 32, true, true, false)); // does not work on linux version
+		}
+		else if (os.contains("osx"))
+		{
+			//this is apple
+			stage_.getIcons().add(new Image("/textures/game_symbol.png", 32, 32, true, true, false)); // does not work on linux version
+		}
+		else if (os.contains("nix") || os.contains("aix") || os.contains("nux"))
+		{
+			//this is any linux/unix/*aix os
+			System.out.println("I am working on any Unix, Linux or *AIX OS");
+		}
 
 		setScene(new Scene(loadMainPane()));
 		fxmlNavigator.loadFxml(fxmlNavigator.STARTUP);
@@ -74,21 +71,21 @@ public class gameClient extends Application
 			MainController mainController = loader.getController();
 			fxmlNavigator.setMainController(mainController);
 
-			//PauseTransition pause = new PauseTransition(Duration.millis(4000));
-			//pause.setOnFinished
-			//(
-			//	pauseFinishedEvent ->
-			//	{
-			//		try
-			//		{
-			//			fxmlNavigator.loadFxml(fxmlNavigator.LOADING);
-			//		}
-			//		catch (Exception e)
-			//		{
-			//			e.printStackTrace();
-			//		}
-			//	}
-			//);
+			PauseTransition pause = new PauseTransition(Duration.millis(4000));
+			pause.setOnFinished
+			(
+				pauseFinishedEvent ->
+				{
+					try
+					{
+						fxmlNavigator.loadFxml(fxmlNavigator.LOADING);
+					}
+					catch (Exception e)
+					{
+						e.printStackTrace();
+					}
+				}
+			);
 			//pause.play();
 			return mainPane;
 		}
@@ -109,26 +106,12 @@ public class gameClient extends Application
 	{
 		Scene scene = stage_.getScene();
 
-		scene.widthProperty().addListener(new ChangeListener<Number>()
-		{
-			@Override
-			public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth)
-			{
-				changeSize(oldSceneWidth, newSceneWidth, false);
-			}
-		});
+		scene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> changeSize(newSceneWidth, false));
 
-		scene.heightProperty().addListener(new ChangeListener<Number>()
-		{
-			@Override
-			public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth)
-			{
-				changeSize(oldSceneWidth, newSceneWidth, true);
-			}
-		});
+		scene.heightProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> changeSize(newSceneWidth, true));
 	}
 
-	private void changeSize(Number oldValue, Number newValue, Boolean isHeight)
+	private void changeSize(Number newValue, Boolean isHeight)
 	{
 		Scene scene = stage_.getScene();
 		String fxml = "";

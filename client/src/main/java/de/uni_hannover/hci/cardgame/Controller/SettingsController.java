@@ -1,13 +1,10 @@
 package de.uni_hannover.hci.cardgame.Controller;
 
-import java.io.IOException;
-
 import de.uni_hannover.hci.cardgame.ControllerInterface;
 import de.uni_hannover.hci.cardgame.fxmlNavigator;
 import de.uni_hannover.hci.cardgame.gameClient;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -49,7 +46,7 @@ public class SettingsController implements ControllerInterface
 	}
 
 	@FXML
-	public void ChangeResolution(ActionEvent event) throws IOException
+	public void ChangeResolution(ActionEvent event)
 	{
 		if(event.getSource().equals(res_1))		// If event source (selected button of resolution changer) is res_1 (600 x 400) do following
 		{
@@ -115,7 +112,7 @@ public class SettingsController implements ControllerInterface
 		Scene scene = stage.getScene();
 
 		picture = (ImageView) scene.lookup("#picture");
-		Image image = new Image("/textures/cards/card_back_lowsat.png", 75, 200, true, false);
+		Image image = new Image("/textures/cards/card_back_lowsat.png", 75, 200, true, true);
 		picture.setImage(image);
 
 		resize(scene.getHeight(), true);
