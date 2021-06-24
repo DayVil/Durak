@@ -4,13 +4,14 @@ import de.uni_hannover.hci.cardgame.ControllerInterface;
 import de.uni_hannover.hci.cardgame.NodeResizer;
 import de.uni_hannover.hci.cardgame.fxmlNavigator;
 import de.uni_hannover.hci.cardgame.gameClient;
-import javafx.event.ActionEvent;
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class HomeScreenController implements ControllerInterface
 {
@@ -88,6 +89,12 @@ public class HomeScreenController implements ControllerInterface
 		NodeResizer.originalSceneWidth = 600.0;
 		Stage stage = gameClient.stage_;
 		Scene scene = stage.getScene();
-		resize(scene.getHeight(), true);
+		PauseTransition pause = new PauseTransition(Duration.millis(10));
+		pause.setOnFinished
+				(
+						pauseFinishedEvent -> resize(scene.getHeight(), true)
+
+				);
+		pause.play();
 	}
 }

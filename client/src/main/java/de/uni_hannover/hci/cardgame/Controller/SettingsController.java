@@ -4,6 +4,7 @@ import de.uni_hannover.hci.cardgame.ControllerInterface;
 import de.uni_hannover.hci.cardgame.NodeResizer;
 import de.uni_hannover.hci.cardgame.fxmlNavigator;
 import de.uni_hannover.hci.cardgame.gameClient;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -15,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class SettingsController implements ControllerInterface
 {
@@ -118,6 +120,11 @@ public class SettingsController implements ControllerInterface
 		Image image = new Image("/textures/cards/card_back_lowsat.png", 75, 200, true, true);
 		picture.setImage(image);
 
-		resize(scene.getHeight(), true);
+		PauseTransition pause = new PauseTransition(Duration.millis(1));
+		pause.setOnFinished
+				(
+						pauseFinishedEvent -> resize(scene.getHeight(), true)
+				);
+		pause.play();
 	}
 }

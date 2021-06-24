@@ -12,16 +12,22 @@ public class NodeResizer {
         double oW = node.getBoundsInLocal().getWidth();
         double oH = node.getBoundsInLocal().getHeight();
 
-        double newX = ((node.getLayoutX() + oW / 2.0) * (sW / originalSceneWidth)) - oW / 2.0;
-        double newY = ((node.getLayoutY() + oH / 2.0) * (sH / originalSceneHeight)) - oH / 2.0;
-
-        node.setLayoutX(newX);
-        node.setLayoutY(newY);
+        if(oW <= 0.0 || oH <= 0.0)
+        {
+            return;
+        }
 
         if(isGettingRescaled)
         {
             rescaleObject(node, sH, sW);
         }
+
+
+        double newX = ((node.getLayoutX() + oW / 2.0) * (sW / originalSceneWidth)) - oW / 2.0;
+        double newY = ((node.getLayoutY() + oH / 2.0) * (sH / originalSceneHeight)) - oH / 2.0;
+
+        node.setLayoutX(newX);
+        node.setLayoutY(newY);
     }
 
     public static void rescaleObject(Node node, double sH, double sW)

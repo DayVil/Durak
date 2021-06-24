@@ -4,8 +4,8 @@ import de.uni_hannover.hci.cardgame.ControllerInterface;
 import de.uni_hannover.hci.cardgame.NodeResizer;
 import de.uni_hannover.hci.cardgame.fxmlNavigator;
 import de.uni_hannover.hci.cardgame.gameClient;
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class StartupScreenController implements ControllerInterface
 {
@@ -111,8 +112,8 @@ public class StartupScreenController implements ControllerInterface
 	{
 		NodeResizer.originalSceneHeight = 400.0;
 		NodeResizer.originalSceneWidth = 600.0;
-		//Stage stage = gameClient.stage_;
-		//Scene scene = stage.getScene();
+		Stage stage = gameClient.stage_;
+		Scene scene = stage.getScene();
 
 		iv1 = new ImageView();
 		Image image = new Image("/textures/cards/diamonds/ace_of_diamonds.png", 75, 200, true, true);
@@ -153,5 +154,12 @@ public class StartupScreenController implements ControllerInterface
 		iv4.setRotate(30.0);
 		iv4.setId("iv4");
 		Startup.getChildren().add(iv4);
+
+		PauseTransition pause = new PauseTransition(Duration.millis(1));
+		pause.setOnFinished
+				(
+						pauseFinishedEvent -> resize(scene.getHeight(), true)
+				);
+		pause.play();
 	}
 }
