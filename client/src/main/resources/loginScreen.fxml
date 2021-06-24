@@ -41,7 +41,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.uni_hannover.hci.cardgame.Controller.LoginController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@styles/cardGameStyle.css" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.uni_hannover.hci.cardgame.Controller.LoginController">
    <children>
       <GridPane hgap="20.0" vgap="20.0">
         <columnConstraints>
@@ -61,7 +61,7 @@
             </Label>
             <Button fx:id="loginButton" mnemonicParsing="false" onAction="#goToLoading" prefHeight="25.0" prefWidth="242.0" text="Login" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" />
             <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label alignment="CENTER" prefHeight="17.0" prefWidth="410.0" text="Cardgame login" GridPane.columnSpan="2" />
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="410.0" stylesheets="@styles/cardGameStyle.css" text="Cardgame login" GridPane.columnSpan="2" />
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
