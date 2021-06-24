@@ -31,8 +31,8 @@ public class LoadingScreenController implements ControllerInterface
 	private Button LoadingNextButton;
 
 	double progressBarValue = 0.0;
-	String[] ImageNameList = {"/textures/cards/diamonds/ten_of_diamonds.png", "/textures/cards/clubs/ace_of_clubs.png", "/textures/cards/clubs/six_of_clubs.png", "/textures/cards/hearts/nine_of_hearts.png"};
-	int    ImageNr = 0;
+	String[] 	ImageNameList = {"/textures/cards/diamonds/ten_of_diamonds.png", "/textures/cards/clubs/ace_of_clubs.png", "/textures/cards/clubs/six_of_clubs.png", "/textures/cards/hearts/nine_of_hearts.png"};
+	int    		ImageNr = 0;
 	
 
 	@FXML

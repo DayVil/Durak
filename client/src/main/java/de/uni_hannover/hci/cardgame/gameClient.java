@@ -108,7 +108,7 @@ public class gameClient extends Application
 
 		scene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> changeSize(newSceneWidth, false));
 
-		scene.heightProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> changeSize(newSceneWidth, true));
+		scene.heightProperty().addListener((observableValue, oldSceneHeight, newSceneHeight) -> changeSize(newSceneHeight, true));
 	}
 
 	private void changeSize(Number newValue, Boolean isHeight)
