@@ -73,32 +73,19 @@ public class StartupScreenController implements ControllerInterface
 
 			// The Main Title stating the name of the game
 			StartupTitle = (Text) scene.lookup("#StartupTitle");
-			resizeObject(sW, sH, StartupTitle, false);
-			//double titleWidth = StartupTitle.getBoundsInLocal().getWidth();
-			//double titleHeight = StartupTitle.getBoundsInLocal().getHeight();
-			//StartupTitle.setLayoutX((Startup.getWidth() - titleWidth) / 2.0);
-			//StartupTitle.setLayoutY((Startup.getHeight() - titleHeight) / 5.0);
+			resizeObject(sW, sH, StartupTitle, true);
 
 			// The Creator Title stating who created the game
 			StartupSubTitle = (Text) scene.lookup("#StartupSubTitle");
-			double subTitleWidth = StartupSubTitle.getBoundsInLocal().getWidth();
-			double subTitleHeight = StartupSubTitle.getBoundsInLocal().getHeight();
-			StartupSubTitle.setLayoutX((sW - subTitleWidth) / 2.0);
-			StartupSubTitle.setLayoutY(((sH - subTitleHeight) / 5.0) + 35);
+			resizeObject(sW, sH, StartupSubTitle, true);
 
 			// The Button to click to go to the next Pane				// Done before the StartupTitle down below as StartupTitle down below is dependant on button
 			StartupContinueButton = (Button) scene.lookup("#StartupContinueButton");
-			double ContinueButtonWidth = StartupContinueButton.getWidth();
-			double ContinueButtonHeight = StartupContinueButton.getHeight();
-			StartupContinueButton.setLayoutX((sW - ContinueButtonWidth) / 2.0);
-			StartupContinueButton.setLayoutY((sH - ContinueButtonHeight) / 1.2);
+			resizeObject(sW, sH, StartupContinueButton, true);
 
 			// The Continue Title stating what to do to continue to the next Pane
 			StartupPressX = (Text) scene.lookup("#StartupPressX");
-			double continueMessageWidth = StartupPressX.getBoundsInLocal().getWidth();
-			//double continueMessageHeight = continueMessage.getBoundsInLocal().getHeight();	// Unused as dependant on button height
-			StartupPressX.setLayoutX((sW - continueMessageWidth) / 2.0);
-			StartupPressX.setLayoutY(((sH - ContinueButtonHeight) / 1.25));
+			resizeObject(sW, sH, StartupPressX, true);
 
 			iv1 = (ImageView) scene.lookup("#iv1");
 			resizeObject(sW, sH, iv1, true);
