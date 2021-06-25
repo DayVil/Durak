@@ -74,29 +74,20 @@ public class SettingsController implements ControllerInterface
 	{
 		if(gameClient.stage_.isFullScreen())
 		{
-			//FIXME: on fullscren this does put you back to windowed, has to be fixed or fullscreen has to be eliminated
-			if(event.getSource().equals(res_1))		// If event source (selected button of resolution changer) is res_1 (600 x 400) do following
-			{
-				resize(600, false);
-				resize(400, true);
-			}
-			else if (event.getSource().equals(res_2))	// If event source (selected button of resolution changer) is res_2 (1200 x 800) do following
-			{
-				resize(1200, false);
-				resize(800, true);
-			}
+			//FIXME: doesnt really work like i thought it would, leaving this empty so it cannot be resized for now in fullscreen
+			System.out.println("Left empty resolution change while fullscreen is activated");
 		}
 		else
 		{
 			if(event.getSource().equals(res_1))		// If event source (selected button of resolution changer) is res_1 (600 x 400) do following
 			{
-				gameClient.stage_.setWidth(600);
-				gameClient.stage_.setHeight(400);
+				gameClient.stage_.setWidth(600.0);
+				gameClient.stage_.setHeight(400.0);
 			}
 			else if (event.getSource().equals(res_2))	// If event source (selected button of resolution changer) is res_2 (1200 x 800) do following
 			{
-				gameClient.stage_.setWidth(1200);
-				gameClient.stage_.setHeight(800);
+				gameClient.stage_.setWidth(1200.0);
+				gameClient.stage_.setHeight(800.0);
 			}
 			gameClient.stage_.centerOnScreen();
 		}
