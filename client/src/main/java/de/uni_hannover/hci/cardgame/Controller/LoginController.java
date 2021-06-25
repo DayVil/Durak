@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -24,7 +25,13 @@ public class LoginController implements ControllerInterface
     private Pane Content;
 
     @FXML
-    private TextField UserTextField;
+    private TextField IPAddress;
+
+    @FXML
+    private PasswordField Password;
+
+    @FXML
+    private TextField UserName;
 
     @FXML
     private Button PlayButton;
@@ -75,8 +82,26 @@ public class LoginController implements ControllerInterface
         Login.setPrefHeight(sH);
 
         Content = (Pane) scene.lookup("#Content");
-        NodeResizer.resizeObject(sW, sH, Content, true);
+        Content.setPrefHeight(sH);
+        Content.setPrefWidth(sW/3.0);
 
+        IPAddress = (TextField) scene.lookup("#IPAddress");
+        NodeResizer.resizeObject(sW, sH, IPAddress, true);
+
+        Password = (PasswordField) scene.lookup("#Password");
+        NodeResizer.resizeObject(sW, sH, Password, true);
+
+        UserName = (TextField) scene.lookup("#UserName");
+        NodeResizer.resizeObject(sW, sH, UserName, true);
+
+        label = (Label) scene.lookup("#label");
+        NodeResizer.resizeObject(sW, sH, label, true);
+
+        Back = (Button) scene.lookup("#Back");
+        NodeResizer.resizeObject(sW, sH, Back, true);
+
+        PlayButton = (Button) scene.lookup("#PlayButton");
+        NodeResizer.resizeObject(sW, sH, PlayButton, true);
 
         NodeResizer.originalSceneWidth = sW;
         NodeResizer.originalSceneHeight = sH;

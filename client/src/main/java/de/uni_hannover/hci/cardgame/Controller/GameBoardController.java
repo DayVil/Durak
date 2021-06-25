@@ -78,7 +78,11 @@ public class GameBoardController implements ControllerInterface
         NodeResizer.resizeObject(sW, sH, DeckBackground, true);
 
         GameActionsBackGround = (Pane) scene.lookup("#GameActionsBackGround");
-        NodeResizer.resizeObject(sW, sH, GameActionsBackGround, true);
+        GameActionsBackGround.setPrefWidth(sW);
+        GameActionsBackGround.setPrefHeight(sH/5.0);
+
+        Menu = (Button) scene.lookup("#Menu");
+        NodeResizer.resizeObject(sW, sH, Menu, true);
 
         Take = (Button) scene.lookup("#Take");
         NodeResizer.resizeObject(sW, sH, Take, true);

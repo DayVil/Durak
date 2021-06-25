@@ -25,8 +25,15 @@ public class NodeResizer {
         double newX = ((node.getLayoutX() + oW / 2.0) * (sW / originalSceneWidth)) - oW / 2.0;
         double newY = ((node.getLayoutY() + oH / 2.0) * (sH / originalSceneHeight)) - oH / 2.0;
 
-        node.setLayoutX(newX);
-        node.setLayoutY(newY);
+        if(newX > 0.0)
+        {
+            node.setLayoutX(newX);
+        }
+
+        if(newY > 0.0)
+        {
+            node.setLayoutY(newY);
+        }
     }
 
     public static void rescaleObject(Node node, double sH, double sW)

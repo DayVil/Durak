@@ -89,7 +89,23 @@ public class HomeScreenController implements ControllerInterface
 		Home.setPrefHeight(sH);
 
 		Content = (Pane) scene.lookup("#Content");
-		NodeResizer.resizeObject(sW, sH, Content, true);
+		Content.setPrefHeight(sH);
+		Content.setPrefWidth(sW/3.0);
+
+		SettingsButton = (Button) scene.lookup("#SettingsButton");
+		NodeResizer.resizeObject(sW, sH, SettingsButton, true);
+
+		PlayButton = (Button) scene.lookup("#PlayButton");
+		NodeResizer.resizeObject(sW, sH, PlayButton, true);
+
+		CreditButton = (Button) scene.lookup("#CreditButton");
+		NodeResizer.resizeObject(sW, sH, CreditButton, true);
+
+		QuitButton = (Button) scene.lookup("#QuitButton");
+		NodeResizer.resizeObject(sW, sH, QuitButton, true);
+
+		label = (Label) scene.lookup("#label");
+		NodeResizer.resizeObject(sW, sH, label, true);
 
 		NodeResizer.originalSceneWidth = sW;
 		NodeResizer.originalSceneHeight = sH;

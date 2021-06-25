@@ -47,6 +47,9 @@ public class SettingsController implements ControllerInterface
 
 	@FXML
 	private Button BackButton;
+
+	@FXML
+	private Label SoundLabel;
 	
 	@FXML
 	private void goToHome()
@@ -71,7 +74,7 @@ public class SettingsController implements ControllerInterface
 	{
 		if(gameClient.stage_.isFullScreen())
 		{
-			//FIXME: resize seems to not resize stuff correctly, not needed but nice to have, may be fixed when polishing whole program near the end of groupproject
+			//FIXME: on fullscren this does put you back to windowed, has to be fixed or fullscreen has to be eliminated
 			if(event.getSource().equals(res_1))		// If event source (selected button of resolution changer) is res_1 (600 x 400) do following
 			{
 				resize(600, false);
@@ -127,7 +130,26 @@ public class SettingsController implements ControllerInterface
 		Settings.setPrefHeight(sH);
 
 		Content = (Pane) scene.lookup("#Content");
-		NodeResizer.resizeObject(sW, sH, Content, true);
+		Content.setPrefHeight(sH);
+		Content.setPrefWidth(sW/3.0);
+
+		SoundSlider = (Slider) scene.lookup("#SoundSlider");
+		NodeResizer.resizeObject(sW, sH, SoundSlider, true);
+
+		FullScreenCheckBox = (CheckBox) scene.lookup("#FullScreenCheckBox");
+		NodeResizer.resizeObject(sW, sH, FullScreenCheckBox, true);
+
+		Resolution = (SplitMenuButton) scene.lookup("#Resolution");
+		NodeResizer.resizeObject(sW, sH, Resolution, true);
+
+		label = (Label) scene.lookup("#label");
+		NodeResizer.resizeObject(sW, sH, label, true);
+
+		SoundLabel = (Label) scene.lookup("#SoundLabel");
+		NodeResizer.resizeObject(sW, sH, SoundLabel, true);
+
+		BackButton = (Button) scene.lookup("#BackButton");
+		NodeResizer.resizeObject(sW, sH, BackButton, true);
 
 		picture = (ImageView) scene.lookup("#picture");
 		NodeResizer.resizeObject(sW, sH, picture, true);

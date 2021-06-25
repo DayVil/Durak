@@ -22,6 +22,6 @@
             </Label>
          <CheckBox fx:id="FullScreenCheckBox" layoutX="10.0" layoutY="309.0" mnemonicParsing="false" onAction="#goFullScreen" prefHeight="20.0" prefWidth="180.0" text="FullScreen" />
          <Slider fx:id="SoundSlider" layoutX="10.0" layoutY="200.0" onDragDetected="#changeSound" prefHeight="20.0" prefWidth="180.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
-         <Label layoutX="71.0" layoutY="168.0" text="Sound" textFill="RED" />
+         <Label fx:id="SoundLabel" layoutX="71.0" layoutY="168.0" text="Sound" textFill="RED" />
    </Pane>
 </Pane>
