@@ -9,49 +9,37 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class LoginController implements ControllerInterface
+public class CreditsController implements ControllerInterface
 {
 
     @FXML
-    private Pane Login;
-
-    @FXML
-    private Pane Content;
-
-    @FXML
-    private TextField UserTextField;
-
-    @FXML
-    private Button PlayButton;
-
-    @FXML
-    private Button Back;
+    private Pane Credits;
 
     @FXML
     private Label label;
 
     @FXML
-    private void goToHome()
+    private Text CreditsText;
+
+    @FXML
+    private Button Back;
+
+    @FXML
+    private void goBack()
     {
         fxmlNavigator.loadFxml(fxmlNavigator.HOME);
     }
 
-    @FXML
-    private void checkForEntrance()
-    {
-        //TODO: get this associated with server/client communication, for now just doing the ui with nothing in it
-        fxmlNavigator.loadFxml(fxmlNavigator.GAME);
-    }
-
     @Override
-    public void resize (Number newValue, Boolean isHeight)
+    public void resize(Number newValue, Boolean isHeight)
     {
         Stage stage = gameClient.stage_;
+        // The Pane of the Scene, that has got everything
         Scene scene = stage.getScene();
 
         double sW = scene.getWidth();
@@ -70,24 +58,31 @@ public class LoginController implements ControllerInterface
             return;
         }
 
-        Login = (Pane) scene.lookup("#Login");
-        Login.setPrefWidth(sW);
-        Login.setPrefHeight(sH);
+        Credits = (Pane) scene.lookup("#Credits");
+        Credits.setPrefWidth(sW);
+        Credits.setPrefHeight(sH);
 
-        Content = (Pane) scene.lookup("#Content");
-        NodeResizer.resizeObject(sW, sH, Content, true);
+        label = (Label) scene.lookup("#label");
+        NodeResizer.resizeObject(sW, sH, label, true);
 
+        CreditsText = (Text) scene.lookup("#CreditsText");
+        NodeResizer.resizeObject(sW, sH, CreditsText, true);
+
+        Back = (Button) scene.lookup("#Back");
+        NodeResizer.resizeObject(sW, sH, Back, true);
 
         NodeResizer.originalSceneWidth = sW;
         NodeResizer.originalSceneHeight = sH;
     }
 
     @Override
-    public void init ()
+    public void init()
     {
         NodeResizer.originalSceneHeight = 400.0;
         NodeResizer.originalSceneWidth = 600.0;
-        Scene scene = gameClient.stage_.getScene();
+        Stage stage = gameClient.stage_;
+        Scene scene = stage.getScene();
+
         PauseTransition pause = new PauseTransition(Duration.millis(10));
         pause.setOnFinished
                 (

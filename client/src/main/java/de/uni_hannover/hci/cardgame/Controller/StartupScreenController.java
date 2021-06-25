@@ -37,7 +37,7 @@ public class StartupScreenController implements ControllerInterface
 	@FXML
 	private void goToLoading()
 	{
-		fxmlNavigator.loadFxml(fxmlNavigator.LOGIN);
+		fxmlNavigator.loadFxml(fxmlNavigator.LOADING);
 	}
 
 	@Override
@@ -155,7 +155,7 @@ public class StartupScreenController implements ControllerInterface
 		iv4.setId("iv4");
 		Startup.getChildren().add(iv4);
 
-		PauseTransition pause = new PauseTransition(Duration.millis(1));
+		PauseTransition pause = new PauseTransition(Duration.millis(10));
 		pause.setOnFinished
 				(
 						pauseFinishedEvent -> resize(scene.getHeight(), true)

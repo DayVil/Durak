@@ -20,24 +20,45 @@ public class HomeScreenController implements ControllerInterface
 	private Pane Home;
 
 	@FXML
+	private Pane Content;
+
+	@FXML
 	private Button SettingsButton;
 
 	@FXML
-	private Button GameBoardButton;
+	private Button PlayButton;
+
+	@FXML
+	private Button QuitButton;
+
+	@FXML
+	private Button CreditButton;
 	
 	@FXML
 	private Label label;
-
-	@FXML
-	private void goToGame()
-	{
-		fxmlNavigator.loadFxml(fxmlNavigator.GAME);
-	}
 	
 	@FXML 
 	private void goToSettings()
 	{
 		fxmlNavigator.loadFxml(fxmlNavigator.SETTINGS);
+	}
+
+	@FXML
+	private void goToCredits()
+	{
+		fxmlNavigator.loadFxml(fxmlNavigator.CREDITS);
+	}
+
+	@FXML
+	private void goToLogin()
+	{
+		fxmlNavigator.loadFxml(fxmlNavigator.LOGIN);
+	}
+
+	@FXML
+	private void shutDown()
+	{
+		gameClient.shutDown();
 	}
 
 	@Override
@@ -67,16 +88,8 @@ public class HomeScreenController implements ControllerInterface
 		Home.setPrefWidth(sW);
 		Home.setPrefHeight(sH);
 
-		// The button that will bring the user to the next pane
-		SettingsButton = (Button) scene.lookup("#SettingsButton");
-		NodeResizer.resizeObject(sW, sH, SettingsButton, true);
-
-		// The button that will bring the user to the next pane
-		GameBoardButton = (Button) scene.lookup("#GameBoardButton");
-		NodeResizer.resizeObject(sW, sH, GameBoardButton, true);
-
-		label = (Label) scene.lookup("#label");
-		NodeResizer.resizeObject(sW, sH, label, true);
+		Content = (Pane) scene.lookup("#Content");
+		NodeResizer.resizeObject(sW, sH, Content, true);
 
 		NodeResizer.originalSceneWidth = sW;
 		NodeResizer.originalSceneHeight = sH;

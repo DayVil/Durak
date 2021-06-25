@@ -8,10 +8,7 @@ import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SplitMenuButton;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -20,9 +17,12 @@ import javafx.util.Duration;
 
 public class SettingsController implements ControllerInterface
 {
-	
+
 	@FXML
 	private Pane Settings;
+
+	@FXML
+	private Pane Content;
 	
 	@FXML
 	private SplitMenuButton Resolution;
@@ -37,10 +37,16 @@ public class SettingsController implements ControllerInterface
 	private Label label;
 
 	@FXML
-	private Button HomeButton;
+	private ImageView picture;
 
 	@FXML
-	private ImageView picture;
+	private CheckBox FullScreenCheckBox;
+
+	@FXML
+	private Slider SoundSlider;
+
+	@FXML
+	private Button BackButton;
 	
 	@FXML
 	private void goToHome()
@@ -49,19 +55,48 @@ public class SettingsController implements ControllerInterface
 	}
 
 	@FXML
+	private void changeSound()
+	{
+		//TODO: only if sound is ever added: change volume of sound to percentage value of soundslider
+	}
+
+	@FXML
+	private void goFullScreen()
+	{
+		gameClient.stage_.setFullScreen(!gameClient.stage_.isFullScreen());
+	}
+
+	@FXML
 	public void ChangeResolution(ActionEvent event)
 	{
-		if(event.getSource().equals(res_1))		// If event source (selected button of resolution changer) is res_1 (600 x 400) do following
+		if(gameClient.stage_.isFullScreen())
 		{
-			gameClient.stage_.setWidth(600);
-			gameClient.stage_.setHeight(400);
+			//FIXME: resize seems to not resize stuff correctly, not needed but nice to have, may be fixed when polishing whole program near the end of groupproject
+			if(event.getSource().equals(res_1))		// If event source (selected button of resolution changer) is res_1 (600 x 400) do following
+			{
+				resize(600, false);
+				resize(400, true);
+			}
+			else if (event.getSource().equals(res_2))	// If event source (selected button of resolution changer) is res_2 (1200 x 800) do following
+			{
+				resize(1200, false);
+				resize(800, true);
+			}
 		}
-		else if (event.getSource().equals(res_2))	// If event source (selected button of resolution changer) is res_2 (1200 x 800) do following
+		else
 		{
-			gameClient.stage_.setWidth(1200);
-			gameClient.stage_.setHeight(800);
+			if(event.getSource().equals(res_1))		// If event source (selected button of resolution changer) is res_1 (600 x 400) do following
+			{
+				gameClient.stage_.setWidth(600);
+				gameClient.stage_.setHeight(400);
+			}
+			else if (event.getSource().equals(res_2))	// If event source (selected button of resolution changer) is res_2 (1200 x 800) do following
+			{
+				gameClient.stage_.setWidth(1200);
+				gameClient.stage_.setHeight(800);
+			}
+			gameClient.stage_.centerOnScreen();
 		}
-		gameClient.stage_.centerOnScreen();
 	}
 
 	@Override
@@ -91,14 +126,8 @@ public class SettingsController implements ControllerInterface
 		Settings.setPrefWidth(sW);
 		Settings.setPrefHeight(sH);
 
-		Resolution = (SplitMenuButton) scene.lookup("#Resolution");
-		NodeResizer.resizeObject(sW, sH, Resolution, true);
-
-		label = (Label) scene.lookup("#label");
-		NodeResizer.resizeObject(sW, sH, label, true);
-
-		HomeButton = (Button) scene.lookup("#HomeButton");
-		NodeResizer.resizeObject(sW, sH, HomeButton, true);
+		Content = (Pane) scene.lookup("#Content");
+		NodeResizer.resizeObject(sW, sH, Content, true);
 
 		picture = (ImageView) scene.lookup("#picture");
 		NodeResizer.resizeObject(sW, sH, picture, true);
@@ -120,7 +149,7 @@ public class SettingsController implements ControllerInterface
 		Image image = new Image("/textures/cards/card_back_lowsat.png", 75, 200, true, true);
 		picture.setImage(image);
 
-		PauseTransition pause = new PauseTransition(Duration.millis(1));
+		PauseTransition pause = new PauseTransition(Duration.millis(10));
 		pause.setOnFinished
 				(
 						pauseFinishedEvent -> resize(scene.getHeight(), true)

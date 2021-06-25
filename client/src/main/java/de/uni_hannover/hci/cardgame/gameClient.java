@@ -143,6 +143,10 @@ public class gameClient extends Application
 			{
 				fxml = fxmlNavigator.LOGIN;
 			}
+			else if (scene.lookup("#Credits") != null)
+			{
+				fxml = fxmlNavigator.CREDITS;
+			}
 
 			if(!(fxml.equals("")))
 			{
@@ -156,5 +160,18 @@ public class gameClient extends Application
 		{
 			e.printStackTrace();
 		}
+	}
+
+	public static void shutDown()
+	{
+		stage_.close();
+		System.exit(0);
+	}
+
+	@Override
+	public void stop()
+	{
+		//wird aufgerufen, wenn man mit dem X von der Stage das Programm beendet
+		stage_.close();
 	}
 }

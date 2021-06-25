@@ -26,13 +26,13 @@ public class GameBoardController implements ControllerInterface
     private Pane DeckBackground;
 
     @FXML
+    private Pane GameActionsBackGround;
+
+    @FXML
     private Button Take;
 
     @FXML
     private Button Pass;
-
-    @FXML
-    private Button HomeButton;
 
     @FXML
     private Button Menu;
@@ -43,13 +43,8 @@ public class GameBoardController implements ControllerInterface
     @FXML
     private void openMenu()
     {
-        System.out.println("I am the menu button!");
-    }
-    
-    @FXML
-    private void goToHome()
-    {
-    	fxmlNavigator.loadFxml(fxmlNavigator.HOME);
+        // currently sending you back to home, has to be changed in the future
+        fxmlNavigator.loadFxml(fxmlNavigator.HOME);
     }
 
     @Override
@@ -82,17 +77,14 @@ public class GameBoardController implements ControllerInterface
         DeckBackground = (Pane) scene.lookup("#DeckBackground");
         NodeResizer.resizeObject(sW, sH, DeckBackground, true);
 
+        GameActionsBackGround = (Pane) scene.lookup("#GameActionsBackGround");
+        NodeResizer.resizeObject(sW, sH, GameActionsBackGround, true);
+
         Take = (Button) scene.lookup("#Take");
         NodeResizer.resizeObject(sW, sH, Take, true);
 
         Pass = (Button) scene.lookup("#Pass");
         NodeResizer.resizeObject(sW, sH, Pass, true);
-
-        HomeButton = (Button) scene.lookup("#HomeButton");
-        NodeResizer.resizeObject(sW, sH, HomeButton, true);
-
-        Menu = (Button) scene.lookup("#Menu");
-        NodeResizer.resizeObject(sW, sH, Menu, true);
 
         NodeResizer.originalSceneWidth = sW;
         NodeResizer.originalSceneHeight = sH;
@@ -111,7 +103,7 @@ public class GameBoardController implements ControllerInterface
         Image image = new Image("/textures/cards/card_back_lowsat.png", 75, 200, true, true);
         leftoverDeck.setImage(image);
 
-        PauseTransition pause = new PauseTransition(Duration.millis(1));
+        PauseTransition pause = new PauseTransition(Duration.millis(10));
         pause.setOnFinished
                 (
                         pauseFinishedEvent -> resize(scene.getHeight(), true)

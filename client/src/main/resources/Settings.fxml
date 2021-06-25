@@ -6,17 +6,22 @@
 <?import javafx.scene.text.*?>
 
 <Pane fx:id="Settings" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@styles/cardGameStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.uni_hannover.hci.cardgame.Controller.SettingsController">
-      <SplitMenuButton fx:id="Resolution" layoutX="60.0" layoutY="110.0" mnemonicParsing="false" text="Resolution">
-        <items>
-          <MenuItem fx:id="res_1" mnemonicParsing="false" onAction="#ChangeResolution" text="600 x 400" />
-          <MenuItem fx:id="res_2" mnemonicParsing="false" onAction="#ChangeResolution" text="1200 x 800" />
-        </items>
-      </SplitMenuButton>
-      <Button fx:id="HomeButton" layoutX="60.0" layoutY="275.0" mnemonicParsing="false" onAction="#goToHome" text="Back to Home" />
-      <Label fx:id="label" layoutX="240.0" layoutY="25.0" text="Settings Menu" textFill="RED">
-         <font>
-            <Font name="System Bold" size="17.0" />
-         </font>
-      </Label>
    <ImageView fx:id="picture" fitHeight="150.0" fitWidth="101.0" layoutX="460.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" />
+   <Pane fx:id="Content" prefHeight="400.0" prefWidth="200.0" style="-fx-background-color: #000000;">
+            <SplitMenuButton fx:id="Resolution" layoutX="10.0" layoutY="260.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="180.0" text="Resolution">
+              <items>
+                <MenuItem fx:id="res_1" mnemonicParsing="false" onAction="#ChangeResolution" text="600 x 400" />
+                <MenuItem fx:id="res_2" mnemonicParsing="false" onAction="#ChangeResolution" text="1200 x 800" />
+              </items>
+            </SplitMenuButton>
+            <Button fx:id="BackButton" layoutX="10.0" layoutY="350.0" mnemonicParsing="false" onAction="#goToHome" prefHeight="20.0" prefWidth="180.0" text="Back" />
+            <Label fx:id="label" layoutX="70.0" layoutY="40.0" text="Settings" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+         <CheckBox fx:id="FullScreenCheckBox" layoutX="10.0" layoutY="309.0" mnemonicParsing="false" onAction="#goFullScreen" prefHeight="20.0" prefWidth="180.0" text="FullScreen" />
+         <Slider fx:id="SoundSlider" layoutX="10.0" layoutY="200.0" onDragDetected="#changeSound" prefHeight="20.0" prefWidth="180.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+         <Label layoutX="71.0" layoutY="168.0" text="Sound" textFill="RED" />
+   </Pane>
 </Pane>

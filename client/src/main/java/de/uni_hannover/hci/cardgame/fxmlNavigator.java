@@ -16,6 +16,7 @@ public class fxmlNavigator
 	public static final String HOME = "HomeScreen.fxml";
 	public static final String GAME = "GameBoard.fxml";
 	public static final String SETTINGS = "Settings.fxml";
+	public static final String CREDITS = "Credits.fxml";
 	private static MainController mainController_;
 	
 	public static void setMainController(MainController mainController)
