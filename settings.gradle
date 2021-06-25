@@ -1,3 +1,4 @@
+rootProject.name = 'cardGame'
 include 'client'
 include 'server'
 

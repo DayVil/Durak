@@ -1,5 +1,5 @@
 plugins {
-    id 'java'
+    id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.10'
 }
 
@@ -19,7 +19,11 @@ test {
     useJUnitPlatform()
 }
 
+application {
+    mainClass = 'de.uni_hannover.hci.cardgame.gameClient'
+}
+
 javafx {
-    version = "11"
+    version = "11.0.1"
     modules = [ 'javafx.controls', 'javafx.fxml']
 }
