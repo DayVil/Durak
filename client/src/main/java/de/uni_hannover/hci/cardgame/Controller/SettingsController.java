@@ -156,6 +156,10 @@ public class SettingsController implements ControllerInterface
 		NodeResizer.originalSceneHeight = 400.0;
 		NodeResizer.originalSceneWidth = 600.0;
 		Stage stage = gameClient.stage_;
+		if (stage.isFullScreen())
+		{
+			FullScreenCheckBox.setSelected(true);
+		}
 		Scene scene = stage.getScene();
 
 		picture = (ImageView) scene.lookup("#picture");
