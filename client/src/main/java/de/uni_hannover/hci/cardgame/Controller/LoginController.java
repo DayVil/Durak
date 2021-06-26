@@ -60,16 +60,33 @@ public class LoginController implements ControllerInterface {
         fxmlNavigator.loadFxml(fxmlNavigator.HOME);
     }
 
+    /**
+     * Check login credentials and establish server client connection
+     */
     @FXML
     private void checkForEntrance() {
-        //TODO: get this associated with server/client communication, for now just doing the ui with nothing in it
 //        fxmlNavigator.loadFxml(fxmlNavigator.GAME);
-        System.out.println("Connecting to server " + IPAddress.getCharacters());
-//        System.out.println(UserName.getCharacters());
-//        System.out.println(Password.getCharacters());
-        startConnection("127.0.0.1", 8000);
-        sendMessage("test");
 
+        boolean isValidIP = validateIP(IPAddress.getCharacters().toString());
+        boolean isValidUserName = UserName.getCharacters().length() > 0;
+        boolean isValidPassword = Password.getCharacters().length() > 0;
+
+        if (!isValidIP) {
+            System.out.println("Please enter a valid IP");
+        } else if (!isValidUserName) {
+            System.out.println("Please enter a valid username");
+        } else if (!isValidPassword) {
+            System.out.println("Please enter a valid password");
+        } else {
+            System.out.println("Connecting to server " + IPAddress.getCharacters());
+
+            startConnection("127.0.0.1", 8000);
+            if (clientSocket.isConnected()) {
+                System.out.println("Connecting successful");
+            }
+            String test = sendMessage("test");
+            System.out.println("this return" + test);
+        }
 
     }
 
@@ -164,5 +181,16 @@ public class LoginController implements ControllerInterface {
             System.out.println("Error");
         }
 
+    }
+
+
+    /**
+     * Checks whether an ip adress is valid
+     * @param ip address as string
+     * @return boolean for valid ip
+     */
+    private static boolean validateIP(String ip) {
+        String PATTERN = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
+        return ip.matches(PATTERN);
     }
 }
