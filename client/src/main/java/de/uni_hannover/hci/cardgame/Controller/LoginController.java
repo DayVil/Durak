@@ -1,16 +1,14 @@
 package de.uni_hannover.hci.cardgame.Controller;
 
 import de.uni_hannover.hci.cardgame.ControllerInterface;
+import de.uni_hannover.hci.cardgame.Network.ClientNetwork;
 import de.uni_hannover.hci.cardgame.NodeResizer;
 import de.uni_hannover.hci.cardgame.fxmlNavigator;
 import de.uni_hannover.hci.cardgame.gameClient;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -27,9 +25,7 @@ import java.io.*;
 
 public class LoginController implements ControllerInterface {
 
-    private Socket clientSocket;
-    private PrintWriter bufferOut;
-    private BufferedReader bufferIn;
+
 
     @FXML
     private Pane Login;
@@ -56,7 +52,8 @@ public class LoginController implements ControllerInterface {
     private Label label;
 
     @FXML
-    private void goToHome() {
+    private void goToHome()
+    {
         fxmlNavigator.loadFxml(fxmlNavigator.HOME);
     }
 
@@ -64,34 +61,71 @@ public class LoginController implements ControllerInterface {
      * Check login credentials and establish server client connection
      */
     @FXML
-    private void checkForEntrance() {
-//        fxmlNavigator.loadFxml(fxmlNavigator.GAME);
+    private void checkForEntrance()
+    {
+        Stage stage = gameClient.stage_;
+        Scene scene = stage.getScene();
 
-        boolean isValidIP = validateIP(IPAddress.getCharacters().toString());
+        IPAddress = (TextField) scene.lookup("#IPAddress");
+        String ip = IPAddress.getText();
+
+        UserName = (TextField) scene.lookup("#UserName");
+        String user = UserName.getText();
+
+        Password = (PasswordField) scene.lookup("#Password");
+        String password = Password.getText();
+
+
+        boolean isValidIP = validateIP(ip);
         boolean isValidUserName = UserName.getCharacters().length() > 0;
         boolean isValidPassword = Password.getCharacters().length() > 0;
 
-        if (!isValidIP) {
-            System.out.println("Please enter a valid IP");
-        } else if (!isValidUserName) {
-            System.out.println("Please enter a valid username");
-        } else if (!isValidPassword) {
-            System.out.println("Please enter a valid password");
-        } else {
-            System.out.println("Connecting to server " + IPAddress.getCharacters());
-
-            startConnection("127.0.0.1", 8000);
-            if (clientSocket.isConnected()) {
-                System.out.println("Connecting successful");
-            }
-            String test = sendMessage("test");
-            System.out.println("this return" + test);
+        if (!isValidIP)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Login");
+            alert.setHeaderText("Invalid IP");
+            alert.setContentText("Use the format xxx.xxx.xxx.xxx \nExample: 192.168.000.001");
+            alert.showAndWait();
         }
-
+        else if (!isValidUserName)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Login");
+            alert.setHeaderText("Invalid User Name");
+            alert.setContentText("Please enter a Username");
+            alert.showAndWait();
+        }
+        else if (!isValidPassword)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Login");
+            alert.setHeaderText("Invalid Server Password");
+            alert.setContentText("PLease enter the servers password");
+            alert.showAndWait();
+        }
+        else
+        {
+            boolean success = ClientNetwork.startConnection(ip, password, user);
+            if (success)  fxmlNavigator.loadFxml(fxmlNavigator.GAME);
+        }
     }
 
+    /**
+     * Checks whether an ip address is valid
+     * @param ip address as string
+     * @return boolean for valid ip
+     */
+    private static boolean validateIP(String ip)
+    {
+        String PATTERN = "^(([01]\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}([01]\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
+        return ip.matches(PATTERN);
+    }
+
+
     @Override
-    public void resize(Number newValue, Boolean isHeight) {
+    public void resize(Number newValue, Boolean isHeight)
+    {
         Stage stage = gameClient.stage_;
         Scene scene = stage.getScene();
 
@@ -152,45 +186,5 @@ public class LoginController implements ControllerInterface {
     }
 
 
-    public void startConnection(String ip, int port) {
-        try {
-            clientSocket = new Socket(ip, port);
-            bufferOut = new PrintWriter(clientSocket.getOutputStream(), true);
-            bufferIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        } catch (IOException e) {
-            System.out.println("error");
-        }
 
-    }
-
-    public String sendMessage(String msg) {
-        try {
-            bufferOut.println(msg);
-            return bufferIn.readLine();
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    public void stopConnection() {
-        try {
-            bufferIn.close();
-            bufferOut.close();
-            clientSocket.close();
-        } catch (IOException e) {
-            System.out.println("Error");
-        }
-
-    }
-
-
-    /**
-     * Checks whether an ip adress is valid
-     * @param ip address as string
-     * @return boolean for valid ip
-     */
-    private static boolean validateIP(String ip) {
-        String PATTERN = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
-        return ip.matches(PATTERN);
-    }
 }

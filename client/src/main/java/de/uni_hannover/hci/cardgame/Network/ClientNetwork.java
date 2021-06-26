@@ -97,6 +97,7 @@ public class ClientNetwork
         try
         {
             bufferOut_.write(msg);
+            bufferOut_.flush();
         }
         catch(IOException e)
         {

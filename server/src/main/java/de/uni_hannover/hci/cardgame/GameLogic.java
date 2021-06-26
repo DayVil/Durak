@@ -80,7 +80,7 @@ public class GameLogic
 
                     if (Line.equals("disconnect")) break;
 
-                    outputBuffer.write("echoing input: " + Line + "\n");
+                    outputBuffer.write("logged in\n");
                     outputBuffer.flush();
                 }
 
