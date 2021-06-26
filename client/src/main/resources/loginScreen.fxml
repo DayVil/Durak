@@ -14,7 +14,7 @@
           <TextField fx:id="IPAddress" layoutX="10.0" layoutY="140.0" prefHeight="20.0" prefWidth="180.0" promptText="IP-Address" />
           <Button fx:id="PlayButton" layoutX="10.0" layoutY="290.0" mnemonicParsing="false" onAction="#checkForEntrance" prefHeight="20.0" prefWidth="180.0" text="Play" />
          <Button fx:id="Back" layoutX="10.0" layoutY="345.0" mnemonicParsing="false" onAction="#goToHome" prefHeight="20.0" prefWidth="180.0" text="Back" />
-         <PasswordField fx:id="Password" layoutX="10.0" layoutY="190.0" prefHeight="20.0" prefWidth="180.0" promptText="Password" />
+         <PasswordField fx:id="Password" layoutX="10.0" layoutY="190.0" prefHeight="20.0" prefWidth="180.0" promptText="Server Password" />
          <TextField fx:id="UserName" layoutX="10.0" layoutY="240.0" prefHeight="20.0" prefWidth="180.0" promptText="UserName" />
    </Pane>
 </Pane>
