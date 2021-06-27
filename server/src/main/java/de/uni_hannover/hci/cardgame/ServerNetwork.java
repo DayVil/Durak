@@ -6,20 +6,19 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
 
-public class ServerNetwork
-{
+public class ServerNetwork {
     ServerSocket serverSocket;
     int clientNumber = 0;
 
-    private void incClientNumber(){
+    private void incClientNumber() {
         this.clientNumber++;
     }
-    private void decClientNumber(){
+
+    private void decClientNumber() {
         this.clientNumber--;
     }
 
-    void run()
-    {
+    void run() {
 
 
         try {
@@ -32,54 +31,44 @@ public class ServerNetwork
         // TODO: startingGame();
     }
 
-    void waitingForClients(int maxNumber)
-    {
-        while(clientNumber < maxNumber)
-        {
-            try
-            {
+    void waitingForClients(int maxNumber) {
+        while (clientNumber < maxNumber) {
+            try {
                 Socket socket = serverSocket.accept();
                 InetAddress inetAddress = socket.getInetAddress();
 
+                incClientNumber();
+
                 System.out.printf("Client: " + clientNumber + "\n\thost name: " + inetAddress.getHostName() + "\n\tIP address " + inetAddress.getHostAddress() + "\n\n");
 
-                ClientHandler task = new ClientHandler(socket, clientNumber++);
+                ClientHandler task = new ClientHandler(socket);
                 new Thread(task).start();
 
-            }
-            catch (IOException ex)
-            {
+            } catch (IOException ex) {
                 System.out.printf(ex.toString());
             }
         }
     }
 
 
-    class ClientHandler implements Runnable
-    {
+    class ClientHandler implements Runnable {
         private final Socket socket;
-        private final int clientNumber;
 
-        ClientHandler(Socket socket, int clientNumber)
-        {
+        ClientHandler(Socket socket) {
             this.socket = socket;
-            this.clientNumber = clientNumber;
             System.out.printf("ClientNumber: %d\n", clientNumber);
         }
 
         @Override
-        public void run()
-        {
-            try
-            {
+        public void run() {
+            try {
                 System.out.printf("In Run %d\n", clientNumber);
 
                 InetAddress inetAddress = socket.getInetAddress();
 
                 BufferedReader inputBuffer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 BufferedWriter outputBuffer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-                while (true)
-                {
+                while (true) {
                     System.out.printf("In Loop %d\n", clientNumber);
                     String Line = inputBuffer.readLine();
                     System.out.printf("Nach inputFromClient %d <%s>\n", clientNumber, Line);
@@ -93,9 +82,7 @@ public class ServerNetwork
                 socket.close();
                 decClientNumber();
 
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 System.err.println(e);
             }
         }
