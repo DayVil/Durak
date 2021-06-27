@@ -6,6 +6,7 @@ import de.uni_hannover.hci.cardgame.NodeResizer;
 import de.uni_hannover.hci.cardgame.fxmlNavigator;
 import de.uni_hannover.hci.cardgame.gameClient;
 import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -24,7 +25,6 @@ import java.net.*;
 import java.io.*;
 
 public class LoginController implements ControllerInterface {
-
 
 
     @FXML
@@ -52,8 +52,7 @@ public class LoginController implements ControllerInterface {
     private Label label;
 
     @FXML
-    private void goToHome()
-    {
+    private void goToHome() {
         fxmlNavigator.loadFxml(fxmlNavigator.HOME);
     }
 
@@ -61,8 +60,7 @@ public class LoginController implements ControllerInterface {
      * Check login credentials and establish server client connection
      */
     @FXML
-    private void checkForEntrance()
-    {
+    private void checkForEntrance() {
         Stage stage = gameClient.stage_;
         Scene scene = stage.getScene();
 
@@ -77,55 +75,59 @@ public class LoginController implements ControllerInterface {
 
 
         boolean isValidIP = validateIP(ip);
-        boolean isValidUserName = UserName.getCharacters().length() > 0;
-        boolean isValidPassword = Password.getCharacters().length() > 0;
+        boolean isValidUserName = user.length() > 0;
+        boolean isValidPassword = password.length() > 0;
 
-        if (!isValidIP)
-        {
+        if (!isValidIP) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Login");
             alert.setHeaderText("Invalid IP");
             alert.setContentText("Use the format xxx.xxx.xxx.xxx \nExample: 192.168.000.001");
+            alert.setResizable(true);
+            alert.onShownProperty().addListener(e -> {
+                Platform.runLater(() -> alert.setResizable(false));
+            });
             alert.showAndWait();
-        }
-        else if (!isValidUserName)
-        {
+        } else if (!isValidUserName) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Login");
             alert.setHeaderText("Invalid User Name");
             alert.setContentText("Please enter a Username");
+            alert.setResizable(true);
+            alert.onShownProperty().addListener(e -> {
+                Platform.runLater(() -> alert.setResizable(false));
+            });
             alert.showAndWait();
-        }
-        else if (!isValidPassword)
-        {
+        } else if (!isValidPassword) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Login");
             alert.setHeaderText("Invalid Server Password");
             alert.setContentText("PLease enter the servers password");
+            alert.setResizable(true);
+            alert.onShownProperty().addListener(e -> {
+                Platform.runLater(() -> alert.setResizable(false));
+            });
             alert.showAndWait();
-        }
-        else
-        {
+        } else {
             boolean success = ClientNetwork.startConnection(ip, password, user);
-            if (success)  fxmlNavigator.loadFxml(fxmlNavigator.GAME);
+            if (success) fxmlNavigator.loadFxml(fxmlNavigator.GAME);
         }
     }
 
     /**
      * Checks whether an ip address is valid
+     *
      * @param ip address as string
      * @return boolean for valid ip
      */
-    private static boolean validateIP(String ip)
-    {
+    private static boolean validateIP(String ip) {
         String PATTERN = "^(([01]\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}([01]\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
         return ip.matches(PATTERN);
     }
 
 
     @Override
-    public void resize(Number newValue, Boolean isHeight)
-    {
+    public void resize(Number newValue, Boolean isHeight) {
         Stage stage = gameClient.stage_;
         Scene scene = stage.getScene();
 
@@ -184,7 +186,6 @@ public class LoginController implements ControllerInterface {
                 );
         pause.play();
     }
-
 
 
 }
