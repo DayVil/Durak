@@ -1,4 +1,4 @@
-package de.uni_hannover.hci.cardgame.cards;
+package de.uni_hannover.hci.cardgame.Cards;
 
 public class Cards
 {
@@ -41,6 +41,21 @@ public class Cards
         if (Nr < 11 || Nr > 63) return (-1);
 
         return ((Nr - 11) % 13);
+    }
+
+    /**
+     * Gets the the corresponding value of the card
+     * @param nr The Nr (index in the textures Array) of a Card
+     * @return Corresponding value.
+     */
+    public static int getCardValue(int nr) {
+        int val = getCard(nr);
+
+        if (val <= 11) {
+            return val + 2;
+        } else {
+            return 1;
+        }
     }
 
     /**

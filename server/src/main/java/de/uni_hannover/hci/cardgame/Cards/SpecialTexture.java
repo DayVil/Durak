@@ -1,4 +1,4 @@
-package de.uni_hannover.hci.cardgame.cards;
+package de.uni_hannover.hci.cardgame.Cards;
 
 public enum SpecialTexture
 {

@@ -6,7 +6,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
 
-public class GameLogic
+public class ServerNetwork
 {
     ServerSocket serverSocket;
     int clientNumber = 0;
@@ -57,8 +57,8 @@ public class GameLogic
 
     class ClientHandler implements Runnable
     {
-        private Socket socket;
-        private int clientNumber;
+        private final Socket socket;
+        private final int clientNumber;
 
         ClientHandler(Socket socket, int clientNumber)
         {

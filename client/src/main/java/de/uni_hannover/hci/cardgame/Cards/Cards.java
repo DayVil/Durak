@@ -1,8 +1,8 @@
-package de.uni_hannover.hci.cardgame.cards;
+package de.uni_hannover.hci.cardgame.Cards;
 
 public class Cards
 {
-    private static String[] textures =
+    private static final String[] textures =
     {
         // 00
         "/textures/cards/clubs/club_symbol.png",
@@ -103,7 +103,7 @@ public class Cards
         if(specialTexture == SpecialTexture.SpadesBlankCard) return "/textures/cards/spades/spade_blank_card.png";
         if(specialTexture == SpecialTexture.BackHighsat) return "/textures/cards/card_back_highsat.png";
         if(specialTexture == SpecialTexture.BackLowsat) return "/textures/cards/card_back_lowsat.png";
-        if(specialTexture == SpecialTexture.BlancCard) return "/textures/cards/card_blanc.png";;
+        if(specialTexture == SpecialTexture.BlancCard) return "/textures/cards/card_blanc.png";
         return null;
     }
 }
