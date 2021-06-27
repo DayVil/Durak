@@ -14,7 +14,7 @@ dependencies {
 }
 
 application {
-    mainClass = 'de.uni_hannover.hci.cardgame.gameServer'
+    mainClass = 'de.uni_hannover.hci.cardgame.GameServerMain'
 }
 
 test {
