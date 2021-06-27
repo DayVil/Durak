@@ -1,5 +1,6 @@
 package de.uni_hannover.hci.cardgame.Network;
 
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
@@ -27,6 +28,10 @@ public class ClientNetwork
             ButtonType buttonTypeYes = new ButtonType("Yes");
             ButtonType buttonTypeNo = new ButtonType("No");
             alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+            alert.setResizable(true);
+            alert.onShownProperty().addListener(e -> {
+                Platform.runLater(() -> alert.setResizable(false));
+            });
             Optional<ButtonType> result = alert.showAndWait();
 
             if (result.get() == buttonTypeNo) return true;
@@ -43,6 +48,10 @@ public class ClientNetwork
             alert.setTitle("Connecting To Server");
             alert.setHeaderText("No connection to server");
             alert.setContentText("Please check the IP-address and your internet connection");
+            alert.setResizable(true);
+            alert.onShownProperty().addListener(ebox -> {
+                Platform.runLater(() -> alert.setResizable(false));
+            });
             alert.showAndWait();
             return false;
         }
@@ -59,6 +68,10 @@ public class ClientNetwork
             alert.setTitle("Connecting To Server");
             alert.setHeaderText("Could not establish read-write stream");
             alert.setContentText("Please check the IP-address and your internet connection");
+            alert.setResizable(true);
+            alert.onShownProperty().addListener(ebox -> {
+                Platform.runLater(() -> alert.setResizable(false));
+            });
             alert.showAndWait();
             return false;
         }
@@ -75,6 +88,10 @@ public class ClientNetwork
             alert.setTitle("Connecting To Server");
             alert.setHeaderText("Server refused connection");
             alert.setContentText("Please check credentials");
+            alert.setResizable(true);
+            alert.onShownProperty().addListener(e -> {
+                Platform.runLater(() -> alert.setResizable(false));
+            });
             alert.showAndWait();
             return false;
         }
@@ -85,6 +102,10 @@ public class ClientNetwork
             alert.setTitle("Connecting To Server");
             alert.setHeaderText("Server send incorrect answer");
             alert.setContentText("Please check IP-address");
+            alert.setResizable(true);
+            alert.onShownProperty().addListener(e -> {
+                Platform.runLater(() -> alert.setResizable(false));
+            });
             alert.showAndWait();
             return false;
         }
@@ -139,6 +160,11 @@ public class ClientNetwork
 
     public static void stopConnection()
     {
+        if (loggedIn_ == true){
+            System.out.println("Shutdown client " + clientSocket_.getInetAddress().getHostAddress());
+            sendMessage("disconnect");
+        }
+
         loggedIn_ = false;
         try
         {

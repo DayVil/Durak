@@ -3,6 +3,7 @@ package de.uni_hannover.hci.cardgame;
 import java.io.IOException;
 
 import de.uni_hannover.hci.cardgame.Controller.*;
+import de.uni_hannover.hci.cardgame.Network.ClientNetwork;
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -164,6 +165,7 @@ public class gameClient extends Application
 
 	public static void shutDown()
 	{
+		ClientNetwork.stopConnection();
 		stage_.close();
 		System.exit(0);
 	}
@@ -172,6 +174,7 @@ public class gameClient extends Application
 	public void stop()
 	{
 		//wird aufgerufen, wenn man mit dem X von der Stage das Programm beendet
+		ClientNetwork.stopConnection();
 		stage_.close();
 	}
 }

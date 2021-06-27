@@ -11,6 +11,13 @@ public class GameLogic
     ServerSocket serverSocket;
     int clientNumber = 0;
 
+    private void incClientNumber(){
+        this.clientNumber++;
+    }
+    private void decClientNumber(){
+        this.clientNumber--;
+    }
+
     void run()
     {
 
@@ -83,6 +90,8 @@ public class GameLogic
                     outputBuffer.write("logged in\n");
                     outputBuffer.flush();
                 }
+                socket.close();
+                decClientNumber();
 
             }
             catch (IOException e)
