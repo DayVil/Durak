@@ -1,51 +1,69 @@
 package de.uni_hannover.hci.cardgame;
 
+import de.uni_hannover.hci.cardgame.Clients.Client;
+import de.uni_hannover.hci.cardgame.Clients.ClientManager;
+
 import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class ServerNetwork
 {
     ServerSocket serverSocket;
-    int clientNumber = 0;
-
-    private void incClientNumber(){
-        this.clientNumber++;
-    }
-    private void decClientNumber(){
-        this.clientNumber--;
-    }
+    ClientManager clientManager;
+    String serverPassword = "TollerServer";
 
     void run()
     {
-
-
-        try {
+        try
+        {
             serverSocket = new ServerSocket(8000);
             System.out.printf("Server started at " + new Date() + '\n');
-        } catch (IOException ex) {
+        }
+        catch (IOException ex)
+        {
             System.out.printf(ex.toString());
         }
+
+        clientManager = new ClientManager();
+
         waitingForClients(3);
+
         // TODO: startingGame();
+    }
+
+    public boolean sendMessage(int clientID, String msg)
+    {
+        BufferedWriter bufferOut =  clientManager.getWriter(clientID);
+        try
+        {
+            bufferOut.write(msg + "\n");
+            bufferOut.flush();
+        }
+        catch(IOException e)
+        {
+            System.out.printf("Error: could not send message %s to client %d", msg, clientID);
+            return false;
+        }
+        return true;
     }
 
     void waitingForClients(int maxNumber)
     {
-        while(clientNumber < maxNumber)
+        while(clientManager.getClientCount() < maxNumber)
         {
             try
             {
                 Socket socket = serverSocket.accept();
                 InetAddress inetAddress = socket.getInetAddress();
 
-                System.out.printf("Client: " + clientNumber + "\n\thost name: " + inetAddress.getHostName() + "\n\tIP address " + inetAddress.getHostAddress() + "\n\n");
+                System.out.printf("host name: " + inetAddress.getHostName() + "\n\tIP address " + inetAddress.getHostAddress() + "\n\n");
 
-                ClientHandler task = new ClientHandler(socket, clientNumber++);
+                socketHandler task = new socketHandler(socket);
                 new Thread(task).start();
-
             }
             catch (IOException ex)
             {
@@ -54,17 +72,15 @@ public class ServerNetwork
         }
     }
 
-
-    class ClientHandler implements Runnable
+    class socketHandler implements Runnable
     {
+        private boolean loggedIn;
         private final Socket socket;
-        private final int clientNumber;
 
-        ClientHandler(Socket socket, int clientNumber)
+        socketHandler(Socket socket)
         {
+            this.loggedIn = false;
             this.socket = socket;
-            this.clientNumber = clientNumber;
-            System.out.printf("ClientNumber: %d\n", clientNumber);
         }
 
         @Override
@@ -72,27 +88,45 @@ public class ServerNetwork
         {
             try
             {
-                System.out.printf("In Run %d\n", clientNumber);
-
                 InetAddress inetAddress = socket.getInetAddress();
 
                 BufferedReader inputBuffer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 BufferedWriter outputBuffer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+
+                int id = clientManager.addClient(outputBuffer);
                 while (true)
                 {
-                    System.out.printf("In Loop %d\n", clientNumber);
-                    String Line = inputBuffer.readLine();
-                    System.out.printf("Nach inputFromClient %d <%s>\n", clientNumber, Line);
-                    System.out.printf("Got Message %s\n", Line);
+                    //System.out.printf("Waiting for message from Client: %d\n", id);
+                    String line = inputBuffer.readLine();
+                    if(line != null)
+                    {
+                        System.out.printf("Got Message %s from Client %d\n", line, id);
 
-                    if (Line.equals("disconnect")) break;
+                        if (line.equals("disconnect"))
+                        {
+                            clientManager.removeClient(id);
+                            // TODO: Start a bot player in its place
+                            break;
+                        }
 
-                    outputBuffer.write("logged in\n");
-                    outputBuffer.flush();
+                        if(!loggedIn && line.length() > 10 + serverPassword.length())
+                        {
+                            // TODO: give user to gamelogic for processing
+                            String p = line.substring(0, 10 + serverPassword.length());
+                            if(p.equals("Password: " + serverPassword))
+                            {
+                                loggedIn = true;
+                                sendMessage(id, "logged in");
+                            }
+                            else
+                            {
+                                sendMessage(id, "failed");
+                            }
+                        }
+                    }
                 }
                 socket.close();
-                decClientNumber();
-
+                clientManager.removeClient(id);
             }
             catch (IOException e)
             {

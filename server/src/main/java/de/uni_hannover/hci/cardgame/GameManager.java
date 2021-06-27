@@ -17,7 +17,8 @@ public class GameManager {
     /**
      * Inits the game.
      */
-    public GameManager() {
+    public GameManager()
+    {
         cardStack = new CardStack();
         cardStack.shuffleList();
 
@@ -36,12 +37,13 @@ public class GameManager {
      * @param playerId id of the current player.
      * @return returns the state of the game.
      */
-    public String gameBoardState(int playerId) {
-        return String.format("drawPileHeight: {12}; trump {3}; Player list: " +
+    public String gameBoardState(int playerId)
+    {
+        return String.format("drawPileHeight: {12}; trump: {3}; Player list: " +
                 "[id :{2}, name: {yann}, handCardNumber: {4}, attacker: {false}, defender: {false}; " +
                 "id :{1}, name: {patrick}, handCardNumber: {3}, attacker: {true}, defender: {false}; " +
                 "id :{0}, name: {robert}, handCardNumber: {7}, attacker: {false}, defender: {true}]; " +
                 "Visible Cards: [{13,15}; {27,32}; {49,50}; {52,-1};]; " +
-                "Hand cards: [{11}; {12}; {14};]");
+                "Hand cards: [{11}; {12}; {14}]");
     }
 }

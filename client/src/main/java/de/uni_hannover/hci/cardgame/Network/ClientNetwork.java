@@ -10,12 +10,29 @@ import java.util.Optional;
 
 public class ClientNetwork
 {
+
+
     private static Socket clientSocket_ = null;
     private static BufferedWriter bufferOut_ = null;
     private static BufferedReader bufferIn_ = null;
     private static int port_ = 8000;
     private static String ip_ ="";
     private static boolean loggedIn_ = false;
+
+    public static Socket getClientSocket_()
+    {
+        return clientSocket_;
+    }
+
+    public static BufferedWriter getBufferOut_()
+    {
+        return bufferOut_;
+    }
+
+    public static BufferedReader getBufferIn_()
+    {
+        return bufferIn_;
+    }
 
     public static boolean startConnection(String ip, String password, String user)
     {
@@ -76,7 +93,7 @@ public class ClientNetwork
             return false;
         }
 
-        String logInMessage = "User: " + user + " Password: " + password + "\n";
+        String logInMessage = "Password: " + password +  " User: " + user + "\n";
 
         if(!sendMessage(logInMessage)) return false;
 
@@ -188,6 +205,5 @@ public class ClientNetwork
         {
             System.out.println("Exception while closing socket");
         }
-
     }
 }

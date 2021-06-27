@@ -48,12 +48,15 @@ public class Cards
      * @param nr The Nr (index in the textures Array) of a Card
      * @return Corresponding value.
      */
-    public static int getCardValue(int nr) {
+    public static int getCardValue(int nr)
+    {
         int val = getCard(nr);
 
-        if (val <= 11) {
+        if (val <= 11)
+        {
             return val + 2;
-        } else {
+        } else
+        {
             return 1;
         }
     }
