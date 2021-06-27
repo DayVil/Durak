@@ -1,4 +1,4 @@
-package de.uni_hannover.hci.cardgame.Cards;
+package de.uni_hannover.hci.cardgame.cards;
 
 public enum CardColor
 {

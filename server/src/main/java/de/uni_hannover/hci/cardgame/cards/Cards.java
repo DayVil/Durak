@@ -1,4 +1,4 @@
-package de.uni_hannover.hci.cardgame.Cards;
+package de.uni_hannover.hci.cardgame.cards;
 
 public class Cards
 {
@@ -22,12 +22,12 @@ public class Cards
 
         int cardColor = (Nr - 11) / 13;
 
-        if (cardColor == 0)    return CardColor.Club;
-        if (cardColor == 1)    return CardColor.Diamonds;
-        if (cardColor == 2)    return CardColor.Hearts;
-        if (cardColor == 3)    return CardColor.Spades;
+        if (cardColor == 0)    return CardColor.CLUB;
+        if (cardColor == 1)    return CardColor.DIAMONDS;
+        if (cardColor == 2)    return CardColor.HEARTS;
+        if (cardColor == 3)    return CardColor.SPADES;
 
-        return (CardColor.Undefined);
+        return (CardColor.UNDEFINED_COLOR);
     }
 
     /**
