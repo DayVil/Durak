@@ -16,9 +16,6 @@ public class GameManager {
      */
     public static CardStack cardStack;
     private final List<Player> player;
-    /// For Debugging
-    Player play;
-    ///
 
     //TODO init game into it's own function.
 
@@ -35,15 +32,6 @@ public class GameManager {
         /// Make function
         cardStack = new CardStack();
         cardStack.shuffleList();
-        ///
-
-        /// Test Here
-        this.play = new Player(4, "claus");
-        System.out.println(cardStack);
-        System.out.println(play);
-        this.play.drawCards(10, cardStack);
-        System.out.println(cardStack);
-        System.out.println(play);
         ///
     }
 

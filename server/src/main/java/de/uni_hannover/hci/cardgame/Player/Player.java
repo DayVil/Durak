@@ -39,9 +39,15 @@ public class Player {
         this.name = name;
     }
 
+    public int getAmountOfCards() {
+        return this.handCards.size();
+    }
+
     // FIXME: Null is not allowed throws exception.
+
     /**
      * Draws one Card and pops it from the card stack.
+     *
      * @param stack the card stack to be drawn and popped from.
      */
     private void drawCard(CardStack stack) {
