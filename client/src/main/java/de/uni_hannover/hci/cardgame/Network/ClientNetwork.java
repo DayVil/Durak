@@ -15,7 +15,7 @@ public class ClientNetwork
     private static Socket clientSocket_ = null;
     private static BufferedWriter bufferOut_ = null;
     private static BufferedReader bufferIn_ = null;
-    private static int port_ = 8000;
+//    private static int port_ = 8000;
     private static String ip_ ="";
     private static boolean loggedIn_ = false;
 
@@ -34,7 +34,7 @@ public class ClientNetwork
         return bufferIn_;
     }
 
-    public static boolean startConnection(String ip, String password, String user)
+    public static boolean startConnection(String ip, String port, String password, String user)
     {
         if (loggedIn_)
         {
@@ -46,9 +46,7 @@ public class ClientNetwork
             ButtonType buttonTypeNo = new ButtonType("No");
             alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
             alert.setResizable(true);
-            alert.onShownProperty().addListener(e -> {
-                Platform.runLater(() -> alert.setResizable(false));
-            });
+            alert.onShownProperty().addListener(e -> Platform.runLater(() -> alert.setResizable(false)));
             Optional<ButtonType> result = alert.showAndWait();
 
             if (result.get() == buttonTypeNo) return true;
@@ -57,7 +55,7 @@ public class ClientNetwork
 
         try
         {
-            clientSocket_ = new Socket(ip, port_);
+            clientSocket_ = new Socket(ip, Integer.parseInt(port));
         }
         catch (IOException e)
         {
@@ -66,9 +64,7 @@ public class ClientNetwork
             alert.setHeaderText("No connection to server");
             alert.setContentText("Please check the IP-address and your internet connection");
             alert.setResizable(true);
-            alert.onShownProperty().addListener(ebox -> {
-                Platform.runLater(() -> alert.setResizable(false));
-            });
+            alert.onShownProperty().addListener(ebox -> Platform.runLater(() -> alert.setResizable(false)));
             alert.showAndWait();
             return false;
         }
@@ -86,9 +82,7 @@ public class ClientNetwork
             alert.setHeaderText("Could not establish read-write stream");
             alert.setContentText("Please check the IP-address and your internet connection");
             alert.setResizable(true);
-            alert.onShownProperty().addListener(ebox -> {
-                Platform.runLater(() -> alert.setResizable(false));
-            });
+            alert.onShownProperty().addListener(ebox -> Platform.runLater(() -> alert.setResizable(false)));
             alert.showAndWait();
             return false;
         }
@@ -106,9 +100,7 @@ public class ClientNetwork
             alert.setHeaderText("Server refused connection");
             alert.setContentText("Please check credentials");
             alert.setResizable(true);
-            alert.onShownProperty().addListener(e -> {
-                Platform.runLater(() -> alert.setResizable(false));
-            });
+            alert.onShownProperty().addListener(e -> Platform.runLater(() -> alert.setResizable(false)));
             alert.showAndWait();
             return false;
         }
@@ -120,9 +112,7 @@ public class ClientNetwork
             alert.setHeaderText("Server send incorrect answer");
             alert.setContentText("Please check IP-address");
             alert.setResizable(true);
-            alert.onShownProperty().addListener(e -> {
-                Platform.runLater(() -> alert.setResizable(false));
-            });
+            alert.onShownProperty().addListener(e -> Platform.runLater(() -> alert.setResizable(false)));
             alert.showAndWait();
             return false;
         }

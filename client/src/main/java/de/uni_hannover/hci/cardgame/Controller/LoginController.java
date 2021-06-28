@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -37,6 +38,9 @@ public class LoginController implements ControllerInterface {
     private TextField IPAddress;
 
     @FXML
+    private TextField Port;
+
+    @FXML
     private PasswordField Password;
 
     @FXML
@@ -46,10 +50,14 @@ public class LoginController implements ControllerInterface {
     private Button PlayButton;
 
     @FXML
+    private VBox TextFieldVAlign;
+
+    @FXML
     private Button Back;
 
     @FXML
     private Label label;
+
 
     @FXML
     private void goToHome() {
@@ -67,11 +75,16 @@ public class LoginController implements ControllerInterface {
         IPAddress = (TextField) scene.lookup("#IPAddress");
         String ip = IPAddress.getText();
 
+        Port = (TextField) scene.lookup("#Port");
+        String port = Port.getText();
+
         UserName = (TextField) scene.lookup("#UserName");
         String user = UserName.getText();
 
         Password = (PasswordField) scene.lookup("#Password");
         String password = Password.getText();
+
+
 
 
         boolean isValidIP = validateIP(ip);
@@ -84,9 +97,7 @@ public class LoginController implements ControllerInterface {
             alert.setHeaderText("Invalid IP");
             alert.setContentText("Use the format xxx.xxx.xxx.xxx \nExample: 192.168.000.001");
             alert.setResizable(true);
-            alert.onShownProperty().addListener(e -> {
-                Platform.runLater(() -> alert.setResizable(false));
-            });
+            alert.onShownProperty().addListener(e -> Platform.runLater(() -> alert.setResizable(false)));
             alert.showAndWait();
         } else if (!isValidUserName) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -94,9 +105,7 @@ public class LoginController implements ControllerInterface {
             alert.setHeaderText("Invalid User Name");
             alert.setContentText("Please enter a Username");
             alert.setResizable(true);
-            alert.onShownProperty().addListener(e -> {
-                Platform.runLater(() -> alert.setResizable(false));
-            });
+            alert.onShownProperty().addListener(e -> Platform.runLater(() -> alert.setResizable(false)));
             alert.showAndWait();
         } else if (!isValidPassword) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -104,12 +113,10 @@ public class LoginController implements ControllerInterface {
             alert.setHeaderText("Invalid Server Password");
             alert.setContentText("PLease enter the servers password");
             alert.setResizable(true);
-            alert.onShownProperty().addListener(e -> {
-                Platform.runLater(() -> alert.setResizable(false));
-            });
+            alert.onShownProperty().addListener(e -> Platform.runLater(() -> alert.setResizable(false)));
             alert.showAndWait();
         } else {
-            boolean success = ClientNetwork.startConnection(ip, password, user);
+            boolean success = ClientNetwork.startConnection(ip, port, password, user);
             if (success) fxmlNavigator.loadFxml(fxmlNavigator.GAME);
         }
     }
@@ -152,17 +159,20 @@ public class LoginController implements ControllerInterface {
         Content.setPrefHeight(sH);
         Content.setPrefWidth(sW / 3.0);
 
-        IPAddress = (TextField) scene.lookup("#IPAddress");
-        NodeResizer.resizeObject(sW, sH, IPAddress, true);
+//        IPAddress = (TextField) scene.lookup("#IPAddress");
+//        NodeResizer.resizeObject(sW, sH, IPAddress, true);
+//
+//        Password = (PasswordField) scene.lookup("#Password");
+//        NodeResizer.resizeObject(sW, sH, Password, true);
+//
+//        UserName = (TextField) scene.lookup("#UserName");
+//        NodeResizer.resizeObject(sW, sH, UserName, true);
+//
+//        label = (Label) scene.lookup("#label");
+//        NodeResizer.resizeObject(sW, sH, label, true);
 
-        Password = (PasswordField) scene.lookup("#Password");
-        NodeResizer.resizeObject(sW, sH, Password, true);
-
-        UserName = (TextField) scene.lookup("#UserName");
-        NodeResizer.resizeObject(sW, sH, UserName, true);
-
-        label = (Label) scene.lookup("#label");
-        NodeResizer.resizeObject(sW, sH, label, true);
+        TextFieldVAlign = (VBox) scene.lookup("#TextFieldVAlign");
+        NodeResizer.resizeObject(sW, sH, TextFieldVAlign, true);
 
         Back = (Button) scene.lookup("#Back");
         NodeResizer.resizeObject(sW, sH, Back, true);
