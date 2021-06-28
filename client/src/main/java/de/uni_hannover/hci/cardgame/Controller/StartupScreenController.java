@@ -29,10 +29,10 @@ public class StartupScreenController implements ControllerInterface
 	@FXML
 	private Button StartupContinueButton;
 
-	private ImageView iv1;
-	private ImageView iv2;
-	private ImageView iv3;
-	private ImageView iv4;
+	private static ImageView iv1;
+	private static ImageView iv2;
+	private static ImageView iv3;
+	private static ImageView iv4;
 
 	@FXML
 	private void goToLoading()
@@ -86,16 +86,16 @@ public class StartupScreenController implements ControllerInterface
 			StartupPressX = (Text) scene.lookup("#StartupPressX");
 			NodeResizer.resizeObject(sW, sH, StartupPressX, true);
 
-			iv1 = (ImageView) scene.lookup("#iv1");
-			NodeResizer.resizeObject(sW, sH, iv1, true);
+			//iv1 = (ImageView) scene.lookup("#iv1");
+			if(iv1 != null) NodeResizer.resizeObject(sW, sH, iv1, true);
 
-			iv2 = (ImageView) scene.lookup("#iv2");
+			//iv2 = (ImageView) scene.lookup("#iv2");
 			NodeResizer.resizeObject(sW, sH, iv2, true);
 
-			iv3 = (ImageView) scene.lookup("#iv3");
+			//iv3 = (ImageView) scene.lookup("#iv3");
 			NodeResizer.resizeObject(sW, sH, iv3, true);
 
-			iv4 = (ImageView) scene.lookup("#iv4");
+			//iv4 = (ImageView) scene.lookup("#iv4");
 			NodeResizer.resizeObject(sW, sH, iv4, true);
 
 			NodeResizer.originalSceneWidth = sW;
@@ -124,7 +124,7 @@ public class StartupScreenController implements ControllerInterface
 		iv1.setPreserveRatio(true);
 		iv1.setFitWidth(75);
 		iv1.setRotate(330.0);
-		iv1.setId("iv1");
+		//iv1.setId("iv1");
 		Startup.getChildren().add(iv1);
 
 		iv2 = new ImageView();
@@ -136,7 +136,7 @@ public class StartupScreenController implements ControllerInterface
 		iv2.setPreserveRatio(true);
 		iv2.setFitWidth(75);
 		iv2.setRotate(350.0);
-		iv2.setId("iv2");
+		//iv2.setId("iv2");
 		Startup.getChildren().add(iv2);
 
 		iv3 = new ImageView();
@@ -148,7 +148,7 @@ public class StartupScreenController implements ControllerInterface
 		iv3.setPreserveRatio(true);
 		iv3.setFitWidth(75);
 		iv3.setRotate(10.0);
-		iv3.setId("iv3");
+		//iv3.setId("iv3");
 		Startup.getChildren().add(iv3);
 
 		iv4 = new ImageView();
@@ -160,7 +160,7 @@ public class StartupScreenController implements ControllerInterface
 		iv4.setPreserveRatio(true);
 		iv4.setFitWidth(75);
 		iv4.setRotate(30.0);
-		iv4.setId("iv4");
+		//iv4.setId("iv4");
 		Startup.getChildren().add(iv4);
 
 		PauseTransition pause = new PauseTransition(Duration.millis(10));

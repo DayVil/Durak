@@ -1,13 +1,11 @@
 package de.uni_hannover.hci.cardgame;
 
-import de.uni_hannover.hci.cardgame.Clients.Client;
 import de.uni_hannover.hci.cardgame.Clients.ClientManager;
 
 import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class ServerNetwork
@@ -60,14 +58,14 @@ public class ServerNetwork
                 Socket socket = serverSocket.accept();
                 InetAddress inetAddress = socket.getInetAddress();
 
-                System.out.printf("host name: " + inetAddress.getHostName() + "\n\tIP address " + inetAddress.getHostAddress() + "\n\n");
+                System.out.print("host name: " + inetAddress.getHostName() + "\n\tIP address " + inetAddress.getHostAddress() + "\n\n");
 
                 socketHandler task = new socketHandler(socket);
                 new Thread(task).start();
             }
             catch (IOException ex)
             {
-                System.out.printf(ex.toString());
+                System.out.print(ex.toString());
             }
         }
     }
@@ -102,11 +100,16 @@ public class ServerNetwork
                     {
                         System.out.printf("Got Message %s from Client %d\n", line, id);
 
-                        if (line.equals("disconnect"))
+                        if(line.equals("disconnect"))
                         {
                             clientManager.removeClient(id);
                             // TODO: Start a bot player in its place
                             break;
+                        }
+
+                        if(line.equals("Gimme Gamestate"))
+                        {
+                            sendMessage(id, "12 1 2 1 Werner 3 0 1 25 Sebastian 5 1 0 5 12 13 25 26 43 5 14 15 16 17 18 1");
                         }
 
                         if(!loggedIn && line.length() > 10 + serverPassword.length())

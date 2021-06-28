@@ -3,7 +3,7 @@ package de.uni_hannover.hci.cardgame.Cards;
 public enum CardColor
 {
     Undefined,
-    Club,
+    Clubs,
     Diamonds,
     Hearts,
     Spades,

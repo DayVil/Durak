@@ -56,30 +56,22 @@ public class CardStack {
         return stack.size();
     }
 
-    //FIXME: crashes when there are no cards
-
     /**
      * Draws the first card of the deck.
      *
      * @return Draws the first card of the deck. Else returns null if List is empty!
      */
-    public Integer getFirstCard() {
-        try {
-            return stack.get(0);
-        } catch (IndexOutOfBoundsException e) {
-            e.printStackTrace();
-            return null;
-        }
+    public Integer getFirstCard()
+    {
+        if(!stack.isEmpty()) return stack.get(0);
+        else return null;
     }
 
     /**
      * Pops the first card of the deck.
      */
-    public void popFirstCard() {
-        try {
-            stack.remove(0);
-        } catch (IndexOutOfBoundsException e) {
-            e.printStackTrace();
-        }
+    public void popFirstCard()
+    {
+        if(!stack.isEmpty()) stack.remove(0);
     }
 }

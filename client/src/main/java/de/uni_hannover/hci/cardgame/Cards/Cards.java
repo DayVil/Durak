@@ -106,4 +106,21 @@ public class Cards
         if(specialTexture == SpecialTexture.BlancCard) return "/textures/cards/card_blanc.png";
         return null;
     }
+
+
+    /**
+     * Used to convert the servers Color ID into a usable SpecialTexture Enum
+     *
+     * @param id the id of the Color used by the server to distinguish card colors
+     * @return The enum corresponding to a SpecialTexture
+     */
+    public static CardColor intToCardColor(int id)
+    {
+        if(id == 0) return CardColor.Clubs;
+        if(id == 1) return CardColor.Diamonds;
+        if(id == 2) return CardColor.Hearts;
+        if(id == 3) return CardColor.Spades;
+        return CardColor.Undefined;
+    }
+
 }
