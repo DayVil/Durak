@@ -8,11 +8,10 @@ public class GameServerMain
     public static void main(String[] args)
     {
         /// UNSERE KLEINE SPIELBOX
-        GameManager man = new GameManager();
+        String[] str = {"claus, steven, fabian"};
+        GameManager man = new GameManager(str);
         System.out.println(man.gameBoardState(1));
         ///
-
-
 
 
         ServerNetwork serverNetwork = new ServerNetwork();

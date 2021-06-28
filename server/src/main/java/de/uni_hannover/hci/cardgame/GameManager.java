@@ -3,24 +3,39 @@ package de.uni_hannover.hci.cardgame;
 import de.uni_hannover.hci.cardgame.Cards.CardStack;
 import de.uni_hannover.hci.cardgame.Player.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * This contains every function to execute the game and manage it.
  */
 public class GameManager {
-    /** The card stack where everyone draws from.*/
+    /**
+     * The card stack where everyone draws from.
+     */
     public static CardStack cardStack;
+    private final List<Player> player;
     /// For Debugging
     Player play;
     ///
 
+    //TODO init game into it's own function.
+
     /**
      * Inits the game.
      */
-    public GameManager()
-    {
+    public GameManager(String[] args) {
+        player = new ArrayList<>();
+
+        for (int i = 0; i < args.length; i++) {
+            player.add(new Player(i, args[i]));
+        }
+
+        /// Make function
         cardStack = new CardStack();
         cardStack.shuffleList();
+        ///
 
         /// Test Here
         this.play = new Player(4, "claus");
@@ -39,11 +54,11 @@ public class GameManager {
      */
     public String gameBoardState(int playerId)
     {
-        return String.format("drawPileHeight: {12}; trump: {3}; Player list: " +
+        return "drawPileHeight: {12}; trump: {3}; Player list: " +
                 "[id :{2}, name: {yann}, handCardNumber: {4}, attacker: {false}, defender: {false}; " +
                 "id :{1}, name: {patrick}, handCardNumber: {3}, attacker: {true}, defender: {false}; " +
                 "id :{0}, name: {robert}, handCardNumber: {7}, attacker: {false}, defender: {true}]; " +
                 "Visible Cards: [{13,15}; {27,32}; {49,50}; {52,-1};]; " +
-                "Hand cards: [{11}; {12}; {14}]");
+                "Hand cards: [{11}; {12}; {14}]";
     }
 }
