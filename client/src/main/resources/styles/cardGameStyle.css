@@ -1,4 +1,4 @@
-/**
+/**at runtime
 * This css file defines the styles of the card game
 * @author Robert Witteck &lt;robert.witteck@stud.uni-hannover.de&gt;
 * @Version   : Robert Witteck
@@ -101,7 +101,7 @@
 
 .button {
     -fx-text-fill: -text-color;
-    -fx-background-color: #000000, linear-gradient(#7ebcea, #2f4b8f), linear-gradient(#426ab7, #263e75), linear-gradient(#395cab, #223768);
+    -fx-background-color: #000000, linear-gradient(-dark, -bright), linear-gradient(-dark, -bright), linear-gradient(-bright, -dark);
     -fx-background-insets: 0, 1, 2, 3;
     -fx-background-radius: 3, 2, 2, 2;
     -fx-padding: 12 30 12 30;

@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 
 <Pane fx:id="GameBoard" prefHeight="400.0" prefWidth="600.0" stylesheets="@styles/cardGameStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.uni_hannover.hci.cardgame.Controller.GameBoardController">
-      <Button fx:id="Take" layoutX="30.0" layoutY="338.0" mnemonicParsing="false" text="Take" />
+      <Button fx:id="Take" layoutX="30.0" layoutY="338.0" mnemonicParsing="false" text="Take" onAction="#actionTake"/>
       <Button fx:id="Pass" layoutX="464.0" layoutY="338.0" mnemonicParsing="false" onAction="#debugrequestgamestate" text="Pass DEBUG" />
    <Pane fx:id="DeckBackground" layoutX="480.0" layoutY="140.0" prefHeight="120.0" prefWidth="80.0" style="-fx-background-color: black;">
             <ImageView fx:id="leftoverDeck" fitHeight="70.0" fitWidth="40.0" layoutX="20.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
