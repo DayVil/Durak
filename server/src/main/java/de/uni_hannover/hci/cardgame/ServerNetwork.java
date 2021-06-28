@@ -109,7 +109,33 @@ public class ServerNetwork
 
                         if(line.equals("Gimme Gamestate"))
                         {
-                            sendMessage(id, "12 1 2 1 Werner 3 0 1 25 Sebastian 5 1 0 5 12 13 25 26 43 5 14 15 16 17 18 1");
+                            sendMessage(id, "12 " +    //StackSize
+                                    "1 " +                  //TrumpColor
+                                    "2 " +                  //PlayerCount
+                                    "1 " +                  //Player ID
+                                    "Werner " +             //PLayerName
+                                    "3 " +                  //PlayerHandcards
+                                    "0 " +                  //IsAttacker
+                                    "1 " +                  //IsDefender
+                                    "25 " +                 //PlayerID
+                                    "Sebastian " +          //PLayerName
+                                    "5 " +                  //PlayerHandcards
+                                    "1 " +                  //IsAttacker
+                                    "0 " +                  //IsDefender
+                                    "5 " +                  //VisibleCardsCount
+                                    "12 " +                 //VisibleCard
+                                    "13 " +                 //VisibleCard
+                                    "25 " +                 //VisibleCard
+                                    "26 " +                 //VisibleCard
+                                    "43 " +                 //VisibleCard
+                                    "5 " +                  //MyHandCardCount
+                                    "14 " +                 //HandCard
+                                    "15 " +                 //HandCard
+                                    "16 " +                 //HandCard
+                                    "17 " +                 //HandCard
+                                    "18 " +                 //HandCard
+                                    "1");                   //WasSuccessful
+
                         }
 
                         if(!loggedIn && line.length() > 10 + serverPassword.length())
