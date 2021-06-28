@@ -10,6 +10,7 @@ public class GameServerMain
         /// UNSERE KLEINE SPIELBOX
         String[] str = {"claus, steven, fabian"};
         GameManager man = new GameManager(str);
+        man.initGame();
         ///
 
 

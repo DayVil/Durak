@@ -51,18 +51,28 @@ public class Player {
      * @param stack the card stack to be drawn and popped from.
      */
     private void drawCard(CardStack stack) {
-        handCards.add(stack.getFirstCard());
-        stack.popFirstCard();
+
+        try {
+            handCards.add(stack.getFirstCard());
+            stack.popFirstCard();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
+    //FIXME: Cannot draw to 0
     /**
      * Draws cards and pops it from the card stack.
      * @param amount amount to be drawn.
      * @param stack the stack to be drawn and popped from.
      */
     public void drawCards(int amount, CardStack stack) {
-        for (int i = 0; i < amount; i++) {
-            drawCard(stack);
+        try {
+            for (int i = 0; i < amount; i++) {
+                drawCard(stack);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

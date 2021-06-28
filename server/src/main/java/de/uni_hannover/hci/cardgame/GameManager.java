@@ -24,24 +24,37 @@ public class GameManager {
      */
     public GameManager(String[] args) {
         player = new ArrayList<>();
+        cardStack = new CardStack();
 
         for (int i = 0; i < args.length; i++) {
             player.add(new Player(i, args[i]));
         }
 
         /// Make function
-        cardStack = new CardStack();
         cardStack.shuffleList();
         ///
     }
 
+    public void initGame() {
+        ///
+        Player play = this.player.get(0);
+        //play.drawCards(52, cardStack); // error
+        System.out.println(cardStack);
+        System.out.println(play);
+        ///
+
+        if (cardStack.getFirstCard() == null) {
+            System.out.println("Empty!");
+        }
+    }
+
     /**
      * The format the the client can process.
+     *
      * @param playerId id of the current player.
      * @return returns the state of the game.
      */
-    public String gameBoardState(int playerId)
-    {
+    public String gameBoardState(int playerId) {
         return "drawPileHeight: {12}; trump: {3}; Player list: " +
                 "[id :{2}, name: {yann}, handCardNumber: {4}, attacker: {false}, defender: {false}; " +
                 "id :{1}, name: {patrick}, handCardNumber: {3}, attacker: {true}, defender: {false}; " +
