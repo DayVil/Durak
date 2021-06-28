@@ -159,20 +159,20 @@ public class LoginController implements ControllerInterface {
         Content.setPrefHeight(sH);
         Content.setPrefWidth(sW / 3.0);
 
-//        IPAddress = (TextField) scene.lookup("#IPAddress");
-//        NodeResizer.resizeObject(sW, sH, IPAddress, true);
-//
-//        Password = (PasswordField) scene.lookup("#Password");
-//        NodeResizer.resizeObject(sW, sH, Password, true);
-//
-//        UserName = (TextField) scene.lookup("#UserName");
-//        NodeResizer.resizeObject(sW, sH, UserName, true);
-//
-//        label = (Label) scene.lookup("#label");
-//        NodeResizer.resizeObject(sW, sH, label, true);
+        IPAddress = (TextField) scene.lookup("#IPAddress");
+        NodeResizer.resizeObject(sW, sH, IPAddress, true);
 
-        TextFieldVAlign = (VBox) scene.lookup("#TextFieldVAlign");
-        NodeResizer.resizeObject(sW, sH, TextFieldVAlign, true);
+        Port = (TextField) scene.lookup("#Port");
+        NodeResizer.resizeObject(sW, sH, Port, true);
+
+        Password = (PasswordField) scene.lookup("#Password");
+        NodeResizer.resizeObject(sW, sH, Password, true);
+
+        UserName = (TextField) scene.lookup("#UserName");
+        NodeResizer.resizeObject(sW, sH, UserName, true);
+
+        label = (Label) scene.lookup("#label");
+        NodeResizer.resizeObject(sW, sH, label, true);
 
         Back = (Button) scene.lookup("#Back");
         NodeResizer.resizeObject(sW, sH, Back, true);

@@ -54,6 +54,13 @@
     -fx-background-color: -bright;
 }
 
+.text-field {
+}
+.text-field:focused{
+    -fx-background-insets: 0, 0, 0, 0;
+    -fx-background-radius: 7, 6, 4, 3;
+}
+
 .titled-pane {
     -fx-mark-color: -standard;
     -fx-mark-highlight-color: transparent;
