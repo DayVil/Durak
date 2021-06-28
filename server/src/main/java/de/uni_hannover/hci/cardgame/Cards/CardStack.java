@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
+//TODO: implement checker to look if list is empty
 /**
  * Creates a card stack between the values: int 11 - 63
  */
@@ -31,12 +31,12 @@ public class CardStack {
      */
     @Override
     public String toString() {
-        String str = "";
+        StringBuilder str = new StringBuilder();
         for (int x:
              this.stack) {
-            str += String.format("Colour: %s\tCValue: %s\tValue: %s\n", Cards.getColor(x), Cards.getCardValue(x), Cards.getCard(x));
+            str.append(String.format("Colour: %s\tCValue: %s\tValue: %s\n", Cards.getColor(x), Cards.getCardValue(x), Cards.getCard(x)));
         }
-        return str;
+        return str.toString();
     }
 
     /**
@@ -49,24 +49,37 @@ public class CardStack {
 
     /**
      * Size of the deck.
+     *
      * @return Size of the deck.
      */
     public int remainingCards() {
         return stack.size();
     }
 
+    //FIXME: crashes when there are no cards
+
     /**
      * Draws the first card of the deck.
-     * @return Draws the first card of the deck.
+     *
+     * @return Draws the first card of the deck. Else returns null if List is empty!
      */
     public Integer getFirstCard() {
-        return stack.get(0);
+        try {
+            return stack.get(0);
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
      * Pops the first card of the deck.
      */
     public void popFirstCard() {
-        stack.remove(0);
+        try {
+            stack.remove(0);
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+        }
     }
 }

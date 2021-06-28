@@ -6,7 +6,7 @@ import de.uni_hannover.hci.cardgame.Player.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-
+//TODO add player
 /**
  * This contains every function to execute the game and manage it.
  */
@@ -23,26 +23,29 @@ public class GameManager {
      * Inits the game.
      */
     public GameManager(String[] args) {
-        player = new ArrayList<>();
+        this.player = new ArrayList<>();
         cardStack = new CardStack();
 
         for (int i = 0; i < args.length; i++) {
-            player.add(new Player(i, args[i]));
+            this.player.add(new Player(i, args[i]));
         }
-
         /// Make function
         cardStack.shuffleList();
         ///
     }
 
+    //FIXME: Stack may be empty
+    //TODO: Implement
     public void initGame() {
         ///
-        Player play = this.player.get(0);
-        //play.drawCards(52, cardStack); // error
+        System.out.println(this.player);
+        Player play = this.player.get(1);
+        play.drawCards(52, cardStack); // error
         System.out.println(cardStack);
         System.out.println(play);
         ///
 
+        //TODO: replace with checker
         if (cardStack.getFirstCard() == null) {
             System.out.println("Empty!");
         }

@@ -10,11 +10,17 @@ import java.util.List;
  * This represents one of the 8 possible players.
  */
 public class Player {
-    /** Id of the player */
+    /**
+     * Id of the player
+     */
     private int id;
-    /** Custom name of the player. */
+    /**
+     * Custom name of the player.
+     */
     private String name;
-    /** The handcarts of the player.*/
+    /**
+     * The handcarts of the player. THIS MAY NEVER BE FINAL
+     */
     private final List<Integer> handCards;
 
     public Player(int id, String name) {
@@ -44,6 +50,7 @@ public class Player {
     }
 
     // FIXME: Null is not allowed throws exception.
+    // FIXME: The app crashes if the card stack is empty and you try to draw from it.
 
     /**
      * Draws one Card and pops it from the card stack.
@@ -51,28 +58,24 @@ public class Player {
      * @param stack the card stack to be drawn and popped from.
      */
     private void drawCard(CardStack stack) {
-
         try {
-            handCards.add(stack.getFirstCard());
+            int firstCard = stack.getFirstCard();
+            handCards.add(firstCard);
             stack.popFirstCard();
-        } catch (Exception e) {
+        } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
         }
+
     }
 
-    //FIXME: Cannot draw to 0
     /**
      * Draws cards and pops it from the card stack.
      * @param amount amount to be drawn.
      * @param stack the stack to be drawn and popped from.
      */
     public void drawCards(int amount, CardStack stack) {
-        try {
-            for (int i = 0; i < amount; i++) {
-                drawCard(stack);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        for (int i = 0; i < amount; i++) {
+            drawCard(stack);
         }
     }
 
@@ -80,6 +83,6 @@ public class Player {
     // TODO: Correct formatting.
     @Override
     public String toString() {
-        return String.format("ID: %s\tName: %s\t Cards in hand: %s", getId(), getName(), handCards.toString());
+        return String.format("ID: %s\tName: %s\tCards in hand: %s\n", getId(), getName(), handCards.toString());
     }
 }
