@@ -127,7 +127,7 @@ public class GameBoardController implements ControllerInterface {
 
         int handSize = parsedServerMessage.getHandCards_().size();
         for (int i = 0; i < handSize; i++) {
-            drawCard(parsedServerMessage.getHandCards_().get(i), 100 + i * 10, 100, false /*true if not debugging*/);
+            drawCard(parsedServerMessage.getHandCards_().get(i), 100 + i * 10, 100, true /*true if not debugging*/);
         }
 
 
@@ -146,7 +146,7 @@ public class GameBoardController implements ControllerInterface {
             imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    cardClicked();
+                    cardClicked(cardNumber);
                 }
             });
         }
@@ -167,7 +167,7 @@ public class GameBoardController implements ControllerInterface {
         Scene scene = stage.getScene();
 
         leftoverDeck = (ImageView) scene.lookup("#leftoverDeck");
-        Image image = new Image(Cards.getSpecialTexture(SpecialTexture.BackLowsat), 75, 200, true, true);
+        Image image = new Image(Cards.getSpecialTexture(SpecialTexture.BackLowsat), 200, 200, true, true);
         leftoverDeck.setImage(image);
         PauseTransition pause = new PauseTransition(Duration.millis(10));
         pause.setOnFinished
@@ -180,8 +180,8 @@ public class GameBoardController implements ControllerInterface {
         new Thread(task).start();
     }
 
-    public void cardClicked() {
-        ClientNetwork.sendMessage("11\n");
+    public void cardClicked( int nr) {
+        ClientNetwork.sendMessage(String.format("%d\n", nr));
     }
 
     public void debugrequestgamestate(ActionEvent actionEvent) {
