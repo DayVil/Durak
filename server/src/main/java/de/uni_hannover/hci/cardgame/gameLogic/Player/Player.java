@@ -62,7 +62,7 @@ public class Player
         isDefender_ = defender_;
     }
 
-    public ArrayList<Integer> getHandCards_()
+    private ArrayList<Integer> getHandCards_()
     {
         return handCards_;
     }
@@ -81,7 +81,7 @@ public class Player
     {
         if (stack == null || stack.remainingCards() == 0)
         {
-            System.out.printf("Stack was empty when trying to pull from stack\n");
+            System.out.print("Stack was empty when trying to pull from stack\n");
             return;
         }
         int firstCard = stack.getFirstCard();
@@ -100,6 +100,16 @@ public class Player
         {
             drawCard(stack);
         }
+    }
+
+    public String handCardsToString()
+    {
+        StringBuilder returnString = new StringBuilder();
+        for (Integer i: handCards_)
+        {
+            returnString.append(String.format("%s ", i));
+        }
+        return returnString.toString();
     }
 
     public boolean playCard(int card)

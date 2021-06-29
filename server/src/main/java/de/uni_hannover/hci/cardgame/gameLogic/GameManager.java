@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class GameManager {
     public static CardStack cardStack_;
     public static ArrayList<int[]> visibleCards_;
-    private ArrayList<Player> players_;
+    private final ArrayList<Player> players_;
     private CardColor trump_;
 
     // TODO init game into it's own function.
@@ -37,6 +37,10 @@ public class GameManager {
     //TODO: Implement
     public void sandBox() {
         /// SANDBOX
+        players_.get(0).drawCards(7, cardStack_);
+        int[] vis = {54, 60};
+        visibleCards_.add(vis);
+        System.out.println(gameBoardState(0));
         ///
     }
 
@@ -64,31 +68,7 @@ public class GameManager {
         return returnString.toString();
     }
 
-    private String handCardsAmountOfPLayerToString(int ID) {
-        for (Player p: players_) {
-            if (p.getId_() == ID) {
-                return String.format("%d ", p.getAmountOfHandCards());
-            }
-        }
-        return "-1";
-    }
-
-    private String handCardsToString(int ID)
-    {
-        StringBuilder returnString = new StringBuilder();
-        for (Player p: players_)
-        {
-            if(p.getId_() == ID)
-            {
-                for (Integer i: p.getHandCards_())
-                {
-                    returnString.append(String.format("%d ", i));
-                }
-            }
-        }
-        return returnString.append("-1").toString();
-    }
-
+    //FIXME: Some params are unsure. A LOT
     /**
      * The format the the client can process.
      *
@@ -97,14 +77,24 @@ public class GameManager {
      */
     public String gameBoardState(int playerId)
     {
-        String returnString = "drawPileHeight: {12}; trump: {3}; Player list: " +
-                "[id :{2}, name: {yann}, handCardNumber: {4}, attacker: {false}, defender: {false}; " +
-                "id :{1}, name: {patrick}, handCardNumber: {3}, attacker: {true}, defender: {false}; " +
-                "id :{0}, name: {robert}, handCardNumber: {7}, attacker: {false}, defender: {true}]; " +
-                "Visible Cards: [{13,15}; {27,32}; {49,50}; {52,-1};]; " +
-                "Hand cards: [{11}; {12}; {14}]";
-
-        return returnString;
+        StringBuilder returnString = new StringBuilder();
+        for (Player p: players_) {
+            if (p.getId_() == playerId) {
+                returnString.append(String.format("%s ", cardStack_.remainingCards()));     // StackSize
+                returnString.append(String.format("%s ", trump_));                          // Trump color (Is a color not an int?)
+                returnString.append(String.format("%s ", players_.size()));                 // Player count
+                returnString.append(String.format("%s ", p.getId_()));                      // Player count
+                returnString.append(String.format("%s ", p.getName_()));                    // Player name (Defender)
+                returnString.append(String.format("%s ", p.getAmountOfHandCards()));        // Player hand cards amount (Defender)
+                returnString.append(String.format("%s ", p.handCardsToString()));           // Player hand cards (Defender)
+                returnString.append(String.format("%s ", p.isAttacker_()));                 // Player is attacker (Defender)
+                returnString.append(String.format("%s ", p.isDefender_()));                 // Player is defender (Defender)
+                /// PART MISSING?
+                returnString.append(String.format("%s ", visibleCards_.size()));            // Amount of visible cards x2
+                returnString.append(String.format("%s ", visibleCardsToString()));          // Visible cards
+            }
+        }
+        return returnString.toString();
     }
 
 
