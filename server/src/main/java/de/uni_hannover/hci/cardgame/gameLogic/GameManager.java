@@ -7,14 +7,12 @@ import de.uni_hannover.hci.cardgame.gameLogic.Player.Player;
 
 import java.util.ArrayList;
 
-//TODO add player
 /**
  * This contains every function to execute the game and manage it.
  */
-public class GameManager
-{
+public class GameManager {
     public static CardStack cardStack_;
-    public static ArrayList<int[]> visibleCards_ = new ArrayList<>();
+    public static ArrayList<int[]> visibleCards_;
     private ArrayList<Player> players_;
     private CardColor trump_;
 
@@ -22,59 +20,29 @@ public class GameManager
     // TODO Validate cards
     // TODO Implement attack and defense turn classes
     // TODO Implement rest of game logic
-    public GameManager(int[] IDs)
-    {
+    public GameManager(int[] IDs) {
         this.players_ = new ArrayList<>();
         cardStack_ = new CardStack();
+        visibleCards_ = new ArrayList<>();
+
         // TODO: When done with DEBUGGING merge shuffle into constructor
         cardStack_.shuffleList();
-        trump_ = createTrump();
+        createTrump();
 
-        for (int i = 0; i < IDs.length; i++)
-        {
-            this.players_.add(new Player(IDs[i], "BHGUJZGDFUZGSAUJDGFSAUDGAUIJSGDAUS"));
+        for (int id: IDs) {
+            this.players_.add(new Player(id, "TestPlayer"));
         }
     }
 
     //TODO: Implement
-    public void initGame() {
+    public void sandBox() {
         /// SANDBOX
-        System.out.println(this.players_);
-        Player play = this.players_.get(1);
-        play.drawCards(52, cardStack_);
-        System.out.println(cardStack_);
-        System.out.println(trump_);
-        /*
-        System.out.println(play);
-        play.setAttacker_(true);
-        printVisibleCards();
-        System.out.println(play);
-        play.playCard(45);
-        printVisibleCards();
-        System.out.println(play);
-        play.setAttacker_(false);
-        play.setDefender_(true);
-        play.playCard(22);
-        printVisibleCards();
-        System.out.println(play);
-        play.setAttacker_(true);
-        play.setDefender_(false);
-        play.playCard(35);
-        printVisibleCards();
-        System.out.println(play);
-        play.setAttacker_(false);
-        play.setDefender_(true);
-        play.playCard(55);
-        printVisibleCards();
-        System.out.println(play);
-        */
         ///
     }
 
-    private CardColor createTrump()
+    private void createTrump()
     {
-        CardColor trump = Cards.getColor(cardStack_.getLastCard());
-        return trump;
+        trump_ = Cards.getColor(cardStack_.getLastCard());
     }
 
     private int countVisibleCards()
@@ -96,13 +64,10 @@ public class GameManager
         return returnString.toString();
     }
 
-    private String handCardsOfPLayerToString(int ID)
-    {
-        for (Player p: players_)
-        {
-            if(p.getId_() == ID)
-            {
-                return String.format("%d ",p.getAmountOfHandCards());
+    private String handCardsAmountOfPLayerToString(int ID) {
+        for (Player p: players_) {
+            if (p.getId_() == ID) {
+                return String.format("%d ", p.getAmountOfHandCards());
             }
         }
         return "-1";
@@ -111,7 +76,6 @@ public class GameManager
     private String handCardsToString(int ID)
     {
         StringBuilder returnString = new StringBuilder();
-        returnString.append("");
         for (Player p: players_)
         {
             if(p.getId_() == ID)
@@ -122,7 +86,7 @@ public class GameManager
                 }
             }
         }
-        return returnString.toString();
+        return returnString.append("-1").toString();
     }
 
     /**
@@ -144,8 +108,7 @@ public class GameManager
     }
 
 
-
-    // DEBUG FUNCTIONS
+    /// DEBUG FUNCTIONS
     public void printVisibleCards()
     {
         for (int[] arr:visibleCards_)
@@ -153,6 +116,6 @@ public class GameManager
             System.out.printf("%d ",arr[0]);
             System.out.printf("%d\n",arr[1]);
         }
-        System.out.printf("//////////////////////////////////\n");
+        System.out.print("//////////////////////////////////\n");
     }
 }

@@ -13,7 +13,7 @@ public class Player
 {
     private int id_; //is Equal to Client ID
     private String name_;
-    private ArrayList<Integer> handCards_;
+    private final ArrayList<Integer> handCards_;
     private boolean isAttacker_;
     private boolean isDefender_;
 
@@ -138,6 +138,6 @@ public class Player
     // TODO: Correct formatting.
     @Override
     public String toString() {
-        return String.format("ID: %s\tName: %s\tCards in hand: %s\n", getId_(), getName_(), handCards_.toString());
+        return String.format("ID: %s\tName: %s\tCards in hand: %s", getId_(), getName_(), handCards_.toString());
     }
 }
