@@ -1,9 +1,8 @@
-package de.uni_hannover.hci.cardgame.Player;
+package de.uni_hannover.hci.cardgame.gameLogic.Player;
 
 import de.uni_hannover.hci.cardgame.Cards.CardStack;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -21,7 +20,7 @@ public class Player {
     /**
      * The handcarts of the player. THIS MAY NEVER BE FINAL
      */
-    private final List<Integer> handCards;
+    private final ArrayList<Integer> handCards;
 
     public Player(int id, String name) {
         setId(id);

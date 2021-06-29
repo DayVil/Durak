@@ -1,7 +1,7 @@
-package de.uni_hannover.hci.cardgame;
+package de.uni_hannover.hci.cardgame.gameLogic;
 
 import de.uni_hannover.hci.cardgame.Cards.CardStack;
-import de.uni_hannover.hci.cardgame.Player.Player;
+import de.uni_hannover.hci.cardgame.gameLogic.Player.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +22,13 @@ public class GameManager {
     /**
      * Inits the game.
      */
-    public GameManager(String[] args) {
+    public GameManager(String[] args)
+    {
         this.player = new ArrayList<>();
         cardStack = new CardStack();
 
-        for (int i = 0; i < args.length; i++) {
+        for (int i = 0; i < args.length; i++)
+        {
             this.player.add(new Player(i, args[i]));
         }
         /// Make function

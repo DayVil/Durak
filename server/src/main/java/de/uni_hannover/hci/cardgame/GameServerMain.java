@@ -1,5 +1,7 @@
 package de.uni_hannover.hci.cardgame;
 
+import de.uni_hannover.hci.cardgame.gameLogic.GameManager;
+
 /**
  * The main class for the server.
  */
