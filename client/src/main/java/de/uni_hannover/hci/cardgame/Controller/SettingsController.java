@@ -173,4 +173,8 @@ public class SettingsController implements ControllerInterface
 				);
 		pause.play();
 	}
+
+	public void changeStyle(ActionEvent actionEvent) {
+		CSSController.changeTheme();
+	}
 }
