@@ -163,7 +163,7 @@ public class SettingsController implements ControllerInterface
 		Scene scene = stage.getScene();
 
 		picture = (ImageView) scene.lookup("#picture");
-		Image image = new Image("/textures/cards/card_back_lowsat.png", 75, 200, true, true);
+		Image image = new Image("/textures/cards/card_back_lowsat.png", 200, 200, true, true);
 		picture.setImage(image);
 
 		PauseTransition pause = new PauseTransition(Duration.millis(10));
