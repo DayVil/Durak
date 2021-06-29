@@ -1,9 +1,9 @@
 package de.uni_hannover.hci.cardgame.Controller;
 //This class will Control every action of the GameBoard.fxml file
 
-import de.uni_hannover.hci.cardgame.Cards.Cards;
-import de.uni_hannover.hci.cardgame.Cards.ParsedServerMessage;
-import de.uni_hannover.hci.cardgame.Cards.SpecialTexture;
+import de.uni_hannover.hci.cardgame.gameLogic.Cards.Cards;
+import de.uni_hannover.hci.cardgame.gameLogic.Cards.ParsedServerMessage;
+import de.uni_hannover.hci.cardgame.gameLogic.Cards.SpecialTexture;
 import de.uni_hannover.hci.cardgame.ControllerInterface;
 import de.uni_hannover.hci.cardgame.Network.ClientNetwork;
 import de.uni_hannover.hci.cardgame.NodeResizer;

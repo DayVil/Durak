@@ -1,4 +1,4 @@
-package de.uni_hannover.hci.cardgame.Cards;
+package de.uni_hannover.hci.cardgame.gameLogic.Cards;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,7 +52,8 @@ public class CardStack {
      *
      * @return Size of the deck.
      */
-    public int remainingCards() {
+    public int remainingCards()
+    {
         return stack.size();
     }
 
@@ -64,6 +65,12 @@ public class CardStack {
     public Integer getFirstCard()
     {
         if(!stack.isEmpty()) return stack.get(0);
+        else return null;
+    }
+
+    public Integer getLastCard()
+    {
+        if(!stack.isEmpty()) return stack.get(stack.size() - 1);
         else return null;
     }
 

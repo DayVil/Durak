@@ -1,13 +1,11 @@
-package de.uni_hannover.hci.cardgame.Cards;
+package de.uni_hannover.hci.cardgame.gameLogic.Cards;
 
 public class Cards
 {
     /**
-     *
      * @param Nr The Nr (index in the textures Array) of a Card
      *
      * @return One of the four Card-Colors or Undefined if the function is not called correctly
-     *
      * */
     public static CardColor getColor(int Nr)
     {

@@ -1,6 +1,7 @@
 package de.uni_hannover.hci.cardgame;
 
 import de.uni_hannover.hci.cardgame.Clients.ClientManager;
+import de.uni_hannover.hci.cardgame.gameLogic.GameManager;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -13,6 +14,7 @@ public class ServerNetwork
     ServerSocket serverSocket;
     ClientManager clientManager;
     String serverPassword = "TollerServer";
+    int maxPlayerCount = 2;
 
     void run()
     {
@@ -28,9 +30,20 @@ public class ServerNetwork
 
         clientManager = new ClientManager();
 
-        waitingForClients(3);
+        waitingForClients(maxPlayerCount);
+        int[] IDs = new int[maxPlayerCount];
+        for(int i = 0; i < maxPlayerCount; i++)
+        {
+            IDs[i] = i;
+        }
+        System.out.println("We Are FULL");
 
+        // FIXME: Server starts after maxplayers + 1?
         // TODO: startingGame();
+        /*
+        GameManager man = new GameManager(IDs);
+        man.initGame();
+        */
     }
 
     public boolean sendMessage(int clientID, String msg)
@@ -109,27 +122,27 @@ public class ServerNetwork
 
                         if(line.equals("Gimme Gamestate"))
                         {
-                            sendMessage(id, "12 " +    //StackSize
-                                    "1 " +                  //TrumpColor
-                                    "2 " +                  //PlayerCount
-                                    "1 " +                  //Player ID
-                                    "Werner " +             //PLayerName
-                                    "3 " +                  //PlayerHandcards
-                                    "0 " +                  //IsAttacker
-                                    "1 " +                  //IsDefender
+                            sendMessage(id, "12 " +    //StackSize         DONE
+                                    "1 " +                  //TrumpColor        DONE
+                                    "2 " +                  //PlayerCount       DONE
+                                    "1 " +                  //Player ID         DONE
+                                    "Werner " +             //PLayerName        DONE
+                                    "3 " +                  //PlayerHandcards   DONE
+                                    "0 " +                  //IsAttacker        DONE
+                                    "1 " +                  //IsDefender        DONE
                                     "25 " +                 //PlayerID
                                     "Sebastian " +          //PLayerName
                                     "5 " +                  //PlayerHandcards
                                     "1 " +                  //IsAttacker
                                     "0 " +                  //IsDefender
-                                    "5 " +                  //VisibleCardsCount
-                                    "12 " +                 //VisibleCard
+                                    "5 " +                  //VisibleCardsCount DONE
+                                    "12 " +                 //VisibleCard       DONE
                                     "13 " +                 //VisibleCard
                                     "25 " +                 //VisibleCard
                                     "26 " +                 //VisibleCard
                                     "43 " +                 //VisibleCard
-                                    "5 " +                  //MyHandCardCount
-                                    "14 " +                 //HandCard
+                                    "5 " +                  //MyHandCardCount   DONE
+                                    "14 " +                 //HandCard          DONE
                                     "15 " +                 //HandCard
                                     "16 " +                 //HandCard
                                     "17 " +                 //HandCard
