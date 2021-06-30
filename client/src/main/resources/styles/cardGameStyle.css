@@ -18,7 +18,7 @@
     -fx-background-image: url("../textures/board/muster1.png");
     -fx-background: #34383B;
     -fx-base: -standard;
-    -fx-font-size: 16px;
+    -fx-font-size: 13px;
     -fx-font-weight: lighter;
     -fx-selection-bar: -standard;
     -fx-selection-bar-non-focused: derive(-standard, 20%);
@@ -30,6 +30,15 @@
     -fx-background-radius: 10;
 }
 
+
+.labelHead {
+    -fx-text-fill: -text-color;
+    -fx-fill: -text-color;
+    -fx-background-color: -brightopac;
+    -fx-padding: 10 15 10 15;
+    -fx-font-size: 16px;
+    -fx-background-radius: 10;
+}
 
 .label {
     -fx-text-fill: -text-color;
@@ -45,7 +54,7 @@
 
 .menu-bar .menu:selected {
     -fx-background: -bright;
-    -fx-background-color: -standard;
+    -fx-background-color: -dark;
     -fx-text-fill: -text-color;
 }
 
@@ -111,7 +120,6 @@
     -fx-border-color: transparent;
     -fx-background-radius: 10;
     -fx-background-insets: 0, 0, 0, 1 0 0 0;
-    -fx-font-size: 13px;
     -fx-font-style: normal;
     -fx-effect: dropshadow(two-pass-box, rgba(0, 0, 0, 0.2), 2, 0, -2, 2);
     -fx-pref-height: -1;
@@ -513,7 +521,6 @@ http://fxexperience.com/2011/12/styling-fx-buttons-with-css/
 }
 
 .bt_windows7 {
-    #.button {
         -fx-background-color: #707070, linear-gradient(#fcfcfc, #f3f3f3), linear-gradient(#f2f2f2 0%, #ebebeb 49%, #dddddd 50%, #cfcfcf 100%);
         -fx-background-insets: 0, 1, 2;
         -fx-background-radius: 3, 2, 1;

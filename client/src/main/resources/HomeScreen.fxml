@@ -8,10 +8,7 @@
 <Pane fx:id="Home" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.uni_hannover.hci.cardgame.Controller.HomeScreenController">
    <Pane fx:id="Content" prefHeight="400.0" prefWidth="200.0" styleClass="pane">
             <Button fx:id="PlayButton" layoutX="10.0" layoutY="120.0" mnemonicParsing="false" onAction="#goToLogin" prefHeight="20.0" prefWidth="180.0" text="Play" textAlignment="CENTER" />
-            <Label fx:id="label" contentDisplay="CENTER" layoutX="55.0" layoutY="40.0" styleClass="label" text="Durak">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
+            <Label fx:id="label" contentDisplay="CENTER" layoutX="55.0" layoutY="25.0" styleClass="labelHead" text="Durak">
             </Label>
             <Button fx:id="SettingsButton" layoutX="10.0" layoutY="200.0" mnemonicParsing="false" onAction="#goToSettings" prefHeight="20.0" prefWidth="180.0" text="Settings" textAlignment="CENTER" />
          <Button fx:id="CreditButton" layoutX="10.0" layoutY="260.0" mnemonicParsing="false" onAction="#goToCredits" prefHeight="20.0" prefWidth="180.0" text="Credits" textAlignment="CENTER" />

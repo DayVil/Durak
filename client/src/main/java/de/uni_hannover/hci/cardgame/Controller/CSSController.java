@@ -10,23 +10,28 @@ import java.util.Objects;
 public class CSSController
 {
 
-    public static void changeTheme()
+    public static void changeTheme(String theme)
     {
+        String themeFile_;
+
         Stage stage = gameClient.stage_;
-        // The Pane of the Scene, that has got everything
         Scene scene = stage.getScene();
 
 
-        String themeBlue = Objects.requireNonNull(CSSController.class.getClassLoader().getResource("styles/cardGameStyle.css")).toExternalForm();
-        String themeRed = Objects.requireNonNull(CSSController.class.getClassLoader().getResource("styles/cardGameStyle_red.css")).toExternalForm();
+        if (theme.equals("ThemeBlue")) {
+            themeFile_ = Objects.requireNonNull(CSSController.class.getClassLoader().getResource("styles/cardGameStyle_blue.css")).toExternalForm();
+        }
+        else if (theme.equals("ThemeRed")) {
+            themeFile_ = Objects.requireNonNull(CSSController.class.getClassLoader().getResource("styles/cardGameStyle_red.css")).toExternalForm();
+        }
+        else{
+            themeFile_ = Objects.requireNonNull(CSSController.class.getClassLoader().getResource("styles/cardGameStyle.css")).toExternalForm();
+        }
 
         Pane Main = (Pane) scene.lookup("#fxmlHolder");
         Main.getStylesheets().clear();
-
-        Main.getStylesheets().add(themeRed);
-
+        Main.getStylesheets().add(themeFile_);
         stage.setScene(scene);
-        stage.setTitle("Test");
         stage.show();
     }
 }

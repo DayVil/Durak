@@ -50,7 +50,17 @@ public class SettingsController implements ControllerInterface
 
 	@FXML
 	private Label SoundLabel;
-	
+
+	@FXML
+	private SplitMenuButton Theme;
+
+	@FXML
+	private MenuItem ThemeBlue_;
+
+	@FXML
+	private MenuItem ThemeRed_;
+
+
 	@FXML
 	private void goToHome()
 	{
@@ -133,6 +143,9 @@ public class SettingsController implements ControllerInterface
 		Resolution = (SplitMenuButton) scene.lookup("#Resolution");
 		NodeResizer.resizeObject(sW, sH, Resolution, true);
 
+		Theme = (SplitMenuButton) scene.lookup("#Theme");
+		NodeResizer.resizeObject(sW, sH, Theme, true);
+
 		label = (Label) scene.lookup("#label");
 		NodeResizer.resizeObject(sW, sH, label, true);
 
@@ -174,7 +187,17 @@ public class SettingsController implements ControllerInterface
 		pause.play();
 	}
 
-	public void changeStyle() {
-		CSSController.changeTheme();
+	public void changeStyle(ActionEvent event) {
+		if(event.getSource().equals(ThemeBlue_))		// If event source (selected button of resolution changer) is res_1 (600 x 400) do following
+		{
+			CSSController.changeTheme("ThemeBlue");
+		}
+		else if (event.getSource().equals(ThemeRed_))	// If event source (selected button of resolution changer) is res_2 (1200 x 800) do following
+		{
+			CSSController.changeTheme("ThemeRed");
+		}
+		else {
+			CSSController.changeTheme("ThemeBlue");
+		}
 	}
 }
