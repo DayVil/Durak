@@ -15,6 +15,7 @@ public class ServerNetwork
     ClientManager clientManager;
     String serverPassword = "TollerServer";
     int maxPlayerCount = 2;
+    int clients_ = 0;
 
     void run()
     {
@@ -37,8 +38,6 @@ public class ServerNetwork
             IDs[i] = i;
         }
         System.out.println("We Are FULL");
-
-        // FIXME: Server starts after maxplayers + 1?
         // TODO: startingGame();
         /*
         GameManager man = new GameManager(IDs);
@@ -64,11 +63,12 @@ public class ServerNetwork
 
     void waitingForClients(int maxNumber)
     {
-        while(clientManager.getClientCount() < maxNumber)
+        while(clients_ < maxNumber)
         {
             try
             {
                 Socket socket = serverSocket.accept();
+                clients_++;
                 InetAddress inetAddress = socket.getInetAddress();
 
                 System.out.print("host name: " + inetAddress.getHostName() + "\n\tIP address " + inetAddress.getHostAddress() + "\n\n");
@@ -105,6 +105,7 @@ public class ServerNetwork
                 BufferedWriter outputBuffer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 
                 int id = clientManager.addClient(outputBuffer);
+                clients_ = clientManager.getClientCount();
                 while (true)
                 {
                     //System.out.printf("Waiting for message from Client: %d\n", id);
