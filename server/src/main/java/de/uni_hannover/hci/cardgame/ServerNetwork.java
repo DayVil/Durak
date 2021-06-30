@@ -117,6 +117,7 @@ public class ServerNetwork
                         if(line.equals("disconnect"))
                         {
                             clientManager.removeClient(id);
+                            clients_ = clientManager.getClientCount();
                             // TODO: Start a bot player in its place
                             break;
                         }
