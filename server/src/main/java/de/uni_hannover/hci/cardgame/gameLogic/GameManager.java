@@ -14,11 +14,10 @@ public class GameManager {
     public static CardStack cardStack_;
     public static ArrayList<int[]> visibleCards_;
     private final ArrayList<Player> players_;
-    private CardColor trump_;
+    private static CardColor trump_;
 
     // TODO init game into it's own function.
     // TODO Validate cards
-    // TODO Implement attack and defense turn classes
     // TODO Implement rest of game logic
     public GameManager(int[] IDs) {
         this.players_ = new ArrayList<>();
@@ -32,6 +31,11 @@ public class GameManager {
         for (int id: IDs) {
             this.players_.add(new Player(id, "TestPlayer"));
         }
+    }
+
+    public static CardColor getTrump_ ()
+    {
+        return trump_;
     }
 
     //TODO: Implement
@@ -51,8 +55,13 @@ public class GameManager {
 
     private int countVisibleCards()
     {
+        // per int-array there is 2 cards lying down, one from attacker and the second from defender
         int returnValue = visibleCards_.size() * 2;
+
+        // looks for empty spot of defenders card, if it is empty the amount is one less.
+        // as there is no way we have multiple open spots this is the only thing we have to check here
         if(visibleCards_.get(visibleCards_.size() - 1)[1] == -1) returnValue -= 1;
+
         return returnValue;
     }
 
@@ -68,7 +77,6 @@ public class GameManager {
         return returnString.toString();
     }
 
-    //FIXME: Some params are unsure. A LOT
     /**
      * The format the the client can process.
      *
@@ -82,7 +90,7 @@ public class GameManager {
         StringBuilder returnString = new StringBuilder();
 
         returnString.append(String.format("%s ", cardStack_.remainingCards()));                 // StackSize
-        returnString.append(String.format("%s ", trump_));                                      // Trump color (Is a color not an int?)
+        returnString.append(String.format("%s ", Cards.getColorInt(trump_)));                   // Trump color as Int
         returnString.append(String.format("%s ", players_.size()));                             // Player count
 
         for (Player p: players_)
@@ -90,8 +98,8 @@ public class GameManager {
             returnString.append(String.format("%s ", p.getId_()));                              // Player count
             returnString.append(String.format("%s ", p.getName_()));                            // Player name
             returnString.append(String.format("%s ", p.getAmountOfHandCards()));                // Player hand cards amount
-            returnString.append(String.format("%s ", p.isAttackerInt_()));                      // Player is attacker
-            returnString.append(String.format("%s ", p.isDefenderInt_()));                      // Player is defender
+            returnString.append(String.format("%s ", p.isAttackerInt_()));                      // Player is attacker as Int
+            returnString.append(String.format("%s ", p.isDefenderInt_()));                      // Player is defender as Int
 
 
         }
@@ -103,8 +111,8 @@ public class GameManager {
         {
             if (pID.getId_() == playerId)
             {
-                returnString.append(String.format("%s ", pID.getAmountOfHandCards()));          // Player hand cards amount
-                returnString.append(String.format("%s", pID.handCardsToString()));              // Player hand cards
+                returnString.append(String.format("%s ", pID.getAmountOfHandCards()));          // specified players hand cards amount
+                returnString.append(String.format("%s", pID.handCardsToString()));              // specified players hand cards
             }
         }
 

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-//TODO: implement checker to look if list is empty
 /**
  * Creates a card stack between the values: int 11 - 63
  */

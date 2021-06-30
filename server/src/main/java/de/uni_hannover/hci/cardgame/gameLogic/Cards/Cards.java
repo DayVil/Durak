@@ -28,6 +28,16 @@ public class Cards
         return (CardColor.UNDEFINED_COLOR);
     }
 
+    public static int getColorInt (CardColor color)
+    {
+        if (color == CardColor.CLUB)        return 0;
+        if (color == CardColor.DIAMONDS)    return 1;
+        if (color == CardColor.HEARTS)      return 2;
+        if (color == CardColor.SPADES)      return 3;
+
+        return -1;
+    }
+
     /**
      *
      * @param Nr The Nr (index in the textures Array) of a Card
@@ -62,18 +72,19 @@ public class Cards
     /**
      *
      * @param Trump The Trump color
-     * @param Nr1   The Nr (index in the textures Array) of the first Card
-     * @param Nr2   The Nr (index in the textures Array) of the second Card
+     * @param attackerCard   The Nr (index in the textures Array) of the first Card
+     * @param defenderCard   The Nr (index in the textures Array) of the second Card
      * @return  1 if Card1 will beat Nr2, -1 if Card2 will beat Card 1, 0 if both cards are equal (this should not happen)
      */
-    public static int compareCards(CardColor Trump, int Nr1, int Nr2)
+    public static int compareCards(CardColor Trump, int attackerCard, int defenderCard)
     {
-        CardColor cardColorNr1 = getColor(Nr1);
-        CardColor cardColorNr2 = getColor(Nr2);
+        CardColor cardColorNr1 = getColor(attackerCard);
+        CardColor cardColorNr2 = getColor(defenderCard);
 
-        if (cardColorNr1 == Trump && cardColorNr2 != Trump) return (1);
-        if (cardColorNr1 != Trump && cardColorNr2 == Trump) return (-1);
-        return Integer.compare(Nr1, Nr2);
-
+        if (cardColorNr1 == Trump && cardColorNr2 != Trump) return 1;
+        if (cardColorNr1 != Trump && cardColorNr2 == Trump) return -1;
+        // card Nr1 is attack, if both of the cards color differs from one another attacker "beats" defender. this can only be done if none of the cards is a trump
+        if (cardColorNr1 != cardColorNr2)                   return -1;
+        return Integer.compare(attackerCard, defenderCard);
     }
 }

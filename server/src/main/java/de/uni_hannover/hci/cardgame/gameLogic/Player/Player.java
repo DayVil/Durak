@@ -1,6 +1,8 @@
 package de.uni_hannover.hci.cardgame.gameLogic.Player;
 
+import de.uni_hannover.hci.cardgame.gameLogic.Attack;
 import de.uni_hannover.hci.cardgame.gameLogic.Cards.CardStack;
+import de.uni_hannover.hci.cardgame.gameLogic.Defend;
 import de.uni_hannover.hci.cardgame.gameLogic.GameManager;
 
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ public class Player
     private final ArrayList<Integer> handCards_;
     private boolean isAttacker_;
     private boolean isDefender_;
+    private boolean isActive_;
 
     public Player(int id, String name) {
         setId_(id);
@@ -60,6 +63,16 @@ public class Player
     public void setDefender_(boolean defender_)
     {
         isDefender_ = defender_;
+    }
+
+    public boolean isActive_ ()
+    {
+        return isActive_;
+    }
+
+    public void setActive_ (boolean active_)
+    {
+        isActive_ = active_;
     }
 
     private ArrayList<Integer> getHandCards_()
@@ -132,38 +145,49 @@ public class Player
 
     public boolean playCard(int card)
     {
-        int size = GameManager.visibleCards_.size();
+        if(!isActive_)      return false;
+
         if(isDefender_ && !isAttacker_)
         {
             for (int i = 0; i < handCards_.size(); i++)
             {
                 if(handCards_.get(i) == card)
                 {
-                    handCards_.remove(i);
-                    GameManager.visibleCards_.get(size - 1)[1] = card;
-                    return true;
+                    if (Defend.defend(card))
+                    {
+                        handCards_.remove(i);
+                        return true;
+                    }
+                    return false;
                 }
             }
+            // Should be unreachable
+            System.out.println("User tried to use card that is not on hand!");
+            return false;
         }
+
         if(!isDefender_ && isAttacker_)
         {
             for (int i = 0; i < handCards_.size(); i++)
             {
                 if(handCards_.get(i) == card)
                 {
-                    handCards_.remove(i);
-                    int[] arr = new int[2];
-                    arr[0] = card;
-                    arr[1] = -1;
-                    GameManager.visibleCards_.add(arr);
-                    return true;
+                    if (Attack.attack(card))
+                    {
+                        handCards_.remove(i);
+                        return true;
+                    }
+                    return false;
                 }
             }
+            // Should be unreachable
+            System.out.println("User tried to use card that is not on hand!");
+            return false;
         }
+        System.out.println("User is neither Attacker, nor Defender OR Attacker AND Defender and is marked as Active!");
         return false;
     }
 
-    // TODO: Correct formatting.
     @Override
     public String toString() {
         return String.format("ID: %s\tName: %s\tCards in hand: %s", getId_(), getName_(), handCards_.toString());

@@ -74,7 +74,7 @@ public class SettingsController implements ControllerInterface
 	{
 		if(gameClient.stage_.isFullScreen())
 		{
-			//FIXME: doesnt really work like i thought it would, leaving this empty so it cannot be resized for now in fullscreen
+			//FIXME: doesn't really work like i thought it would, leaving this empty so it cannot be resized for now in fullscreen
 			System.out.println("Left empty resolution change while fullscreen is activated");
 		}
 		else
