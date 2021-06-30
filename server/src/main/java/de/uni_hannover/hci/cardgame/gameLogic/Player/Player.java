@@ -72,6 +72,24 @@ public class Player
         return this.handCards_.size();
     }
 
+    public int isAttackerInt_()
+    {
+        if (isAttacker_)
+        {
+            return 1;
+        }
+        return 0;
+    }
+
+    public int isDefenderInt_()
+    {
+        if (isDefender_)
+        {
+            return 1;
+        }
+        return 0;
+    }
+
     /**
      * Draws one Card and pops it from the card stack.
      *

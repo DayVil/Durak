@@ -14,7 +14,7 @@ public class Cards
         // ((11 - 11) / 13) == 0 and ((23 - 11) / 13) == 0
         // next color starts at index 24 and gives 1 und so on
         // club == 0
-        // disamonds == 1
+        // diamonds == 1
         // hearts == 2
         // spades == 3
 

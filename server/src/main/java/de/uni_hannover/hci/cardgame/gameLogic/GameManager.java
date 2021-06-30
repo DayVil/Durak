@@ -77,23 +77,38 @@ public class GameManager {
      */
     public String gameBoardState(int playerId)
     {
+        // As per String convention specified in ServerNetwork.java this would be the correct approach to generate the String
+
         StringBuilder returnString = new StringBuilder();
-        for (Player p: players_) {
-            if (p.getId_() == playerId) {
-                returnString.append(String.format("%s ", cardStack_.remainingCards()));     // StackSize
-                returnString.append(String.format("%s ", trump_));                          // Trump color (Is a color not an int?)
-                returnString.append(String.format("%s ", players_.size()));                 // Player count
-                returnString.append(String.format("%s ", p.getId_()));                      // Player count
-                returnString.append(String.format("%s ", p.getName_()));                    // Player name (Defender)
-                returnString.append(String.format("%s ", p.getAmountOfHandCards()));        // Player hand cards amount (Defender)
-                returnString.append(String.format("%s ", p.handCardsToString()));           // Player hand cards (Defender)
-                returnString.append(String.format("%s ", p.isAttacker_()));                 // Player is attacker (Defender)
-                returnString.append(String.format("%s ", p.isDefender_()));                 // Player is defender (Defender)
-                /// PART MISSING?
-                returnString.append(String.format("%s ", visibleCards_.size()));            // Amount of visible cards x2
-                returnString.append(String.format("%s ", visibleCardsToString()));          // Visible cards
+
+        returnString.append(String.format("%s ", cardStack_.remainingCards()));                 // StackSize
+        returnString.append(String.format("%s ", trump_));                                      // Trump color (Is a color not an int?)
+        returnString.append(String.format("%s ", players_.size()));                             // Player count
+
+        for (Player p: players_)
+        {
+            returnString.append(String.format("%s ", p.getId_()));                              // Player count
+            returnString.append(String.format("%s ", p.getName_()));                            // Player name
+            returnString.append(String.format("%s ", p.getAmountOfHandCards()));                // Player hand cards amount
+            returnString.append(String.format("%s ", p.isAttackerInt_()));                      // Player is attacker
+            returnString.append(String.format("%s ", p.isDefenderInt_()));                      // Player is defender
+
+
+        }
+
+        returnString.append(String.format("%s ", countVisibleCards()));                         // Amount of visible cards
+        returnString.append(String.format("%s", visibleCardsToString()));                       // Visible cards
+
+        for (Player pID : players_)
+        {
+            if (pID.getId_() == playerId)
+            {
+                returnString.append(String.format("%s ", pID.getAmountOfHandCards()));          // Player hand cards amount
+                returnString.append(String.format("%s", pID.handCardsToString()));              // Player hand cards
             }
         }
+
+        returnString.append(String.format("%s", 1));                                            // Was successful
         return returnString.toString();
     }
 

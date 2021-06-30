@@ -127,27 +127,27 @@ public class ServerNetwork
                                     "2 " +                  //PlayerCount       DONE
                                     "1 " +                  //Player ID         DONE
                                     "Werner " +             //PLayerName        DONE
-                                    "3 " +                  //PlayerHandcards   DONE
+                                    "3 " +                  //PlayerHandCards   DONE
                                     "0 " +                  //IsAttacker        DONE
                                     "1 " +                  //IsDefender        DONE
-                                    "25 " +                 //PlayerID
-                                    "Sebastian " +          //PLayerName
-                                    "5 " +                  //PlayerHandcards
-                                    "1 " +                  //IsAttacker
-                                    "0 " +                  //IsDefender
+                                    "25 " +                 //PlayerID          DONE
+                                    "Sebastian " +          //PLayerName        DONE
+                                    "5 " +                  //PlayerHandCards   DONE
+                                    "1 " +                  //IsAttacker        DONE
+                                    "0 " +                  //IsDefender        DONE
                                     "5 " +                  //VisibleCardsCount DONE
                                     "12 " +                 //VisibleCard       DONE
-                                    "13 " +                 //VisibleCard
-                                    "25 " +                 //VisibleCard
-                                    "26 " +                 //VisibleCard
-                                    "43 " +                 //VisibleCard
+                                    "13 " +                 //VisibleCard       DONE
+                                    "25 " +                 //VisibleCard       DONE
+                                    "26 " +                 //VisibleCard       DONE
+                                    "43 " +                 //VisibleCard       DONE
                                     "5 " +                  //MyHandCardCount   DONE
                                     "14 " +                 //HandCard          DONE
-                                    "15 " +                 //HandCard
-                                    "16 " +                 //HandCard
-                                    "17 " +                 //HandCard
-                                    "18 " +                 //HandCard
-                                    "1");                   //WasSuccessful
+                                    "15 " +                 //HandCard          DONE
+                                    "16 " +                 //HandCard          DONE
+                                    "17 " +                 //HandCard          DONE
+                                    "18 " +                 //HandCard          DONE
+                                    "1");                   //WasSuccessful     DONE
 
                         }
 
