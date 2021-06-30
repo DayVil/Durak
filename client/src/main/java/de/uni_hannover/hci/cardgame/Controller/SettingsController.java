@@ -174,7 +174,7 @@ public class SettingsController implements ControllerInterface
 		pause.play();
 	}
 
-	public void changeStyle(ActionEvent actionEvent) {
+	public void changeStyle() {
 		CSSController.changeTheme();
 	}
 }

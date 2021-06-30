@@ -21,11 +21,11 @@ public class ServerNetwork
         try
         {
             serverSocket = new ServerSocket(8000);
-            System.out.printf("Server started at " + new Date() + '\n');
+            System.out.print("Server started at " + new Date() + '\n');
         }
         catch (IOException ex)
         {
-            System.out.printf(ex.toString());
+            ex.printStackTrace();
         }
 
         clientManager = new ClientManager();
@@ -78,7 +78,7 @@ public class ServerNetwork
             }
             catch (IOException ex)
             {
-                System.out.print(ex.toString());
+                ex.printStackTrace();
             }
         }
     }
@@ -172,7 +172,8 @@ public class ServerNetwork
             }
             catch (IOException e)
             {
-                System.err.println(e);
+                e.printStackTrace();
+                System.err.println("Something went wrong");
             }
         }
     }

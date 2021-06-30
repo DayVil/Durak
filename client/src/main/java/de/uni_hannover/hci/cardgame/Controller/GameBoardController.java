@@ -11,15 +11,12 @@ import de.uni_hannover.hci.cardgame.fxmlNavigator;
 import de.uni_hannover.hci.cardgame.gameClient;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -27,6 +24,7 @@ import javafx.util.Duration;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class GameBoardController implements ControllerInterface
@@ -129,7 +127,7 @@ public class GameBoardController implements ControllerInterface
         }
         else
         {
-            System.out.printf("List ist null");
+            System.out.println("List ist null");
         }
 
 
@@ -171,14 +169,7 @@ public class GameBoardController implements ControllerInterface
         imageView.setFitWidth(75);
         if (isHandCard)
         {
-            imageView.setOnMouseClicked(new EventHandler<MouseEvent>()
-            {
-                @Override
-                public void handle(MouseEvent event)
-                {
-                    cardClicked(cardNumber);
-                }
-            });
+            imageView.setOnMouseClicked(event -> cardClicked(cardNumber));
         }
         GameBoard.getChildren().add(imageView);
         imageViewArrayList.add(imageView);
@@ -199,7 +190,7 @@ public class GameBoardController implements ControllerInterface
         Scene scene = stage.getScene();
 
         leftoverDeck = (ImageView) scene.lookup("#leftoverDeck");
-        Image image = new Image(Cards.getSpecialTexture(SpecialTexture.BackLowsat), 200, 200, true, true);
+        Image image = new Image(Objects.requireNonNull(Cards.getSpecialTexture(SpecialTexture.BackLowsat)), 200, 200, true, true);
         leftoverDeck.setImage(image);
         PauseTransition pause = new PauseTransition(Duration.millis(10));
         pause.setOnFinished
@@ -217,12 +208,12 @@ public class GameBoardController implements ControllerInterface
         ClientNetwork.sendMessage(String.format("%d\n", nr));
     }
 
-    public void debugrequestgamestate(ActionEvent actionEvent)
+    public void debugrequestgamestate()
     {
         ClientNetwork.sendMessage("Gimme Gamestate\n");
     }
 
-    public void actionTake(ActionEvent actionEvent)
+    public void actionTake()
     {
         ClientNetwork.sendMessage("TakeAction\n");
     }
@@ -246,13 +237,14 @@ public class GameBoardController implements ControllerInterface
         {
             try
             {
-                System.out.printf("In NetworkHandler Run\n");
+                System.out.print("In NetworkHandler Run\n");
                 while (true)
                 {
-                    System.out.printf("Waiting for input from server\n");
+                    System.out.print("Waiting for input from server\n");
                     String line = ClientNetwork.getMessage();
                     System.out.printf("Got Message %s\n", line);
 
+                    assert line != null;
                     if (line.equals("disconnect")) break;
 
                     Platform.runLater(() -> executeLine(line));
@@ -261,7 +253,8 @@ public class GameBoardController implements ControllerInterface
             }
             catch (IOException e)
             {
-                System.err.println(e);
+                e.printStackTrace();
+                System.err.println("Something went wrong in GameBoardController.java");
             }
         }
     }

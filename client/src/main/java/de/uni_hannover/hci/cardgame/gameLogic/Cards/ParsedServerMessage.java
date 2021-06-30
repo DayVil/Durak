@@ -80,15 +80,14 @@ public class ParsedServerMessage
         for(int i = 0; i < visibleCardCount; i++)
         {
             int[] arr = new int[2];
+            arr[0] = s.nextInt();
             if(i + 1 < visibleCardCount)
             {
-                arr[0] = s.nextInt();
                 arr[1] = s.nextInt();
                 i++;
             }
             else
             {
-                arr[0] = s.nextInt();
                 arr[1] = -1;
             }
             visibleCards_.add(arr);

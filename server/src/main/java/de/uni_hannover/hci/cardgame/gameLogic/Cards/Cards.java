@@ -73,9 +73,7 @@ public class Cards
 
         if (cardColorNr1 == Trump && cardColorNr2 != Trump) return (1);
         if (cardColorNr1 != Trump && cardColorNr2 == Trump) return (-1);
-        if (Nr1 > Nr2) return (1);
-        if (Nr1 < Nr2) return (-1);
+        return Integer.compare(Nr1, Nr2);
 
-        return (0);
     }
 }

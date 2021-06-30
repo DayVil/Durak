@@ -11,7 +11,7 @@ public class ClientManager
     public ClientManager()
     {
         newID = 0;
-        clientList = new ArrayList<Client>();
+        clientList = new ArrayList<>();
     }
 
     public int addClient(BufferedWriter writer)
