@@ -1,6 +1,7 @@
 package de.uni_hannover.hci.cardgame.Controller;
 //This class will Control every action of the GameBoard.fxml file
 
+import de.uni_hannover.hci.cardgame.gameLogic.Cards.CardColor;
 import de.uni_hannover.hci.cardgame.gameLogic.Cards.Cards;
 import de.uni_hannover.hci.cardgame.gameLogic.Cards.ParsedServerMessage;
 import de.uni_hannover.hci.cardgame.gameLogic.Cards.SpecialTexture;
@@ -54,12 +55,57 @@ public class GameBoardController implements ControllerInterface
     private ImageView leftoverDeck;
 
     private static ArrayList<ImageView> imageViewArrayList;
+    boolean killClientNetworkHandler;
 
-    @FXML
-    private void openMenu()
+    @Override
+    public void init()
     {
-        // currently sending you back to home, has to be changed in the future
+        NodeResizer.originalSceneHeight = 400.0;
+        NodeResizer.originalSceneWidth = 600.0;
+        Stage stage = gameClient.stage_;
+        Scene scene = stage.getScene();
+
+        leftoverDeck = (ImageView) scene.lookup("#leftoverDeck");
+        Image image = new Image(Objects.requireNonNull(Cards.getSpecialTexture(SpecialTexture.BackLowsat)), 200, 200, true, true);
+        leftoverDeck.setImage(image);
+        // TODO: Check if this is necessary or can be done in a better way
+        PauseTransition pause = new PauseTransition(Duration.millis(10));
+        pause.setOnFinished
+                (
+                        pauseFinishedEvent -> resize(scene.getHeight(), true)
+                );
+        pause.play();
+
+        killClientNetworkHandler = false;
+        networkHandler task = new networkHandler();
+        new Thread(task).start();
+    }
+
+
+    public void disconnect()
+    {
+        if (ClientNetwork.isLoggedIn_())
+        {
+            System.out.println("Shutdown client");
+            ClientNetwork.sendMessage("disconnect");
+        }
+        ClientNetwork.stopConnection();
         fxmlNavigator.loadFxml(fxmlNavigator.HOME);
+    }
+
+    public void cardClicked(int nr)
+    {
+        ClientNetwork.sendMessage(String.format("%d", nr));
+    }
+
+    public void debugrequestgamestate()
+    {
+        ClientNetwork.sendMessage("Gimme Gamestate");
+    }
+
+    public void actionTake()
+    {
+        ClientNetwork.sendMessage("TakeAction");
     }
 
     public void setToSize()
@@ -145,9 +191,14 @@ public class GameBoardController implements ControllerInterface
 
     public void draw(ParsedServerMessage parsedServerMessage)
     {
-        imageViewArrayList = new ArrayList<>();
         String drawPileText = String.format("%d", parsedServerMessage.getDrawPileHeight_());
         DrawPileCounter.setText(drawPileText);
+
+        drawTrump(parsedServerMessage.getTrumpColor_());
+
+
+        imageViewArrayList = new ArrayList<>();
+
 
         int handSize = parsedServerMessage.getHandCards_().size();
         for (int i = 0; i < handSize; i++)
@@ -155,6 +206,19 @@ public class GameBoardController implements ControllerInterface
             drawCard(parsedServerMessage.getHandCards_().get(i), 100 + i * 10, 100, true /*true if not debugging*/);
         }
 
+    }
+
+    public void drawTrump(CardColor trump)
+    {
+        if(trump == null) return;
+        ImageView imageView = new ImageView();
+        Image image = new Image(Objects.requireNonNull(Cards.getSymbolTexture(trump)), 200, 10000, true, true);
+        imageView.setImage(image);
+        imageView.setCache(true);
+        imageView.setLayoutX(20);
+        imageView.setLayoutY(20);
+        imageView.setPreserveRatio(true);
+        imageView.setFitWidth(75);
     }
 
     public void drawCard(int cardNumber, int x, int y, boolean isHandCard)
@@ -181,44 +245,6 @@ public class GameBoardController implements ControllerInterface
 
     }
 
-    @Override
-    public void init()
-    {
-        NodeResizer.originalSceneHeight = 400.0;
-        NodeResizer.originalSceneWidth = 600.0;
-        Stage stage = gameClient.stage_;
-        Scene scene = stage.getScene();
-
-        leftoverDeck = (ImageView) scene.lookup("#leftoverDeck");
-        Image image = new Image(Objects.requireNonNull(Cards.getSpecialTexture(SpecialTexture.BackLowsat)), 200, 200, true, true);
-        leftoverDeck.setImage(image);
-        PauseTransition pause = new PauseTransition(Duration.millis(10));
-        pause.setOnFinished
-                (
-                        pauseFinishedEvent -> resize(scene.getHeight(), true)
-                );
-        pause.play();
-
-        networkHandler task = new networkHandler();
-        new Thread(task).start();
-    }
-
-    public void cardClicked(int nr)
-    {
-        ClientNetwork.sendMessage(String.format("%d\n", nr));
-    }
-
-    public void debugrequestgamestate()
-    {
-        ClientNetwork.sendMessage("Gimme Gamestate\n");
-    }
-
-    public void actionTake()
-    {
-        ClientNetwork.sendMessage("TakeAction\n");
-    }
-
-
     class networkHandler implements Runnable
     {
         Socket socket_;
@@ -235,27 +261,20 @@ public class GameBoardController implements ControllerInterface
         @Override
         public void run()
         {
-            try
+            System.out.print("In NetworkHandler Run\n");
+            while (!killClientNetworkHandler)
             {
-                System.out.print("In NetworkHandler Run\n");
-                while (true)
+                System.out.print("Waiting for input from server\n");
+                String line = ClientNetwork.getMessage();
+                System.out.printf("Got Message %s\n", line);
+
+                if (line != null)
                 {
-                    System.out.print("Waiting for input from server\n");
-                    String line = ClientNetwork.getMessage();
-                    System.out.printf("Got Message %s\n", line);
-
-                    assert line != null;
                     if (line.equals("disconnect")) break;
-
                     Platform.runLater(() -> executeLine(line));
                 }
-                socket_.close();
             }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-                System.err.println("Something went wrong in GameBoardController.java");
-            }
+            ClientNetwork.stopConnection();
         }
     }
 }

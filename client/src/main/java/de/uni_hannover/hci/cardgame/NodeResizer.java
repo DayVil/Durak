@@ -2,7 +2,8 @@ package de.uni_hannover.hci.cardgame;
 
 import javafx.scene.Node;
 
-public class NodeResizer {
+public class NodeResizer
+{
 
     public static double originalSceneWidth;
     public static double originalSceneHeight;
@@ -12,12 +13,12 @@ public class NodeResizer {
         double oW = node.getBoundsInLocal().getWidth();
         double oH = node.getBoundsInLocal().getHeight();
 
-        if(oW <= 0.0 || oH <= 0.0)
+        if (oW <= 0.0 || oH <= 0.0)
         {
             return;
         }
 
-        if(isGettingRescaled)
+        if (isGettingRescaled)
         {
             rescaleObject(node, sH, sW);
         }
@@ -25,12 +26,12 @@ public class NodeResizer {
         double newX = ((node.getLayoutX() + oW / 2.0) * (sW / originalSceneWidth)) - oW / 2.0;
         double newY = ((node.getLayoutY() + oH / 2.0) * (sH / originalSceneHeight)) - oH / 2.0;
 
-        if(newX > 0.0)
+        if (newX > 0.0)
         {
             node.setLayoutX(newX);
         }
 
-        if(newY > 0.0)
+        if (newY > 0.0)
         {
             node.setLayoutY(newY);
         }

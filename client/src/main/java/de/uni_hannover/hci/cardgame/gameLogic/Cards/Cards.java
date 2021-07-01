@@ -91,10 +91,19 @@ public class Cards
         return (textures[Nr]);
     }
 
+    public static String getSymbolTexture(CardColor color)
+    {
+        if(color == CardColor.Clubs) return getSpecialTexture(SpecialTexture.ClubsSymbol);
+        if(color == CardColor.Diamonds) return getSpecialTexture(SpecialTexture.DiamondsSymbol);
+        if(color == CardColor.Hearts) return getSpecialTexture(SpecialTexture.HeartsSymbol);
+        if(color == CardColor.Spades) return getSpecialTexture(SpecialTexture.SpadesSymbol);
+        return null;
+    }
+
     public static String getSpecialTexture(SpecialTexture specialTexture)
     {
-        if(specialTexture == SpecialTexture.ClubSymbol) return "/textures/cards/clubs/club_symbol.png";
-        if(specialTexture == SpecialTexture.ClubBlankCard) return "/textures/cards/clubs/club_blank_card.png";
+        if(specialTexture == SpecialTexture.ClubsSymbol) return "/textures/cards/clubs/club_symbol.png";
+        if(specialTexture == SpecialTexture.ClubsBlankCard) return "/textures/cards/clubs/club_blank_card.png";
         if(specialTexture == SpecialTexture.DiamondsSymbol) return "/textures/cards/diamonds/diamond_symbol.png";
         if(specialTexture == SpecialTexture.DiamondsBlankCard) return "/textures/cards/diamonds/diamond_blank_card.png";
         if(specialTexture == SpecialTexture.HeartsSymbol) return "/textures/cards/hearts/heart_symbol.png";
@@ -120,7 +129,7 @@ public class Cards
         if(id == 1) return CardColor.Diamonds;
         if(id == 2) return CardColor.Hearts;
         if(id == 3) return CardColor.Spades;
-        return CardColor.Undefined;
+        return null;
     }
 
 }

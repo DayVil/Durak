@@ -58,6 +58,7 @@ public class HomeScreenController implements ControllerInterface
 	@FXML
 	private void shutDown()
 	{
+
 		gameClient.shutDown();
 	}
 

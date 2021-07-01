@@ -17,6 +17,7 @@ public class ClientNetwork
     private static BufferedReader bufferIn_ = null;
 //    private static int port_ = 8000;
     private static String ip_ ="";
+
     private static boolean loggedIn_ = false;
 
     public static Socket getClientSocket_()
@@ -32,6 +33,11 @@ public class ClientNetwork
     public static BufferedReader getBufferIn_()
     {
         return bufferIn_;
+    }
+
+    public static boolean isLoggedIn_()
+    {
+        return loggedIn_;
     }
 
     public static boolean startConnection(String ip, String port, String password, String user)
@@ -87,7 +93,7 @@ public class ClientNetwork
             return false;
         }
 
-        String logInMessage = "Password: " + password +  " User: " + user + "\n";
+        String logInMessage = "Password: " + password +  " User: " + user;
 
         if(!sendMessage(logInMessage)) return false;
 
@@ -124,7 +130,7 @@ public class ClientNetwork
     {
         try
         {
-            bufferOut_.write(msg);
+            bufferOut_.write(msg + "\n");
             bufferOut_.flush();
         }
         catch(IOException e)
@@ -167,11 +173,6 @@ public class ClientNetwork
 
     public static void stopConnection()
     {
-        if (loggedIn_ == true){
-            System.out.println("Shutdown client " + clientSocket_.getInetAddress().getHostAddress());
-            sendMessage("disconnect");
-        }
-
         loggedIn_ = false;
         try
         {

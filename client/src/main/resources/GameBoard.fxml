@@ -18,6 +18,6 @@
             </Label>
    </Pane>
    <Pane fx:id="GameActionsBackGround" prefHeight="80.0" prefWidth="600.0" style="-fx-background-color: black;">
-               <Button fx:id="Menu" layoutX="483.0" layoutY="20.0" mnemonicParsing="false" onAction="#openMenu" styleClass=".green" text="Menu" />
+               <Button fx:id="Menu" layoutX="483.0" layoutY="20.0" mnemonicParsing="false" onAction="#disconnect" styleClass=".green" text="Disconnect" />
    </Pane>
 </Pane>

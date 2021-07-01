@@ -2,8 +2,8 @@ package de.uni_hannover.hci.cardgame.gameLogic.Cards;
 
 public enum SpecialTexture
 {
-    ClubSymbol,
-    ClubBlankCard,
+    ClubsSymbol,
+    ClubsBlankCard,
     DiamondsSymbol,
     DiamondsBlankCard,
     HeartsSymbol,
