@@ -95,13 +95,12 @@ public class GameManager {
 
         for (Player p: players_)
         {
-            returnString.append(String.format("%s ", p.getId_()));                              // Player count
+            returnString.append(String.format("%s ", p.getId_()));                              // Player id
             returnString.append(String.format("%s ", p.getName_()));                            // Player name
             returnString.append(String.format("%s ", p.getAmountOfHandCards()));                // Player hand cards amount
             returnString.append(String.format("%s ", p.isAttackerInt_()));                      // Player is attacker as Int
             returnString.append(String.format("%s ", p.isDefenderInt_()));                      // Player is defender as Int
-
-
+            returnString.append(String.format("%s ", p.isActiveInt_()));                        // Player is active
         }
 
         returnString.append(String.format("%s ", countVisibleCards()));                         // Amount of visible cards

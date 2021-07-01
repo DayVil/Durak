@@ -3,7 +3,6 @@ package de.uni_hannover.hci.cardgame.gameLogic.Player;
 import de.uni_hannover.hci.cardgame.gameLogic.Attack;
 import de.uni_hannover.hci.cardgame.gameLogic.Cards.CardStack;
 import de.uni_hannover.hci.cardgame.gameLogic.Defend;
-import de.uni_hannover.hci.cardgame.gameLogic.GameManager;
 
 import java.util.ArrayList;
 
@@ -50,6 +49,7 @@ public class Player
         return isAttacker_;
     }
 
+
     public void setAttacker_(boolean attacker_)
     {
         isAttacker_ = attacker_;
@@ -60,23 +60,24 @@ public class Player
         return isDefender_;
     }
 
-    public void setDefender_(boolean defender_)
-    {
+    public void setDefender_(boolean defender_) {
         isDefender_ = defender_;
     }
 
-    public boolean isActive_ ()
-    {
+    public boolean isActive_() {
         return isActive_;
     }
 
-    public void setActive_ (boolean active_)
-    {
+    public int isActiveInt_() {
+        if (isActive_) return 1;
+        return 0;
+    }
+
+    public void setActive_(boolean active_) {
         isActive_ = active_;
     }
 
-    private ArrayList<Integer> getHandCards_()
-    {
+    private ArrayList<Integer> getHandCards_() {
         return handCards_;
     }
 
