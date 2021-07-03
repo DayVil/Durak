@@ -34,9 +34,6 @@ public class LoadingScreenController implements ControllerInterface
 		nodeRescaleArrayList_.add(scene.lookup("#LoadingTitle"));
 		nodeRescaleArrayList_.add(scene.lookup("#LoadingBar"));
 
-		PaneResizer.oldSceneHeight = 400.0;
-		PaneResizer.oldSceneWidth = 600.0;
-
 		PaneResizer.resizePane(scene.getHeight(), true);
 /*
 		PauseTransition pause = new PauseTransition(Duration.millis(100));

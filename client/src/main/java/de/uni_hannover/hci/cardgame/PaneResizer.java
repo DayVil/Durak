@@ -8,9 +8,6 @@ import java.util.ArrayList;
 
 public class PaneResizer
 {
-    public static double oldSceneWidth;
-    public static double oldSceneHeight;
-
     public static void resizePane(Number newValue, Boolean isHeight)
     {
         Scene scene = gameClient.stage_.getScene();

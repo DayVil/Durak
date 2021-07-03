@@ -5,7 +5,6 @@ import de.uni_hannover.hci.cardgame.Network.ClientNetwork;
 import de.uni_hannover.hci.cardgame.PaneResizer;
 import de.uni_hannover.hci.cardgame.fxmlNavigator;
 import de.uni_hannover.hci.cardgame.gameClient;
-import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -13,7 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.util.ArrayList;
 
@@ -57,9 +55,6 @@ public class LoginController implements ControllerInterface {
         nodeRescaleArrayList_.add(scene.lookup("#label"));
         nodeRescaleArrayList_.add(scene.lookup("#Back"));
         nodeRescaleArrayList_.add(scene.lookup("#PlayButton"));
-
-        PaneResizer.oldSceneHeight = 400.0;
-        PaneResizer.oldSceneWidth = 600.0;
 
         PaneResizer.resizePane(scene.getHeight(), true);
 

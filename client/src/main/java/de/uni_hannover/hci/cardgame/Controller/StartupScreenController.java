@@ -1,7 +1,6 @@
 package de.uni_hannover.hci.cardgame.Controller;
 
 import de.uni_hannover.hci.cardgame.ControllerInterface;
-import de.uni_hannover.hci.cardgame.PaneResizer;
 import de.uni_hannover.hci.cardgame.fxmlNavigator;
 import de.uni_hannover.hci.cardgame.gameClient;
 import javafx.fxml.FXML;
@@ -20,8 +19,6 @@ public class StartupScreenController implements ControllerInterface
 	@Override
 	public void init()
 	{
-		PaneResizer.oldSceneHeight = 400.0;
-		PaneResizer.oldSceneWidth = 600.0;
 
 		Stage stage = gameClient.stage_;
 		Scene scene = stage.getScene();

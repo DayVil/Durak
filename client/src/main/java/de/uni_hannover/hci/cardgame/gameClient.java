@@ -41,8 +41,6 @@ public class gameClient extends Application
 		stage_.setResizable(true);
 		stage_.setMinWidth(stageMinWidth_);
 		stage_.setMinHeight(stageMinHeight_);
-		PaneResizer.oldSceneHeight = 400.0;
-		PaneResizer.oldSceneWidth = 600.0;
 		stageTitle("Cardgame");
 		String os = System.getProperty("os.name").toLowerCase();
 		if (os.contains("win"))

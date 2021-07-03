@@ -6,7 +6,6 @@ import de.uni_hannover.hci.cardgame.fxmlNavigator;
 import de.uni_hannover.hci.cardgame.gameClient;
 import de.uni_hannover.hci.cardgame.gameLogic.Cards.Cards;
 import de.uni_hannover.hci.cardgame.gameLogic.Cards.SpecialTexture;
-import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -16,7 +15,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -90,9 +88,6 @@ public class SettingsController implements ControllerInterface
 		nodeRescaleArrayList_.add(scene.lookup("#SoundLabel"));
 		nodeRescaleArrayList_.add(scene.lookup("#BackButton"));
 		nodeRescaleArrayList_.add(scene.lookup("#picture"));
-
-		PaneResizer.oldSceneHeight = 400.0;
-		PaneResizer.oldSceneWidth = 600.0;
 
 		picture = (ImageView) scene.lookup("#picture");
 		Image image = new Image(Objects.requireNonNull(Cards.getSpecialTexture(SpecialTexture.BackLowsat)), 200, 200, true, true);

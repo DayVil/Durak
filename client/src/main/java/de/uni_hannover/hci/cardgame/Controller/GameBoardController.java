@@ -1,5 +1,4 @@
 package de.uni_hannover.hci.cardgame.Controller;
-//This class will Control every action of the GameBoard.fxml file
 
 import de.uni_hannover.hci.cardgame.gameLogic.Cards.*;
 import de.uni_hannover.hci.cardgame.ControllerInterface;
@@ -7,22 +6,19 @@ import de.uni_hannover.hci.cardgame.Network.ClientNetwork;
 import de.uni_hannover.hci.cardgame.PaneResizer;
 import de.uni_hannover.hci.cardgame.fxmlNavigator;
 import de.uni_hannover.hci.cardgame.gameClient;
-import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Objects;
 
 
@@ -35,48 +31,23 @@ public class GameBoardController implements ControllerInterface
     private Pane GameBoard;
 
     @FXML
-    private Pane DeckBackground;
-
-    @FXML
-    private Pane GameActionsBackGround;
-
-    @FXML
-    private Button Take;
-
-    @FXML
-    private Button Pass;
-
-    @FXML
-    private Button Menu;
-
-    @FXML
     private ImageView leftoverDeck;
 
-    private static ArrayList<Node> NodeRescaleArrayList;
-    private static ArrayList<Node> NodeArrayList;
     boolean killClientNetworkHandler;
 
     @Override
     public void init()
     {
-        PaneResizer.oldSceneHeight = 400.0;
-        PaneResizer.oldSceneWidth = 600.0;
         Stage stage = gameClient.stage_;
         Scene scene = stage.getScene();
+
+        GameBoard.setStyle("-fx-background-color: #0000ff");
 
         leftoverDeck = (ImageView) scene.lookup("#leftoverDeck");
         Image image = new Image(Objects.requireNonNull(Cards.getSpecialTexture(SpecialTexture.BackLowsat)), 200, 200, true, true);
         leftoverDeck.setImage(image);
-        // TODO: Check if this is necessary or can be done in a better way
+
         PaneResizer.resizePane(scene.getHeight(), true);
-/*
-        PauseTransition pause = new PauseTransition(Duration.millis(10));
-        pause.setOnFinished
-                (
-                        pauseFinishedEvent -> resize(scene.getHeight(), true)
-                );
-        pause.play();
-*/
 
         killClientNetworkHandler = false;
         networkHandler task = new networkHandler();
@@ -110,75 +81,6 @@ public class GameBoardController implements ControllerInterface
         ClientNetwork.sendMessage("TakeAction");
     }
 
-/*
-    @Override
-    public void resize(Number newValue, Boolean isHeight)
-    {
-        Stage stage = gameClient.stage_;
-        // The Pane of the Scene, that has got everything
-        Scene scene = stage.getScene();
-
-        double sW = scene.getWidth();
-        double sH = scene.getHeight();
-
-        if (isHeight)
-        {
-            sH = (double) newValue;
-        }
-        else
-        {
-            sW = (double) newValue;
-        }
-
-        if (sH <= 0.0 || sW <= 0.0)
-        {
-            return;
-        }
-
-        GameBoard = (Pane) scene.lookup("#GameBoard");
-        GameBoard.setPrefWidth(sW);
-        GameBoard.setPrefHeight(sH);
-
-        DeckBackground = (Pane) scene.lookup("#DeckBackground");
-        PaneResizer.resizeNode(sW, sH, DeckBackground, true);
-
-        GameActionsBackGround = (Pane) scene.lookup("#GameActionsBackGround");
-        GameActionsBackGround.setPrefWidth(sW);
-        GameActionsBackGround.setPrefHeight(sH / 5.0);
-
-        Menu = (Button) scene.lookup("#Menu");
-        PaneResizer.resizeNode(sW, sH, Menu, true);
-
-        Take = (Button) scene.lookup("#Take");
-        PaneResizer.resizeNode(sW, sH, Take, true);
-
-        Pass = (Button) scene.lookup("#Pass");
-        PaneResizer.resizeNode(sW, sH, Pass, true);
-
-        if (NodeRescaleArrayList != null)
-        {
-            for (Node n : NodeRescaleArrayList)
-            {
-                PaneResizer.resizeNode(sW, sH, n, true);
-            }
-        }
-        if (NodeArrayList != null)
-        {
-            for (Node n : NodeArrayList)
-            {
-                PaneResizer.resizeNode(sW, sH, n, false);
-            }
-        }
-        else
-        {
-            System.out.println("List ist null");
-        }
-
-        PaneResizer.oldSceneWidth = sW;
-        PaneResizer.oldSceneHeight = sH;
-    }
-*/
-
     public void executeLine(String line)
     {
         System.out.println("Message from server:" + line);
@@ -190,10 +92,7 @@ public class GameBoardController implements ControllerInterface
     public void draw(ParsedServerMessage parsedServerMessage)
     {
         Stage stage = gameClient.stage_;
-        Scene scene = stage.getScene();
-
-        NodeRescaleArrayList = new ArrayList<>();
-        NodeArrayList = new ArrayList<>();
+        Scene GameBoard = stage.getScene();
 
         //CARDSTACKCOUNT
         String drawPileText = String.format("%d", parsedServerMessage.getDrawPileHeight_());
@@ -203,8 +102,8 @@ public class GameBoardController implements ControllerInterface
         drawTrump(parsedServerMessage.getTrumpColor_());
 
         //PLAYERLIST
-        int playerStart = (int) (scene.getWidth() * 0.1);
-        int playerEnd = (int) (scene.getWidth() * 0.8);
+        int playerStart = 60;
+        int playerEnd = 480;
 
         int playerCount = parsedServerMessage.getPlayers_().size();
 
@@ -213,24 +112,46 @@ public class GameBoardController implements ControllerInterface
         for(int i = 0; i < playerCount; i++)
         {
             int x = playerStart + i * playerSpace ;
-            int y = (int) (scene.getHeight() * 0.1);
+            int y = 30;
             drawPlayer(parsedServerMessage.getPlayers_().get(i), x ,y);
         }
 
         //VISIBLECARDS
+        int visibleCardsHorizontalSpacing = 80;
+        int visibleCardsVerticalTop = 90;
+        int visibleCardsVerticalBottom = visibleCardsVerticalTop + 110;
+
+        int visibleCardsCount = parsedServerMessage.getVisibleCards_().size();
+        for(int i = 0; i < visibleCardsCount; i++)
+        {
+            int[] arr = parsedServerMessage.getVisibleCards_().get(i);
+            int x = 140 + (i % 3) * visibleCardsHorizontalSpacing;
+            drawCard(arr[0], x, (i < 3)? visibleCardsVerticalTop : visibleCardsVerticalBottom, false);
+            if(arr[1] >= 11) drawCard(arr[1], x, (i < 3)? visibleCardsVerticalTop + 15 : visibleCardsVerticalBottom + 15, false);
+        }
 
         //HANDCARDS
-        int handStart = (int) (scene.getWidth() * 0.2);
-        int handEnd = (int) (scene.getWidth() * 0.8);
-        int cardSize = (int) ((scene.getWidth() / 600) * 60);
+        int handStart = 120;
+        int handEnd = 480;
+        int cardSize = 55;
         int handSpace = handEnd - handStart - cardSize;
 
         int handSize = parsedServerMessage.getHandCards_().size();
         for (int i = 0; i < handSize; i++)
         {
             int x = handStart + i * (handSpace / handSize);
-            int y = (int) (scene.getHeight() * 0.75);
+            int y = 315;
             drawCard(parsedServerMessage.getHandCards_().get(i), x, y, true);
+        }
+
+        // WAS SUCCESSFUL
+        if(!parsedServerMessage.getWasSuccessful_())
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Invalid Card");
+            alert.setHeaderText("You tried to play an invalid card");
+            alert.setContentText("Its either not your turn or the card you tried to play\ncant be played without violating the rules of the game.\n");
+            alert.showAndWait();
         }
     }
 
@@ -259,7 +180,6 @@ public class GameBoardController implements ControllerInterface
         pane.setPrefHeight(50);
         pane.setPrefWidth(120);
         pane.setStyle("-fx-background-color: #a0a0a0");
-        NodeRescaleArrayList.add(pane);
         GameBoard.getChildren().add(pane);
 
         if(player.isAttacker_())
@@ -272,7 +192,6 @@ public class GameBoardController implements ControllerInterface
             imageView.setLayoutY(y);
             imageView.setPreserveRatio(true);
             imageView.setFitHeight(40);
-            NodeRescaleArrayList.add(imageView);
             GameBoard.getChildren().add(imageView);
         }
         if(player.isDefender_())
@@ -285,7 +204,6 @@ public class GameBoardController implements ControllerInterface
             imageView.setLayoutY(y);
             imageView.setPreserveRatio(true);
             imageView.setFitHeight(40);
-            NodeRescaleArrayList.add(imageView);
             GameBoard.getChildren().add(imageView);
         }
         if(player.isActive_()) pane.setStyle("-fx-background-color: #a0f0a0");
@@ -304,7 +222,6 @@ public class GameBoardController implements ControllerInterface
         imageView.setPreserveRatio(true);
         imageView.setFitHeight(40);
         GameBoard.getChildren().add(imageView);
-        NodeRescaleArrayList.add(imageView);
     }
 
     public void drawCard(int cardNumber, int x, int y, boolean isHandCard)
@@ -316,13 +233,12 @@ public class GameBoardController implements ControllerInterface
         imageView.setLayoutX(x);
         imageView.setLayoutY(y);
         imageView.setPreserveRatio(true);
-        imageView.setFitWidth(60);
+        imageView.setFitWidth(55);
         if (isHandCard)
         {
             imageView.setOnMouseClicked(event -> cardClicked(cardNumber));
         }
         GameBoard.getChildren().add(imageView);
-        NodeRescaleArrayList.add(imageView);
     }
 
     class networkHandler implements Runnable

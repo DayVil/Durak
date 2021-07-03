@@ -139,12 +139,17 @@ public class ServerNetwork
                                     "1 " +                  //IsAttacker        DONE
                                     "0 " +                  //IsDefender        DONE
                                     "1 " +                  //IsActive          DONE
-                                    "5 " +                  //VisibleCardsCount DONE
+                                    "10 " +                 //VisibleCardsCount DONE
                                     "12 " +                 //VisibleCard       DONE
                                     "13 " +                 //VisibleCard       DONE
                                     "25 " +                 //VisibleCard       DONE
                                     "26 " +                 //VisibleCard       DONE
                                     "43 " +                 //VisibleCard       DONE
+                                    "44 " +                 //VisibleCard       DONE
+                                    "59 " +                 //VisibleCard       DONE
+                                    "60 " +                 //VisibleCard       DONE
+                                    "55 " +                 //VisibleCard       DONE
+                                    "56 " +                 //VisibleCard       DONE
                                     "10 " +                 //MyHandCardCount   DONE
                                     "14 " +                 //HandCard          DONE
                                     "15 " +                 //HandCard          DONE
@@ -156,7 +161,7 @@ public class ServerNetwork
                                     "21 " +                 //HandCard          DONE
                                     "22 " +                 //HandCard          DONE
                                     "23 " +                 //HandCard          DONE
-                                    "1");                   //WasSuccessful     DONE
+                                    "0");                   //WasSuccessful     DONE
 
                         }
 
