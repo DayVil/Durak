@@ -6,6 +6,7 @@ import de.uni_hannover.hci.cardgame.gameLogic.Cards.Cards;
 import de.uni_hannover.hci.cardgame.gameLogic.Player.Player;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * This contains every function to execute the game and manage it.
@@ -15,10 +16,12 @@ public class GameManager {
     public static ArrayList<int[]> visibleCards_;
     private final ArrayList<Player> players_;
     private static CardColor trump_;
+    public static int activeId_;
 
     // TODO implement run
     // TODO Implement rest of game logic
     public GameManager(int[] IDs) {
+        activeId_ = -1;
         this.players_ = new ArrayList<>();
         cardStack_ = new CardStack();
         visibleCards_ = new ArrayList<>();
@@ -27,11 +30,16 @@ public class GameManager {
         for (int id: IDs) {
             this.players_.add(new Player(id, "TestPlayer"));
         }
+        Collections.shuffle(players_);
     }
 
     public static CardColor getTrump_ ()
     {
         return trump_;
+    }
+
+    public void initGame() {
+        players_.get(0);
     }
 
     //TODO: Implement
@@ -71,6 +79,23 @@ public class GameManager {
             returnString.append(String.format("%d ", arr[1]));
         }
         return returnString.toString();
+    }
+
+    public boolean playPCard(int id, int card) {
+        Player player = null;
+
+        // Gets the Player
+        for (Player p: players_) {
+            if (id == p.getId_()) {
+                player = p;
+            }
+        }
+
+        // Player doesn't exist
+        if (player == null) return false;
+
+
+        return player.playCard(card);
     }
 
     /**

@@ -1,6 +1,7 @@
 package de.uni_hannover.hci.cardgame;
 
 import de.uni_hannover.hci.cardgame.Clients.ClientManager;
+import de.uni_hannover.hci.cardgame.gameLogic.ExecuteGame;
 import de.uni_hannover.hci.cardgame.gameLogic.GameManager;
 
 import java.io.*;
@@ -37,12 +38,11 @@ public class ServerNetwork
         {
             IDs[i] = clientManager.getClientList().get(i).getID_();
         }
+
         System.out.println("We Are FULL");
-        // TODO: startingGame();
-        /*
-        GameManager man = new GameManager(IDs);
-        man.initGame();
-        */
+
+        ExecuteGame ex = new ExecuteGame();
+        ex.runGame(IDs);
         // TODO: Add restart option
     }
 
