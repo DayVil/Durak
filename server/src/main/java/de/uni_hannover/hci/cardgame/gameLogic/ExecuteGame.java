@@ -11,13 +11,17 @@ public class ExecuteGame {
 
     public void runGame(int[] ids) {
         GameManager game = new GameManager(ids);
-        String str = "pass";
+        String str = "0";
+
+        game.initGame();
 
         do {
-            if (str.equals("pass")) {
+            if (game.isVisibleCardsfull()) { //Defender won
+                game.newTurn(true);
+            } else if (str.equals("pass")) {
 
             } else if (str.equals("take")) {
-
+                game.newTurn(false);
             } else { // This is a num
 
             }

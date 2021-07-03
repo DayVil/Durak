@@ -18,8 +18,11 @@ public class Player
     private boolean isAttacker_;
     private boolean isDefender_;
     private boolean isActive_;
+    private boolean playedCard_;
 
     public Player(int id, String name) {
+        resetFlags();
+
         setId_(id);
         setName_(name);
         handCards_ = new ArrayList<>();
@@ -49,11 +52,14 @@ public class Player
         return isAttacker_;
     }
 
-
     public void setAttacker_(boolean attacker_)
     {
         isAttacker_ = attacker_;
     }
+
+    public void setPlayedCard_(boolean played) { playedCard_ = played; }
+
+    public boolean getPlayedCard_() { return playedCard_; }
 
     public boolean isDefender_()
     {
@@ -102,6 +108,13 @@ public class Player
             return 1;
         }
         return 0;
+    }
+
+    public void resetFlags() {
+        setAttacker_(false);
+        setDefender_(false);
+        setActive_(false);
+        setPlayedCard_(false);
     }
 
     /**
@@ -159,6 +172,7 @@ public class Player
                     if (Defend.defend(card))
                     {
                         handCards_.remove(i);
+                        setPlayedCard_(true);
                         return true;
                     }
                     return false;
@@ -178,6 +192,7 @@ public class Player
                     if (Attack.attack(card))
                     {
                         handCards_.remove(i);
+                        setPlayedCard_(true);
                         return true;
                     }
                     return false;

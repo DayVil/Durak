@@ -20,6 +20,8 @@ public class GameManager {
 
     // TODO implement run
     // TODO Implement rest of game logic
+    // TODO figure it out how to to swap between attackers
+    // Problem finding both attackers
     public GameManager(int[] IDs) {
         activeId_ = -1;
         this.players_ = new ArrayList<>();
@@ -39,10 +41,14 @@ public class GameManager {
     }
 
     public void initGame() {
-        players_.get(0);
+        int beginning = 0;
+        players_.get(beginning).setActive_(true);
+        players_.get(beginning).setAttacker_(true);
+        refreshActiveID();
+
+        players_.get(beginning + 1).setDefender_(true);
     }
 
-    //TODO: Implement
     public void sandBox() {
         /// SANDBOX
         players_.get(0).drawCards(7, cardStack_);
@@ -67,6 +73,49 @@ public class GameManager {
         if(visibleCards_.get(visibleCards_.size() - 1)[1] == -1) returnValue -= 1;
 
         return returnValue;
+    }
+
+    public boolean isVisibleCardsfull() {
+        if (visibleCards_.size() == 6) {
+            if (visibleCards_.get(5)[1] != -1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void newTurn(boolean defWon) {
+        int pos = 0;
+        boolean found = false;
+
+        for (Player p : players_) {
+            if(p.isDefender_()) { //Found defender
+                found = true;
+            }
+
+            if (!found) { //Stop counting
+                pos++;
+            }
+
+            p.resetFlags(); // Sets all flags false
+        }
+
+        if(!defWon) {
+            pos++;
+        }
+
+        players_.get(pos).setAttacker_(true);
+        players_.get(pos + 1).setDefender_(true);
+
+        refreshActiveID();
+    }
+
+    public void refreshActiveID() {
+        for (Player p: players_) {
+            if (p.isActive_()) {
+                activeId_ = p.getId_();
+            }
+        }
     }
 
     private String visibleCardsToString()
