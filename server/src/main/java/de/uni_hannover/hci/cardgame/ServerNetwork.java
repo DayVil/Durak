@@ -35,7 +35,7 @@ public class ServerNetwork
         int[] IDs = new int[maxPlayerCount];
         for(int i = 0; i < maxPlayerCount; i++)
         {
-            IDs[i] = i;
+            IDs[i] = clientManager.getClientList().get(i).getID_();
         }
         System.out.println("We Are FULL");
         // TODO: startingGame();
@@ -43,6 +43,7 @@ public class ServerNetwork
         GameManager man = new GameManager(IDs);
         man.initGame();
         */
+        // TODO: Add restart option
     }
 
     public boolean sendMessage(int clientID, String msg)

@@ -5,6 +5,11 @@ import java.util.ArrayList;
 
 public class ClientManager
 {
+    public ArrayList<Client> getClientList()
+    {
+        return clientList;
+    }
+
     private ArrayList<Client> clientList;
     int newID;
 
