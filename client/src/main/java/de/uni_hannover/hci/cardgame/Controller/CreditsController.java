@@ -63,23 +63,23 @@ public class CreditsController implements ControllerInterface
         Credits.setPrefHeight(sH);
 
         label = (Label) scene.lookup("#label");
-        NodeResizer.resizeObject(sW, sH, label, true);
+        NodeResizer.resizeNode(sW, sH, label, true);
 
         CreditsText = (Text) scene.lookup("#CreditsText");
-        NodeResizer.resizeObject(sW, sH, CreditsText, true);
+        NodeResizer.resizeNode(sW, sH, CreditsText, true);
 
         Back = (Button) scene.lookup("#Back");
-        NodeResizer.resizeObject(sW, sH, Back, true);
+        NodeResizer.resizeNode(sW, sH, Back, true);
 
-        NodeResizer.originalSceneWidth = sW;
-        NodeResizer.originalSceneHeight = sH;
+        NodeResizer.oldSceneWidth = sW;
+        NodeResizer.oldSceneHeight = sH;
     }
 
     @Override
     public void init()
     {
-        NodeResizer.originalSceneHeight = 400.0;
-        NodeResizer.originalSceneWidth = 600.0;
+        NodeResizer.oldSceneHeight = 400.0;
+        NodeResizer.oldSceneWidth = 600.0;
         Stage stage = gameClient.stage_;
         Scene scene = stage.getScene();
 

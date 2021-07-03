@@ -94,32 +94,32 @@ public class HomeScreenController implements ControllerInterface
 		Content.setPrefWidth(sW/3.0);
 
 		SettingsButton = (Button) scene.lookup("#SettingsButton");
-		NodeResizer.resizeObject(sW, sH, SettingsButton, true);
+		NodeResizer.resizeNode(sW, sH, SettingsButton, true);
 
 		PlayButton = (Button) scene.lookup("#PlayButton");
-		NodeResizer.resizeObject(sW, sH, PlayButton, true);
+		NodeResizer.resizeNode(sW, sH, PlayButton, true);
 
 		CreditButton = (Button) scene.lookup("#CreditButton");
-		NodeResizer.resizeObject(sW, sH, CreditButton, true);
+		NodeResizer.resizeNode(sW, sH, CreditButton, true);
 
 		QuitButton = (Button) scene.lookup("#QuitButton");
-		NodeResizer.resizeObject(sW, sH, QuitButton, true);
+		NodeResizer.resizeNode(sW, sH, QuitButton, true);
 
 		label = (Label) scene.lookup("#label");
-		NodeResizer.resizeObject(sW, sH, label, true);
+		NodeResizer.resizeNode(sW, sH, label, true);
 
-		NodeResizer.originalSceneWidth = sW;
-		NodeResizer.originalSceneHeight = sH;
+		NodeResizer.oldSceneWidth = sW;
+		NodeResizer.oldSceneHeight = sH;
 	}
 
 	@Override
 	public void init()
 	{
-		NodeResizer.originalSceneHeight = 400.0;
-		NodeResizer.originalSceneWidth = 600.0;
+		NodeResizer.oldSceneHeight = 400.0;
+		NodeResizer.oldSceneWidth = 600.0;
 		Stage stage = gameClient.stage_;
 		Scene scene = stage.getScene();
-		PauseTransition pause = new PauseTransition(Duration.millis(10));
+		PauseTransition pause = new PauseTransition(Duration.millis(100));
 		pause.setOnFinished
 				(
 						pauseFinishedEvent -> resize(scene.getHeight(), true)

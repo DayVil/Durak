@@ -113,6 +113,8 @@ public class Cards
         if(specialTexture == SpecialTexture.BackHighsat) return "/textures/cards/card_back_highsat.png";
         if(specialTexture == SpecialTexture.BackLowsat) return "/textures/cards/card_back_lowsat.png";
         if(specialTexture == SpecialTexture.BlancCard) return "/textures/cards/card_blanc.png";
+        if(specialTexture == SpecialTexture.SwordIcon) return "/textures/icons/sword.png";
+        if(specialTexture == SpecialTexture.ShieldIcon) return "/textures/icons/shield.png";
         return null;
     }
 

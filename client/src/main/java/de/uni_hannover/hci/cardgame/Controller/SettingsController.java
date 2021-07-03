@@ -4,9 +4,12 @@ import de.uni_hannover.hci.cardgame.ControllerInterface;
 import de.uni_hannover.hci.cardgame.NodeResizer;
 import de.uni_hannover.hci.cardgame.fxmlNavigator;
 import de.uni_hannover.hci.cardgame.gameClient;
+import de.uni_hannover.hci.cardgame.gameLogic.Cards.Cards;
+import de.uni_hannover.hci.cardgame.gameLogic.Cards.SpecialTexture;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -15,11 +18,17 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 public class SettingsController implements ControllerInterface
 {
 
 	@FXML
 	private Pane Settings;
+
+	private static ArrayList<Node> nodeRescaleArrayList_;
+	private static ArrayList<Node> nodeArrayList_;
 
 	@FXML
 	private Pane Content;
@@ -60,6 +69,82 @@ public class SettingsController implements ControllerInterface
 	@FXML
 	private MenuItem ThemeRed_;
 
+	@Override
+	public void init()
+	{
+		nodeRescaleArrayList_ = new ArrayList<>();
+		nodeArrayList_ = new ArrayList<>();
+
+		Stage stage = gameClient.stage_;
+		if (stage.isFullScreen())
+		{
+			FullScreenCheckBox.setSelected(true);
+		}
+		Scene scene = stage.getScene();
+
+		nodeRescaleArrayList_.add(scene.lookup("#SoundSlider"));
+		nodeRescaleArrayList_.add(scene.lookup("#FullScreenCheckBox"));
+		nodeRescaleArrayList_.add(scene.lookup("#Resolution"));
+		nodeRescaleArrayList_.add(scene.lookup("#Theme"));
+		nodeRescaleArrayList_.add(scene.lookup("#label"));
+		nodeRescaleArrayList_.add(scene.lookup("#SoundLabel"));
+		nodeRescaleArrayList_.add(scene.lookup("#BackButton"));
+		nodeRescaleArrayList_.add(scene.lookup("#picture"));
+
+		NodeResizer.oldSceneHeight = 400.0;
+		NodeResizer.oldSceneWidth = 600.0;
+
+		picture = (ImageView) scene.lookup("#picture");
+		Image image = new Image(Objects.requireNonNull(Cards.getSpecialTexture(SpecialTexture.BackLowsat)), 200, 200, true, true);
+		picture.setImage(image);
+
+		PauseTransition pause = new PauseTransition(Duration.millis(10));
+		pause.setOnFinished
+				(
+						pauseFinishedEvent -> resize(scene.getHeight(), true)
+				);
+		pause.play();
+	}
+
+	@Override
+	public void resize (Number newValue, Boolean isHeight)
+	{
+		Stage stage = gameClient.stage_;
+		// The Pane of the Scene, that has got everything
+		Scene scene = stage.getScene();
+
+		double sceneWidth = scene.getWidth();
+		double sceneHeight = scene.getHeight();
+
+		if (isHeight)
+		{
+			sceneHeight = (double) newValue;
+		}
+		else
+		{
+			sceneWidth = (double) newValue;
+		}
+
+		if (sceneHeight <= 0.0 || sceneWidth <= 0.0)
+		{
+			return;
+		}
+
+		Content = (Pane) scene.lookup("#Content");
+		Content.setPrefWidth(sceneWidth/3.0);
+		Content.setPrefHeight(sceneHeight);
+
+		Settings = (Pane) scene.lookup("#Settings");
+		Settings.setPrefWidth(sceneWidth);
+		Settings.setPrefHeight(sceneHeight);
+
+		if (nodeRescaleArrayList_ != null) NodeResizer.resizeNodeList(sceneWidth, sceneHeight, nodeRescaleArrayList_, true);
+
+		if (nodeArrayList_ != null) NodeResizer.resizeNodeList(sceneWidth, sceneHeight, nodeArrayList_, false);
+
+		NodeResizer.oldSceneWidth = sceneWidth;
+		NodeResizer.oldSceneHeight = sceneHeight;
+	}
 
 	@FXML
 	private void goToHome()
@@ -103,91 +188,8 @@ public class SettingsController implements ControllerInterface
 		}
 	}
 
-	@Override
-	public void resize (Number newValue, Boolean isHeight)
+	public void changeStyle(ActionEvent event)
 	{
-		Stage stage = gameClient.stage_;
-		// The Pane of the Scene, that has got everything
-		Scene scene = stage.getScene();
-
-		double sW = scene.getWidth();
-		double sH = scene.getHeight();
-
-		if (isHeight) {
-			sH = (double) newValue;
-		}
-		else
-		{
-			sW = (double) newValue;
-		}
-
-		if (sH <= 0.0 || sW <= 0.0)
-		{
-			return;
-		}
-
-		Settings = (Pane) scene.lookup("#Settings");
-		Settings.setPrefWidth(sW);
-		Settings.setPrefHeight(sH);
-
-		Content = (Pane) scene.lookup("#Content");
-		Content.setPrefHeight(sH);
-		Content.setPrefWidth(sW/3.0);
-
-		SoundSlider = (Slider) scene.lookup("#SoundSlider");
-		NodeResizer.resizeObject(sW, sH, SoundSlider, true);
-
-		FullScreenCheckBox = (CheckBox) scene.lookup("#FullScreenCheckBox");
-		NodeResizer.resizeObject(sW, sH, FullScreenCheckBox, true);
-
-		Resolution = (SplitMenuButton) scene.lookup("#Resolution");
-		NodeResizer.resizeObject(sW, sH, Resolution, true);
-
-		Theme = (SplitMenuButton) scene.lookup("#Theme");
-		NodeResizer.resizeObject(sW, sH, Theme, true);
-
-		label = (Label) scene.lookup("#label");
-		NodeResizer.resizeObject(sW, sH, label, true);
-
-		SoundLabel = (Label) scene.lookup("#SoundLabel");
-		NodeResizer.resizeObject(sW, sH, SoundLabel, true);
-
-		BackButton = (Button) scene.lookup("#BackButton");
-		NodeResizer.resizeObject(sW, sH, BackButton, true);
-
-		picture = (ImageView) scene.lookup("#picture");
-		NodeResizer.resizeObject(sW, sH, picture, true);
-
-		NodeResizer.originalSceneWidth = sW;
-		NodeResizer.originalSceneHeight = sH;
-
-	}
-
-	@Override
-	public void init()
-	{
-		NodeResizer.originalSceneHeight = 400.0;
-		NodeResizer.originalSceneWidth = 600.0;
-		Stage stage = gameClient.stage_;
-		if (stage.isFullScreen())
-		{
-			FullScreenCheckBox.setSelected(true);
-		}
-		Scene scene = stage.getScene();
-
-		picture = (ImageView) scene.lookup("#picture");
-		Image image = new Image("/textures/cards/card_back_lowsat.png", 200, 200, true, true);
-		picture.setImage(image);
-
-		PauseTransition pause = new PauseTransition(Duration.millis(10));
-		pause.setOnFinished
-				(
-						pauseFinishedEvent -> resize(scene.getHeight(), true)
-				);
-		pause.play();
-	}
-
-	public void changeStyle(ActionEvent event) {
 		if(event.getSource().equals(ThemeBlue_))		// If event source (selected button of resolution changer) is res_1 (600 x 400) do following
 		{
 			CSSController.changeTheme("ThemeBlue");

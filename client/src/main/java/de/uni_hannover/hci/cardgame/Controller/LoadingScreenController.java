@@ -6,6 +6,7 @@ import de.uni_hannover.hci.cardgame.fxmlNavigator;
 import de.uni_hannover.hci.cardgame.gameClient;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
@@ -14,25 +15,40 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
+
 public class LoadingScreenController implements ControllerInterface
 {
-	
+
 	@FXML
 	private Pane Loading;
-	
-	@FXML
-	private ProgressBar LoadingBar;
 
-	@FXML
-	private Text LoadingTitle;
+	private static ArrayList<Node> nodeRescaleArrayList_;
+	private static ArrayList<Node> nodeArrayList_;
 
-	@FXML
-	private Button LoadingNextButton;
-
-	@FXML
-	private void goToHome()
+	@Override
+	public void init ()
 	{
-		fxmlNavigator.loadFxml(fxmlNavigator.HOME);
+		nodeRescaleArrayList_ = new ArrayList<>();
+		nodeArrayList_ = new ArrayList<>();
+
+		Stage stage = gameClient.stage_;
+		Scene scene = stage.getScene();
+
+		nodeRescaleArrayList_.add(scene.lookup("#LoadingNextButton"));
+		nodeRescaleArrayList_.add(scene.lookup("#LoadingTitle"));
+		nodeRescaleArrayList_.add(scene.lookup("#LoadingBar"));
+
+		NodeResizer.oldSceneHeight = 400.0;
+		NodeResizer.oldSceneWidth = 600.0;
+
+		PauseTransition pause = new PauseTransition(Duration.millis(100));
+		pause.setOnFinished
+				(
+						pauseFinishedEvent -> resize(scene.getHeight(), true)
+
+				);
+		pause.play();
 	}
 
 	@Override
@@ -42,55 +58,36 @@ public class LoadingScreenController implements ControllerInterface
 		// The Pane of the Scene, that has got everything
 		Scene scene = stage.getScene();
 
-		double sW = scene.getWidth();
-		double sH = scene.getHeight();
+		double sceneWidth = scene.getWidth();
+		double sceneHeight = scene.getHeight();
 
 		if (isHeight) {
-			sH = (double) newValue;
+			sceneHeight = (double) newValue;
 		}
 		else
 		{
-			sW = (double) newValue;
+			sceneWidth = (double) newValue;
 		}
 
-		if (sH <= 0.0 || sW <= 0.0)
+		if (sceneHeight <= 0.0 || sceneWidth <= 0.0)
 		{
 			return;
 		}
 		Loading = (Pane) scene.lookup("#Loading");
-		Loading.setPrefWidth(sW);
-		Loading.setPrefHeight(sH);
+		Loading.setPrefWidth(sceneWidth);
+		Loading.setPrefHeight(sceneHeight);
 
-		// The text that is hovering above the loading bar
-		LoadingTitle = (Text) scene.lookup("#LoadingTitle");
-		NodeResizer.resizeObject(sW, sH, LoadingTitle, true);
+		if (nodeRescaleArrayList_ != null) NodeResizer.resizeNodeList(sceneWidth, sceneHeight, nodeRescaleArrayList_, true);
 
-		// The button that will bring the user to the next pane
-		LoadingNextButton = (Button) scene.lookup("#LoadingNextButton");
-		NodeResizer.resizeObject(sW, sH, LoadingNextButton, true);
+		if (nodeArrayList_ != null) NodeResizer.resizeNodeList(sceneWidth, sceneHeight, nodeArrayList_, false);
 
-		// The progressbar, that has not yet been correctly implemented
-		LoadingBar = (ProgressBar) scene.lookup("#LoadingBar");
-		NodeResizer.resizeObject(sW, sH, LoadingBar, true);
-
-		NodeResizer.originalSceneWidth = sW;
-		NodeResizer.originalSceneHeight = sH;
+		NodeResizer.oldSceneWidth = sceneWidth;
+		NodeResizer.oldSceneHeight = sceneHeight;
 	}
 
-	@Override
-	public void init ()
+	@FXML
+	private void goToHome()
 	{
-		NodeResizer.originalSceneHeight = 400.0;
-		NodeResizer.originalSceneWidth = 600.0;
-		Stage stage = gameClient.stage_;
-		Scene scene = stage.getScene();
-
-		PauseTransition pause = new PauseTransition(Duration.millis(10));
-		pause.setOnFinished
-				(
-						pauseFinishedEvent -> resize(scene.getHeight(), true)
-
-				);
-		pause.play();
+		fxmlNavigator.loadFxml(fxmlNavigator.HOME);
 	}
 }

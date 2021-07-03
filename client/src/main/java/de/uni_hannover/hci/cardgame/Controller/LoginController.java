@@ -8,6 +8,7 @@ import de.uni_hannover.hci.cardgame.gameClient;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
@@ -15,11 +16,16 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
+
 public class LoginController implements ControllerInterface {
 
 
     @FXML
     private Pane Login;
+
+    private static ArrayList<Node> nodeRescaleArrayList_;
+    private static ArrayList<Node> nodeArrayList_;
 
     @FXML
     private Pane Content;
@@ -36,21 +42,76 @@ public class LoginController implements ControllerInterface {
     @FXML
     private TextField UserName;
 
-    @FXML
-    private Button PlayButton;
+    @Override
+    public void init()
+    {
+        nodeRescaleArrayList_ = new ArrayList<>();
+        nodeArrayList_ = new ArrayList<>();
+
+        Stage stage = gameClient.stage_;
+        Scene scene = stage.getScene();
+
+        nodeRescaleArrayList_.add(scene.lookup("#IPAddress"));
+        nodeRescaleArrayList_.add(scene.lookup("#Port"));
+        nodeRescaleArrayList_.add(scene.lookup("#Password"));
+        nodeRescaleArrayList_.add(scene.lookup("#UserName"));
+        nodeRescaleArrayList_.add(scene.lookup("#label"));
+        nodeRescaleArrayList_.add(scene.lookup("#Back"));
+        nodeRescaleArrayList_.add(scene.lookup("#PlayButton"));
+
+        NodeResizer.oldSceneHeight = 400.0;
+        NodeResizer.oldSceneWidth = 600.0;
+
+        PauseTransition pause = new PauseTransition(Duration.millis(100));
+        pause.setOnFinished
+                (
+                        pauseFinishedEvent -> resize(scene.getHeight(), true)
+                );
+        pause.play();
+    }
+
+    @Override
+    public void resize(Number newValue, Boolean isHeight)
+    {
+        Stage stage = gameClient.stage_;
+        Scene scene = stage.getScene();
+
+        double sceneWidth = scene.getWidth();
+        double sceneHeight = scene.getHeight();
+
+        if (isHeight)
+        {
+            sceneHeight = (double) newValue;
+        }
+        else
+        {
+            sceneWidth = (double) newValue;
+        }
+
+        if (sceneHeight <= 0.0 || sceneWidth <= 0.0)
+        {
+            return;
+        }
+
+        Login = (Pane) scene.lookup("#Login");
+        Login.setPrefWidth(sceneWidth);
+        Login.setPrefHeight(sceneHeight);
+
+        Content = (Pane) scene.lookup("#Content");
+        Content.setPrefHeight(sceneHeight);
+        Content.setPrefWidth(sceneWidth / 3.0);
+
+        if (nodeRescaleArrayList_ != null) NodeResizer.resizeNodeList(sceneWidth, sceneHeight, nodeRescaleArrayList_, true);
+
+        if (nodeArrayList_ != null) NodeResizer.resizeNodeList(sceneWidth, sceneHeight, nodeArrayList_, false);
+
+        NodeResizer.oldSceneWidth = sceneWidth;
+        NodeResizer.oldSceneHeight = sceneHeight;
+    }
 
     @FXML
-    private VBox TextFieldVAlign;
-
-    @FXML
-    private Button Back;
-
-    @FXML
-    private Label label;
-
-
-    @FXML
-    private void goToHome() {
+    private void goToHome()
+    {
         fxmlNavigator.loadFxml(fxmlNavigator.HOME);
     }
 
@@ -74,14 +135,12 @@ public class LoginController implements ControllerInterface {
         Password = (PasswordField) scene.lookup("#Password");
         String password = Password.getText();
 
-
-
-
         boolean isValidIP = validateIP(ip);
         boolean isValidUserName = user.length() > 0;
         boolean isValidPassword = password.length() > 0;
 
-        if (!isValidIP) {
+        if (!isValidIP)
+        {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Login");
             alert.setHeaderText("Invalid IP");
@@ -89,7 +148,9 @@ public class LoginController implements ControllerInterface {
             alert.setResizable(true);
             alert.onShownProperty().addListener(e -> Platform.runLater(() -> alert.setResizable(false)));
             alert.showAndWait();
-        } else if (!isValidUserName) {
+        }
+        else if (!isValidUserName)
+        {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Login");
             alert.setHeaderText("Invalid User Name");
@@ -97,7 +158,9 @@ public class LoginController implements ControllerInterface {
             alert.setResizable(true);
             alert.onShownProperty().addListener(e -> Platform.runLater(() -> alert.setResizable(false)));
             alert.showAndWait();
-        } else if (!isValidPassword) {
+        }
+        else if (!isValidPassword)
+        {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Login");
             alert.setHeaderText("Invalid Server Password");
@@ -105,7 +168,9 @@ public class LoginController implements ControllerInterface {
             alert.setResizable(true);
             alert.onShownProperty().addListener(e -> Platform.runLater(() -> alert.setResizable(false)));
             alert.showAndWait();
-        } else {
+        }
+        else
+        {
             boolean success = ClientNetwork.startConnection(ip, port, password, user);
             if (success) fxmlNavigator.loadFxml(fxmlNavigator.GAME);
         }
@@ -117,75 +182,9 @@ public class LoginController implements ControllerInterface {
      * @param ip address as string
      * @return boolean for valid ip
      */
-    private static boolean validateIP(String ip) {
+    private static boolean validateIP(String ip)
+    {
         String PATTERN = "^(([01]\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}([01]\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
         return ip.matches(PATTERN);
     }
-
-
-    @Override
-    public void resize(Number newValue, Boolean isHeight) {
-        Stage stage = gameClient.stage_;
-        Scene scene = stage.getScene();
-
-        double sW = scene.getWidth();
-        double sH = scene.getHeight();
-
-        if (isHeight) {
-            sH = (double) newValue;
-        } else {
-            sW = (double) newValue;
-        }
-
-        if (sH <= 0.0 || sW <= 0.0) {
-            return;
-        }
-
-        Login = (Pane) scene.lookup("#Login");
-        Login.setPrefWidth(sW);
-        Login.setPrefHeight(sH);
-
-        Content = (Pane) scene.lookup("#Content");
-        Content.setPrefHeight(sH);
-        Content.setPrefWidth(sW / 3.0);
-
-        IPAddress = (TextField) scene.lookup("#IPAddress");
-        NodeResizer.resizeObject(sW, sH, IPAddress, true);
-
-        Port = (TextField) scene.lookup("#Port");
-        NodeResizer.resizeObject(sW, sH, Port, true);
-
-        Password = (PasswordField) scene.lookup("#Password");
-        NodeResizer.resizeObject(sW, sH, Password, true);
-
-        UserName = (TextField) scene.lookup("#UserName");
-        NodeResizer.resizeObject(sW, sH, UserName, true);
-
-        label = (Label) scene.lookup("#label");
-        NodeResizer.resizeObject(sW, sH, label, true);
-
-        Back = (Button) scene.lookup("#Back");
-        NodeResizer.resizeObject(sW, sH, Back, true);
-
-        PlayButton = (Button) scene.lookup("#PlayButton");
-        NodeResizer.resizeObject(sW, sH, PlayButton, true);
-
-        NodeResizer.originalSceneWidth = sW;
-        NodeResizer.originalSceneHeight = sH;
-    }
-
-    @Override
-    public void init() {
-        NodeResizer.originalSceneHeight = 400.0;
-        NodeResizer.originalSceneWidth = 600.0;
-        Scene scene = gameClient.stage_.getScene();
-        PauseTransition pause = new PauseTransition(Duration.millis(10));
-        pause.setOnFinished
-                (
-                        pauseFinishedEvent -> resize(scene.getHeight(), true)
-                );
-        pause.play();
-    }
-
-
 }

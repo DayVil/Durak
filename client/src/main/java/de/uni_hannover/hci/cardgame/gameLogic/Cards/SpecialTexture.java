@@ -13,4 +13,6 @@ public enum SpecialTexture
     BackHighsat,
     BackLowsat,
     BlancCard,
+    SwordIcon,
+    ShieldIcon,
 }

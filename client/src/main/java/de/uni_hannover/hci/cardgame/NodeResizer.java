@@ -2,14 +2,30 @@ package de.uni_hannover.hci.cardgame;
 
 import javafx.scene.Node;
 
+import java.util.ArrayList;
+
 public class NodeResizer
 {
 
-    public static double originalSceneWidth;
-    public static double originalSceneHeight;
+    public static double oldSceneWidth;
+    public static double oldSceneHeight;
 
-    public static void resizeObject(double sW, double sH, Node node, Boolean isGettingRescaled)
+    public static void resizeNodeList(double sceneWidth, double sceneHeight, ArrayList<Node> nodeList, Boolean isGettingRescaled)
     {
+        for (Node node:nodeList)
+        {
+            resizeNode(sceneWidth, sceneHeight, node, isGettingRescaled);
+        }
+    }
+
+    public static void resizeNode(double sceneWidth, double sceneHeight, Node node, Boolean isGettingRescaled)
+    {
+        double newFactor = sceneWidth / gameClient.stageMinWidth_;
+        if (newFactor > sceneHeight / gameClient.stageMinHeight_)
+        {
+            newFactor = sceneHeight / gameClient.stageMinHeight_;
+        }
+
         double oW = node.getBoundsInLocal().getWidth();
         double oH = node.getBoundsInLocal().getHeight();
 
@@ -20,11 +36,11 @@ public class NodeResizer
 
         if (isGettingRescaled)
         {
-            rescaleObject(node, sH, sW);
+            rescaleObject(node, newFactor);
         }
 
-        double newX = ((node.getLayoutX() + oW / 2.0) * (sW / originalSceneWidth)) - oW / 2.0;
-        double newY = ((node.getLayoutY() + oH / 2.0) * (sH / originalSceneHeight)) - oH / 2.0;
+        double newX = ((node.getLayoutX() + oW / 2.0) * (sceneWidth / oldSceneWidth)) - oW / 2.0;
+        double newY = ((node.getLayoutY() + oH / 2.0) * (sceneHeight / oldSceneHeight)) - oH / 2.0;
 
         if (newX > 0.0)
         {
@@ -37,13 +53,8 @@ public class NodeResizer
         }
     }
 
-    public static void rescaleObject(Node node, double sH, double sW)
+    public static void rescaleObject(Node node, double factor)
     {
-        double factor = sW / 600.0;
-        if (factor > sH / 400.0)
-        {
-            factor = sH / 400.0;
-        }
         node.setScaleX(factor);
         node.setScaleY(factor);
     }

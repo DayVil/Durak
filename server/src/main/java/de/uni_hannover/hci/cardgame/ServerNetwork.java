@@ -132,11 +132,13 @@ public class ServerNetwork
                                     "3 " +                  //PlayerHandCards   DONE
                                     "0 " +                  //IsAttacker        DONE
                                     "1 " +                  //IsDefender        DONE
+                                    "0 " +                  //IsActive          DONE
                                     "25 " +                 //PlayerID          DONE
                                     "Sebastian " +          //PLayerName        DONE
                                     "5 " +                  //PlayerHandCards   DONE
                                     "1 " +                  //IsAttacker        DONE
                                     "0 " +                  //IsDefender        DONE
+                                    "1 " +                  //IsActive          DONE
                                     "5 " +                  //VisibleCardsCount DONE
                                     "12 " +                 //VisibleCard       DONE
                                     "13 " +                 //VisibleCard       DONE

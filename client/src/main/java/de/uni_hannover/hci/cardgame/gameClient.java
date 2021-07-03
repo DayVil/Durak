@@ -20,6 +20,9 @@ public class gameClient extends Application
 {
 	
 	public static Stage stage_;
+	public static final double stageMinWidth_ = 600.0;
+	public static final double stageMinHeight_ = 400.0;
+
 
 	public void stageTitle(String title)
 	{
@@ -36,10 +39,10 @@ public class gameClient extends Application
 	{
 		gameClient.stage_ = stage;
 		stage_.setResizable(true);
-		stage_.setMinWidth(600.0);
-		stage_.setMinHeight(400.0);
-		NodeResizer.originalSceneHeight = 400.0;
-		NodeResizer.originalSceneWidth = 600.0;
+		stage_.setMinWidth(stageMinWidth_);
+		stage_.setMinHeight(stageMinHeight_);
+		NodeResizer.oldSceneHeight = 400.0;
+		NodeResizer.oldSceneWidth = 600.0;
 		stageTitle("Cardgame");
 		String os = System.getProperty("os.name").toLowerCase();
 		if (os.contains("win"))

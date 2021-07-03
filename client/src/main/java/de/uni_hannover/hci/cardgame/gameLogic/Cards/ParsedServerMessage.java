@@ -42,21 +42,53 @@ public class ParsedServerMessage
         return wasSuccessful_;
     }
 
-    private class Player
+    public class Player
     {
         int id_;
         String name_;
         int handCardAmount_;
         boolean attacker_;
         boolean defender_;
+        boolean active_;
 
-        public Player(int id, String name, int handCardAmount, int attacker, int defender)
+        public Player(int id, String name, int handCardAmount, int attacker, int defender, int active)
         {
             id_ = id;
             name_ = name;
             handCardAmount_ = handCardAmount;
             attacker_ = (attacker == 1);
             defender_ = (defender == 1);
+            active_ = (active == 1);
+        }
+
+        public int getId_()
+        {
+            return id_;
+        }
+
+        public String getName_()
+        {
+            return name_;
+        }
+
+        public int getHandCardAmount_()
+        {
+            return handCardAmount_;
+        }
+
+        public boolean isAttacker_()
+        {
+            return attacker_;
+        }
+
+        public boolean isDefender_()
+        {
+            return defender_;
+        }
+
+        public boolean isActive_()
+        {
+            return active_;
         }
     }
 
@@ -73,7 +105,8 @@ public class ParsedServerMessage
             int handCardAmount = s.nextInt();
             int attacker = s.nextInt();
             int defender = s.nextInt();
-            Player player = new Player(id, name, handCardAmount,attacker, defender);
+            int active = s.nextInt();
+            Player player = new Player(id, name, handCardAmount,attacker, defender, active);
             players_.add(player);
         }
         int visibleCardCount = s.nextInt();
