@@ -16,16 +16,12 @@ public class GameManager {
     private final ArrayList<Player> players_;
     private static CardColor trump_;
 
-    // TODO init game into it's own function.
-    // TODO Validate cards
+    // TODO implement run
     // TODO Implement rest of game logic
     public GameManager(int[] IDs) {
         this.players_ = new ArrayList<>();
         cardStack_ = new CardStack();
         visibleCards_ = new ArrayList<>();
-
-        // TODO: When done with DEBUGGING merge shuffle into constructor
-        cardStack_.shuffleList();
         createTrump();
 
         for (int id: IDs) {
@@ -117,17 +113,5 @@ public class GameManager {
 
         returnString.append(String.format("%s", 1));                                            // Was successful
         return returnString.toString();
-    }
-
-
-    /// DEBUG FUNCTIONS
-    public void printVisibleCards()
-    {
-        for (int[] arr:visibleCards_)
-        {
-            System.out.printf("%d ",arr[0]);
-            System.out.printf("%d\n",arr[1]);
-        }
-        System.out.print("//////////////////////////////////\n");
     }
 }

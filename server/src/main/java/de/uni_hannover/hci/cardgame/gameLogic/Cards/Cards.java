@@ -52,24 +52,6 @@ public class Cards
     }
 
     /**
-     * Gets the the corresponding value of the card
-     * @param nr The Nr (index in the textures Array) of a Card
-     * @return Corresponding value.
-     */
-    public static int getCardValue(int nr)
-    {
-        int val = getCard(nr);
-
-        if (val <= 11)
-        {
-            return val + 2;
-        } else
-        {
-            return 1;
-        }
-    }
-
-    /**
      *
      * @param Trump The Trump color
      * @param attackerCard   The Nr (index in the textures Array) of the first Card

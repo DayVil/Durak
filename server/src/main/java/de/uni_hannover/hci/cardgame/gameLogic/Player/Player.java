@@ -144,9 +144,11 @@ public class Player
         return returnString.toString();
     }
 
+
+
     public boolean playCard(int card)
     {
-        if(!isActive_)      return false;
+        if(!isActive_) return false;
 
         if(isDefender_ && !isAttacker_)
         {

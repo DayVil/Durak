@@ -22,6 +22,8 @@ public class CardStack {
         for(int i = cardStart; i <= cardEnd; i++) {
             this.stack.add(i);
         }
+
+        shuffleList();
     }
 
     /**
@@ -33,7 +35,7 @@ public class CardStack {
         StringBuilder str = new StringBuilder();
         for (int x:
              this.stack) {
-            str.append(String.format("Colour: %s\tCValue: %s\tValue: %s\n", Cards.getColor(x), Cards.getCardValue(x), Cards.getCard(x)));
+            str.append(String.format("Colour: %s\tValue: %s\n", Cards.getColor(x), Cards.getCard(x)));
         }
         return str.toString();
     }
