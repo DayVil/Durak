@@ -43,7 +43,6 @@ public class ServerNetwork
 
         ExecuteGame ex = new ExecuteGame();
         ex.runGame(IDs);
-        // TODO: Add restart option
     }
 
     public boolean sendMessage(int clientID, String msg)
@@ -163,12 +162,11 @@ public class ServerNetwork
                                     "22 " +                 //HandCard          DONE
                                     "23 " +                 //HandCard          DONE
                                     "0");                   //WasSuccessful     DONE
-
                         }
 
                         if(!loggedIn && line.length() > 10 + serverPassword.length())
                         {
-                            // TODO: give user to gamelogic for processing
+
                             String p = line.substring(0, 10 + serverPassword.length());
                             if(p.equals("Password: " + serverPassword))
                             {
@@ -180,6 +178,8 @@ public class ServerNetwork
                                 sendMessage(id, "failed");
                             }
                         }
+                        // TODO: give user to gamelogic for processing
+                        if(GameManager.activeId_ == id && (line.equals("take") || line.equals("pass") || line.matches("^(1[1-9]|[2-5]\\d?|6[0-2])$"))) System.out.printf("Client is accessing gameLogic with %s", line); // TODO: sendToGameLogic;
                     }
                 }
                 socket.close();

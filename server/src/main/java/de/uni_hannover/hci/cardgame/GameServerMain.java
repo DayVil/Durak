@@ -17,7 +17,11 @@ public class GameServerMain
 
         ///
 
+        // TODO: Add a server initializer
+
         ServerNetwork serverNetwork = new ServerNetwork();
         serverNetwork.run();
+
+        // TODO: Add a restart option
     }
 }
