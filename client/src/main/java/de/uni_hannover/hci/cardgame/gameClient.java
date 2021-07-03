@@ -41,8 +41,8 @@ public class gameClient extends Application
 		stage_.setResizable(true);
 		stage_.setMinWidth(stageMinWidth_);
 		stage_.setMinHeight(stageMinHeight_);
-		NodeResizer.oldSceneHeight = 400.0;
-		NodeResizer.oldSceneWidth = 600.0;
+		PaneResizer.oldSceneHeight = 400.0;
+		PaneResizer.oldSceneWidth = 600.0;
 		stageTitle("Cardgame");
 		String os = System.getProperty("os.name").toLowerCase();
 		if (os.contains("win"))
@@ -119,51 +119,7 @@ public class gameClient extends Application
 
 	private void changeSize(Number newValue, Boolean isHeight)
 	{
-		Scene scene = stage_.getScene();
-		String fxml = "";
-		try
-		{
-			if (scene.lookup("#Startup") != null)
-			{
-				fxml = fxmlNavigator.STARTUP;
-			}
-			else if (scene.lookup("#Loading") != null)
-			{
-				fxml = fxmlNavigator.LOADING;
-			}
-			else if (scene.lookup("#Home") != null)
-			{
-				fxml = fxmlNavigator.HOME;
-			}
-			else if (scene.lookup("#Settings") != null)
-			{
-				fxml = fxmlNavigator.SETTINGS;
-			}
-			else if (scene.lookup("#GameBoard") != null)
-			{
-				fxml = fxmlNavigator.GAME;
-			}
-			else if (scene.lookup("#Login") != null)
-			{
-				fxml = fxmlNavigator.LOGIN;
-			}
-			else if (scene.lookup("#Credits") != null)
-			{
-				fxml = fxmlNavigator.CREDITS;
-			}
-
-			if(!(fxml.equals("")))
-			{
-				FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxml));
-				loader.load();
-				ControllerInterface controller = loader.getController();
-				controller.resize(newValue, isHeight);
-			}
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
+		PaneResizer.resizePane(newValue, isHeight);
 	}
 
 	public static void shutDown()

@@ -145,12 +145,17 @@ public class ServerNetwork
                                     "25 " +                 //VisibleCard       DONE
                                     "26 " +                 //VisibleCard       DONE
                                     "43 " +                 //VisibleCard       DONE
-                                    "5 " +                  //MyHandCardCount   DONE
+                                    "10 " +                 //MyHandCardCount   DONE
                                     "14 " +                 //HandCard          DONE
                                     "15 " +                 //HandCard          DONE
                                     "16 " +                 //HandCard          DONE
                                     "17 " +                 //HandCard          DONE
                                     "18 " +                 //HandCard          DONE
+                                    "19 " +                 //HandCard          DONE
+                                    "20 " +                 //HandCard          DONE
+                                    "21 " +                 //HandCard          DONE
+                                    "22 " +                 //HandCard          DONE
+                                    "23 " +                 //HandCard          DONE
                                     "1");                   //WasSuccessful     DONE
 
                         }

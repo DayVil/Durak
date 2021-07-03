@@ -1,7 +1,7 @@
 package de.uni_hannover.hci.cardgame.Controller;
 
 import de.uni_hannover.hci.cardgame.ControllerInterface;
-import de.uni_hannover.hci.cardgame.NodeResizer;
+import de.uni_hannover.hci.cardgame.PaneResizer;
 import de.uni_hannover.hci.cardgame.fxmlNavigator;
 import de.uni_hannover.hci.cardgame.gameClient;
 import javafx.animation.PauseTransition;
@@ -63,7 +63,28 @@ public class HomeScreenController implements ControllerInterface
 	}
 
 	@Override
-	public void resize (Number newValue, Boolean isHeight)
+	public void init()
+	{
+		PaneResizer.oldSceneHeight = 400.0;
+		PaneResizer.oldSceneWidth = 600.0;
+		Stage stage = gameClient.stage_;
+		Scene scene = stage.getScene();
+		PaneResizer.resizePane(scene.getHeight(), true);
+
+/*
+		PauseTransition pause = new PauseTransition(Duration.millis(100));
+ 		pause.setOnFinished
+				(
+						pauseFinishedEvent -> resize(scene.getHeight(), true)
+
+				);
+		pause.play();
+*/
+	}
+
+	/*
+	@Override
+ 	public void resize (Number newValue, Boolean isHeight)
 	{
 		Stage stage = gameClient.stage_;
 		// The Pane of the Scene, that has got everything
@@ -94,37 +115,22 @@ public class HomeScreenController implements ControllerInterface
 		Content.setPrefWidth(sW/3.0);
 
 		SettingsButton = (Button) scene.lookup("#SettingsButton");
-		NodeResizer.resizeNode(sW, sH, SettingsButton, true);
+		PaneResizer.resizeNode(sW, sH, SettingsButton, true);
 
 		PlayButton = (Button) scene.lookup("#PlayButton");
-		NodeResizer.resizeNode(sW, sH, PlayButton, true);
+		PaneResizer.resizeNode(sW, sH, PlayButton, true);
 
 		CreditButton = (Button) scene.lookup("#CreditButton");
-		NodeResizer.resizeNode(sW, sH, CreditButton, true);
+		PaneResizer.resizeNode(sW, sH, CreditButton, true);
 
 		QuitButton = (Button) scene.lookup("#QuitButton");
-		NodeResizer.resizeNode(sW, sH, QuitButton, true);
+		PaneResizer.resizeNode(sW, sH, QuitButton, true);
 
 		label = (Label) scene.lookup("#label");
-		NodeResizer.resizeNode(sW, sH, label, true);
+		PaneResizer.resizeNode(sW, sH, label, true);
 
-		NodeResizer.oldSceneWidth = sW;
-		NodeResizer.oldSceneHeight = sH;
+		PaneResizer.oldSceneWidth = sW;
+		PaneResizer.oldSceneHeight = sH;
 	}
-
-	@Override
-	public void init()
-	{
-		NodeResizer.oldSceneHeight = 400.0;
-		NodeResizer.oldSceneWidth = 600.0;
-		Stage stage = gameClient.stage_;
-		Scene scene = stage.getScene();
-		PauseTransition pause = new PauseTransition(Duration.millis(100));
-		pause.setOnFinished
-				(
-						pauseFinishedEvent -> resize(scene.getHeight(), true)
-
-				);
-		pause.play();
-	}
+*/
 }

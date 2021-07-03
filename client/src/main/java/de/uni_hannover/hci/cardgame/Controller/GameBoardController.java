@@ -4,7 +4,7 @@ package de.uni_hannover.hci.cardgame.Controller;
 import de.uni_hannover.hci.cardgame.gameLogic.Cards.*;
 import de.uni_hannover.hci.cardgame.ControllerInterface;
 import de.uni_hannover.hci.cardgame.Network.ClientNetwork;
-import de.uni_hannover.hci.cardgame.NodeResizer;
+import de.uni_hannover.hci.cardgame.PaneResizer;
 import de.uni_hannover.hci.cardgame.fxmlNavigator;
 import de.uni_hannover.hci.cardgame.gameClient;
 import javafx.animation.PauseTransition;
@@ -59,8 +59,8 @@ public class GameBoardController implements ControllerInterface
     @Override
     public void init()
     {
-        NodeResizer.oldSceneHeight = 400.0;
-        NodeResizer.oldSceneWidth = 600.0;
+        PaneResizer.oldSceneHeight = 400.0;
+        PaneResizer.oldSceneWidth = 600.0;
         Stage stage = gameClient.stage_;
         Scene scene = stage.getScene();
 
@@ -68,12 +68,15 @@ public class GameBoardController implements ControllerInterface
         Image image = new Image(Objects.requireNonNull(Cards.getSpecialTexture(SpecialTexture.BackLowsat)), 200, 200, true, true);
         leftoverDeck.setImage(image);
         // TODO: Check if this is necessary or can be done in a better way
+        PaneResizer.resizePane(scene.getHeight(), true);
+/*
         PauseTransition pause = new PauseTransition(Duration.millis(10));
         pause.setOnFinished
                 (
                         pauseFinishedEvent -> resize(scene.getHeight(), true)
                 );
         pause.play();
+*/
 
         killClientNetworkHandler = false;
         networkHandler task = new networkHandler();
@@ -107,18 +110,7 @@ public class GameBoardController implements ControllerInterface
         ClientNetwork.sendMessage("TakeAction");
     }
 
-    public void setToSize()
-    {
-        Stage stage = gameClient.stage_;
-        Scene scene = stage.getScene();
-
-        double sW = scene.getWidth();
-        double sH = scene.getHeight();
-
-        resize(sW, false);
-        resize(sH, true);
-    }
-
+/*
     @Override
     public void resize(Number newValue, Boolean isHeight)
     {
@@ -148,33 +140,33 @@ public class GameBoardController implements ControllerInterface
         GameBoard.setPrefHeight(sH);
 
         DeckBackground = (Pane) scene.lookup("#DeckBackground");
-        NodeResizer.resizeNode(sW, sH, DeckBackground, true);
+        PaneResizer.resizeNode(sW, sH, DeckBackground, true);
 
         GameActionsBackGround = (Pane) scene.lookup("#GameActionsBackGround");
         GameActionsBackGround.setPrefWidth(sW);
         GameActionsBackGround.setPrefHeight(sH / 5.0);
 
         Menu = (Button) scene.lookup("#Menu");
-        NodeResizer.resizeNode(sW, sH, Menu, true);
+        PaneResizer.resizeNode(sW, sH, Menu, true);
 
         Take = (Button) scene.lookup("#Take");
-        NodeResizer.resizeNode(sW, sH, Take, true);
+        PaneResizer.resizeNode(sW, sH, Take, true);
 
         Pass = (Button) scene.lookup("#Pass");
-        NodeResizer.resizeNode(sW, sH, Pass, true);
+        PaneResizer.resizeNode(sW, sH, Pass, true);
 
         if (NodeRescaleArrayList != null)
         {
             for (Node n : NodeRescaleArrayList)
             {
-                NodeResizer.resizeNode(sW, sH, n, true);
+                PaneResizer.resizeNode(sW, sH, n, true);
             }
         }
         if (NodeArrayList != null)
         {
             for (Node n : NodeArrayList)
             {
-                NodeResizer.resizeNode(sW, sH, n, false);
+                PaneResizer.resizeNode(sW, sH, n, false);
             }
         }
         else
@@ -182,16 +174,17 @@ public class GameBoardController implements ControllerInterface
             System.out.println("List ist null");
         }
 
-        NodeResizer.oldSceneWidth = sW;
-        NodeResizer.oldSceneHeight = sH;
+        PaneResizer.oldSceneWidth = sW;
+        PaneResizer.oldSceneHeight = sH;
     }
+*/
 
     public void executeLine(String line)
     {
         System.out.println("Message from server:" + line);
         ParsedServerMessage parsedServerMessage = new ParsedServerMessage(line);
         draw(parsedServerMessage);
-        setToSize();
+        PaneResizer.resizePane(gameClient.stage_.getScene().getHeight(), true);
     }
 
     public void draw(ParsedServerMessage parsedServerMessage)

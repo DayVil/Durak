@@ -1,7 +1,7 @@
 package de.uni_hannover.hci.cardgame.Controller;
 
 import de.uni_hannover.hci.cardgame.ControllerInterface;
-import de.uni_hannover.hci.cardgame.NodeResizer;
+import de.uni_hannover.hci.cardgame.PaneResizer;
 import de.uni_hannover.hci.cardgame.fxmlNavigator;
 import de.uni_hannover.hci.cardgame.gameClient;
 import de.uni_hannover.hci.cardgame.gameLogic.Cards.Cards;
@@ -91,23 +91,28 @@ public class SettingsController implements ControllerInterface
 		nodeRescaleArrayList_.add(scene.lookup("#BackButton"));
 		nodeRescaleArrayList_.add(scene.lookup("#picture"));
 
-		NodeResizer.oldSceneHeight = 400.0;
-		NodeResizer.oldSceneWidth = 600.0;
+		PaneResizer.oldSceneHeight = 400.0;
+		PaneResizer.oldSceneWidth = 600.0;
 
 		picture = (ImageView) scene.lookup("#picture");
 		Image image = new Image(Objects.requireNonNull(Cards.getSpecialTexture(SpecialTexture.BackLowsat)), 200, 200, true, true);
 		picture.setImage(image);
 
+		PaneResizer.resizePane(scene.getHeight(), true);
+
+/*
 		PauseTransition pause = new PauseTransition(Duration.millis(10));
-		pause.setOnFinished
+ 		pause.setOnFinished
 				(
 						pauseFinishedEvent -> resize(scene.getHeight(), true)
 				);
 		pause.play();
+*/
 	}
 
+/*
 	@Override
-	public void resize (Number newValue, Boolean isHeight)
+ 	public void resize (Number newValue, Boolean isHeight)
 	{
 		Stage stage = gameClient.stage_;
 		// The Pane of the Scene, that has got everything
@@ -138,13 +143,14 @@ public class SettingsController implements ControllerInterface
 		Settings.setPrefWidth(sceneWidth);
 		Settings.setPrefHeight(sceneHeight);
 
-		if (nodeRescaleArrayList_ != null) NodeResizer.resizeNodeList(sceneWidth, sceneHeight, nodeRescaleArrayList_, true);
+		if (nodeRescaleArrayList_ != null) PaneResizer.resizeNodeList(sceneWidth, sceneHeight, nodeRescaleArrayList_, true);
 
-		if (nodeArrayList_ != null) NodeResizer.resizeNodeList(sceneWidth, sceneHeight, nodeArrayList_, false);
+		if (nodeArrayList_ != null) PaneResizer.resizeNodeList(sceneWidth, sceneHeight, nodeArrayList_, false);
 
-		NodeResizer.oldSceneWidth = sceneWidth;
-		NodeResizer.oldSceneHeight = sceneHeight;
+		PaneResizer.oldSceneWidth = sceneWidth;
+		PaneResizer.oldSceneHeight = sceneHeight;
 	}
+*/
 
 	@FXML
 	private void goToHome()

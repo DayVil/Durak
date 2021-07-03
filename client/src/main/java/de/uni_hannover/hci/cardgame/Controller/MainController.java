@@ -31,12 +31,6 @@ public class MainController implements ControllerInterface
 	}
 
 	@Override
-	public void resize (Number newValue, Boolean isHeight)
-	{
-
-	}
-
-	@Override
 	public void init()
 	{
 
