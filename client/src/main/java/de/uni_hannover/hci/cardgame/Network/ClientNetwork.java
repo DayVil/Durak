@@ -147,11 +147,12 @@ public class ClientNetwork
 
     public static String getMessage()
     {
+        if(bufferIn_ == null) return "error";
         String answer = null;
         try
         {
             answer = bufferIn_.readLine();
-            if(answer.equals("disconnect"))
+            if(answer != null && answer.equals("disconnect"))
             {
                 stopConnection();
                 return answer;
@@ -160,12 +161,7 @@ public class ClientNetwork
         catch(IOException e)
         {
             stopConnection();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Network Error");
-            alert.setHeaderText("Server did not answer");
-            alert.setContentText("Please try again");
-            alert.showAndWait();
-            return null;
+            return "error";
         }
         return answer;
     }

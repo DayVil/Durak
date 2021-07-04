@@ -1,5 +1,9 @@
 package de.uni_hannover.hci.cardgame.gameLogic.Cards;
 
+import javafx.scene.image.Image;
+
+import java.time.LocalDateTime;
+
 public class Cards
 {
     private static final String[] textures =
@@ -84,37 +88,53 @@ public class Cards
         "/textures/cards/spades/queen_of_spades.png",
         "/textures/cards/spades/king_of_spades.png",
         "/textures/cards/spades/ace_of_spades.png",
+
+        // 63
+        "/textures/icons/sword.png",
+        "/textures/icons/shield.png",
     };
 
-    public static String getCardTexture(int Nr)
+    private static final javafx.scene.image.Image[] imageBuffer = new javafx.scene.image.Image[textures.length];
+
+    public static int getImageBufferSize()
     {
-        return (textures[Nr]);
+        return imageBuffer.length;
     }
 
-    public static String getSymbolTexture(CardColor color)
+    public static javafx.scene.image.Image getImage (int nr)
     {
-        if(color == CardColor.Clubs) return getSpecialTexture(SpecialTexture.ClubsSymbol);
-        if(color == CardColor.Diamonds) return getSpecialTexture(SpecialTexture.DiamondsSymbol);
-        if(color == CardColor.Hearts) return getSpecialTexture(SpecialTexture.HeartsSymbol);
-        if(color == CardColor.Spades) return getSpecialTexture(SpecialTexture.SpadesSymbol);
+        if(imageBuffer[nr] == null)
+        {
+            javafx.scene.image.Image image = new javafx.scene.image.Image(textures[nr], 200, 10000, true, true);
+            imageBuffer[nr] = image;
+        }
+        return imageBuffer[nr];
+    }
+
+    public static Image getSpecialImage(SpecialTexture specialTexture)
+    {
+        if(specialTexture == SpecialTexture.ClubsSymbol) return imageBuffer[0];
+        if(specialTexture == SpecialTexture.ClubsBlankCard) return imageBuffer[1];
+        if(specialTexture == SpecialTexture.DiamondsSymbol) return imageBuffer[2];
+        if(specialTexture == SpecialTexture.DiamondsBlankCard) return imageBuffer[3];
+        if(specialTexture == SpecialTexture.HeartsSymbol) return imageBuffer[4];
+        if(specialTexture == SpecialTexture.HeartsBlankCard) return imageBuffer[5];
+        if(specialTexture == SpecialTexture.SpadesSymbol) return imageBuffer[6];
+        if(specialTexture == SpecialTexture.SpadesBlankCard) return imageBuffer[7];
+        if(specialTexture == SpecialTexture.BackHighsat) return imageBuffer[8];
+        if(specialTexture == SpecialTexture.BackLowsat) return imageBuffer[9];
+        if(specialTexture == SpecialTexture.BlancCard) return imageBuffer[10];
+        if(specialTexture == SpecialTexture.SwordIcon) return imageBuffer[63];
+        if(specialTexture == SpecialTexture.ShieldIcon) return imageBuffer[64];
         return null;
     }
 
-    public static String getSpecialTexture(SpecialTexture specialTexture)
+    public static Image getColorSymbolImage(CardColor color)
     {
-        if(specialTexture == SpecialTexture.ClubsSymbol) return "/textures/cards/clubs/club_symbol.png";
-        if(specialTexture == SpecialTexture.ClubsBlankCard) return "/textures/cards/clubs/club_blank_card.png";
-        if(specialTexture == SpecialTexture.DiamondsSymbol) return "/textures/cards/diamonds/diamond_symbol.png";
-        if(specialTexture == SpecialTexture.DiamondsBlankCard) return "/textures/cards/diamonds/diamond_blank_card.png";
-        if(specialTexture == SpecialTexture.HeartsSymbol) return "/textures/cards/hearts/heart_symbol.png";
-        if(specialTexture == SpecialTexture.HeartsBlankCard) return "/textures/cards/hearts/heart_blank_card.png";
-        if(specialTexture == SpecialTexture.SpadesSymbol) return "/textures/cards/spades/spade_symbol.png";
-        if(specialTexture == SpecialTexture.SpadesBlankCard) return "/textures/cards/spades/spade_blank_card.png";
-        if(specialTexture == SpecialTexture.BackHighsat) return "/textures/cards/card_back_highsat.png";
-        if(specialTexture == SpecialTexture.BackLowsat) return "/textures/cards/card_back_lowsat.png";
-        if(specialTexture == SpecialTexture.BlancCard) return "/textures/cards/card_blanc.png";
-        if(specialTexture == SpecialTexture.SwordIcon) return "/textures/icons/sword.png";
-        if(specialTexture == SpecialTexture.ShieldIcon) return "/textures/icons/shield.png";
+        if(color == CardColor.Clubs) return getSpecialImage(SpecialTexture.ClubsSymbol);
+        if(color == CardColor.Diamonds) return getSpecialImage(SpecialTexture.DiamondsSymbol);
+        if(color == CardColor.Hearts) return getSpecialImage(SpecialTexture.HeartsSymbol);
+        if(color == CardColor.Spades) return getSpecialImage(SpecialTexture.SpadesSymbol);
         return null;
     }
 

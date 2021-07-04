@@ -90,7 +90,7 @@ public class SettingsController implements ControllerInterface
 		nodeRescaleArrayList_.add(scene.lookup("#picture"));
 
 		picture = (ImageView) scene.lookup("#picture");
-		Image image = new Image(Objects.requireNonNull(Cards.getSpecialTexture(SpecialTexture.BackLowsat)), 200, 200, true, true);
+		Image image = Cards.getSpecialImage(SpecialTexture.BackLowsat);
 		picture.setImage(image);
 
 		PaneResizer.resizePane(scene.getHeight(), true);

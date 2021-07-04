@@ -10,7 +10,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,8 +18,6 @@ import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Objects;
-
 
 public class GameBoardController implements ControllerInterface
 {
@@ -44,7 +41,7 @@ public class GameBoardController implements ControllerInterface
         GameBoard.setStyle("-fx-background-color: #0000ff");
 
         leftoverDeck = (ImageView) scene.lookup("#leftoverDeck");
-        Image image = new Image(Objects.requireNonNull(Cards.getSpecialTexture(SpecialTexture.BackLowsat)), 200, 200, true, true);
+        Image image = Cards.getSpecialImage(SpecialTexture.BackLowsat);
         leftoverDeck.setImage(image);
 
         PaneResizer.resizePane(scene.getHeight(), true);
@@ -84,10 +81,29 @@ public class GameBoardController implements ControllerInterface
     public void executeLine(String line)
     {
         System.out.println("Message from server:" + line);
+        if(line.equals("error"))
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Network Error");
+            alert.setHeaderText("Server did not answer");
+            alert.setContentText("Please try again");
+            alert.showAndWait();
+            return;
+        }
+        if(line.equals("disconnect"))
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Message from Server");
+            alert.setHeaderText("Server Disconnected");
+            alert.setContentText("Please try to reconnect");
+            alert.showAndWait();
+            return;
+        }
         ParsedServerMessage parsedServerMessage = new ParsedServerMessage(line);
         draw(parsedServerMessage);
         PaneResizer.resizePane(gameClient.stage_.getScene().getHeight(), true);
     }
+
 
     public void draw(ParsedServerMessage parsedServerMessage)
     {
@@ -185,7 +201,7 @@ public class GameBoardController implements ControllerInterface
         if(player.isAttacker_())
         {
             ImageView imageView = new ImageView();
-            Image image = new Image(Objects.requireNonNull(Cards.getSpecialTexture(SpecialTexture.SwordIcon)), 10000, 200, true, true);
+            Image image = Cards.getSpecialImage(SpecialTexture.SwordIcon);
             imageView.setImage(image);
             imageView.setCache(true);
             imageView.setLayoutX(x);
@@ -197,7 +213,7 @@ public class GameBoardController implements ControllerInterface
         if(player.isDefender_())
         {
             ImageView imageView = new ImageView();
-            Image image = new Image(Objects.requireNonNull(Cards.getSpecialTexture(SpecialTexture.ShieldIcon)), 10000, 200, true, true);
+            Image image = Cards.getSpecialImage(SpecialTexture.ShieldIcon);
             imageView.setImage(image);
             imageView.setCache(true);
             imageView.setLayoutX(x);
@@ -214,7 +230,7 @@ public class GameBoardController implements ControllerInterface
     {
         if(trump == null) return;
         ImageView imageView = new ImageView();
-        Image image = new Image(Objects.requireNonNull(Cards.getSymbolTexture(trump)), 10000, 200, true, true);
+        Image image = Cards.getColorSymbolImage(trump);
         imageView.setImage(image);
         imageView.setCache(true);
         imageView.setLayoutX(20);
@@ -227,7 +243,7 @@ public class GameBoardController implements ControllerInterface
     public void drawCard(int cardNumber, int x, int y, boolean isHandCard)
     {
         ImageView imageView = new ImageView();
-        Image image = new Image(Cards.getCardTexture(cardNumber), 200, 10000, true, true);
+        Image image = Cards.getImage(cardNumber);
         imageView.setImage(image);
         imageView.setCache(true);
         imageView.setLayoutX(x);
@@ -266,8 +282,9 @@ public class GameBoardController implements ControllerInterface
 
                 if (line != null)
                 {
-                    if (line.equals("disconnect")) break;
                     Platform.runLater(() -> executeLine(line));
+                    if(line.equals("disconnect")) break;
+                    if(line.equals("error")) break;
                 }
             }
             ClientNetwork.stopConnection();

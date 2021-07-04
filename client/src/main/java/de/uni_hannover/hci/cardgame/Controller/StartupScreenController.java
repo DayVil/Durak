@@ -3,6 +3,7 @@ package de.uni_hannover.hci.cardgame.Controller;
 import de.uni_hannover.hci.cardgame.ControllerInterface;
 import de.uni_hannover.hci.cardgame.fxmlNavigator;
 import de.uni_hannover.hci.cardgame.gameClient;
+import de.uni_hannover.hci.cardgame.gameLogic.Cards.Cards;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -24,7 +25,7 @@ public class StartupScreenController implements ControllerInterface
 		Scene scene = stage.getScene();
 
 		ImageView iv1 = new ImageView();
-		Image image = new Image("/textures/cards/diamonds/ace_of_diamonds.png", 200, 10000, true, true);
+		Image image = Cards.getImage(36); //Ace of Diamonds
 		iv1.setImage(image);
 		iv1.setCache(true);
 		iv1.setLayoutX(205.0);
@@ -35,7 +36,7 @@ public class StartupScreenController implements ControllerInterface
 		Startup.getChildren().add(iv1);
 
 		ImageView iv2 = new ImageView();
-		image = new Image("/textures/cards/hearts/ace_of_hearts.png", 200, 10000, true, true);
+		image = Cards.getImage(49); //Ace of Hearts
 		iv2.setImage(image);
 		iv2.setCache(true);
 		iv2.setLayoutX(245.0);
@@ -46,7 +47,7 @@ public class StartupScreenController implements ControllerInterface
 		Startup.getChildren().add(iv2);
 
 		ImageView iv3 = new ImageView();
-		image = new Image("/textures/cards/clubs/ace_of_clubs.png", 200, 10000, true, true);
+		image = Cards.getImage(23); //Ace of Clubs
 		iv3.setImage(image);
 		iv3.setCache(true);
 		iv3.setLayoutX(285.0);
@@ -57,7 +58,7 @@ public class StartupScreenController implements ControllerInterface
 		Startup.getChildren().add(iv3);
 
 		ImageView iv4 = new ImageView();
-		image = new Image("/textures/cards/spades/ace_of_spades.png", 200, 10000, true, true);
+		image = Cards.getImage(62); //Ace of Spades
 		iv4.setImage(image);
 		iv4.setCache(true);
 		iv4.setLayoutX(325.0);

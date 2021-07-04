@@ -11,5 +11,4 @@
             <Font size="16.0" />
          </font>
       </Text>
-      <Button fx:id="LoadingNextButton" layoutX="240.0" layoutY="340.0" mnemonicParsing="false" onAction="#goToHome" text="go To Home" />
 </Pane>
