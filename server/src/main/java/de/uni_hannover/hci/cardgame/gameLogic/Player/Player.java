@@ -4,6 +4,7 @@ import de.uni_hannover.hci.cardgame.gameLogic.Attack;
 import de.uni_hannover.hci.cardgame.gameLogic.Cards.CardStack;
 import de.uni_hannover.hci.cardgame.gameLogic.Cards.Cards;
 import de.uni_hannover.hci.cardgame.gameLogic.Defend;
+import de.uni_hannover.hci.cardgame.gameLogic.GameManager;
 
 import java.util.ArrayList;
 
@@ -16,11 +17,12 @@ public class Player
     private int id_; //is Equal to Client ID
     private String name_;
     private final ArrayList<Integer> handCards_;
-    private boolean isActiveAttacker_;
     private boolean isAttacker_;
     private boolean isDefender_;
     private boolean isActive_;
-    private boolean playedCard_;
+    private boolean skipped_;
+    private String lastAction_;
+    private boolean tookAction_;
 
     public Player(int id, String name)
     {
@@ -29,6 +31,26 @@ public class Player
         setId_(id);
         setName_(name);
         handCards_ = new ArrayList<>();
+    }
+
+    public String getLastAction_ ()
+    {
+        return lastAction_;
+    }
+
+    public boolean getTookAction_ ()
+    {
+        return tookAction_;
+    }
+
+    public void setLastAction_ (String lastAction_)
+    {
+        this.lastAction_ = lastAction_;
+    }
+
+    public void setTookAction_ (boolean tookAction_)
+    {
+        this.tookAction_ = tookAction_;
     }
 
     public int getId_()
@@ -51,16 +73,6 @@ public class Player
         this.name_ = name_;
     }
 
-    public boolean isActiveAttacker_()
-    {
-        return isActiveAttacker_;
-    }
-
-    public void setActiveAttacker_(boolean activeAttacker_)
-    {
-        this.isActiveAttacker_ = activeAttacker_;
-    }
-
     public boolean isAttacker_()
     {
         return isAttacker_;
@@ -71,14 +83,14 @@ public class Player
         isAttacker_ = attacker;
     }
 
-    public void setPlayedCard_(boolean played)
+    public void setSkipped_ (boolean played)
     {
-        playedCard_ = played;
+        skipped_ = played;
     }
 
-    public boolean getPlayedCard_()
+    public boolean hasSkipped_ ()
     {
-        return playedCard_;
+        return skipped_;
     }
 
     public boolean isDefender_()
@@ -119,7 +131,7 @@ public class Player
 
     public int isAttackerInt_()
     {
-        if (isActiveAttacker_)
+        if (isAttacker_)
         {
             return 1;
         }
@@ -137,10 +149,11 @@ public class Player
 
     public void resetFlags()
     {
-        setActiveAttacker_(false);
         setDefender_(false);
         setActive_(false);
-        setPlayedCard_(false);
+        setSkipped_(false);
+        setTookAction_(false);
+        setLastAction_(null);
     }
 
     /**
@@ -173,11 +186,23 @@ public class Player
         }
     }
 
+    public void takeCards()
+    {
+        for (int[] intArr : GameManager.visibleCards_)
+        {
+            for (int card : intArr)
+            {
+                handCards_.add(card);
+            }
+        }
+        GameManager.visibleCards_.clear();
+    }
+
     public boolean playCard(int card)
     {
         if(!isActive_) return false;
 
-        if(isDefender_ && !isActiveAttacker_)
+        if(isDefender_ && !isAttacker_)
         {
             for (int i = 0; i < handCards_.size(); i++)
             {
@@ -186,7 +211,7 @@ public class Player
                     if (Defend.defend(card))
                     {
                         handCards_.remove(i);
-                        setPlayedCard_(true);
+                        setSkipped_(false);
                         return true;
                     }
                     return false;
@@ -197,7 +222,7 @@ public class Player
             return false;
         }
 
-        if(!isDefender_ && isActiveAttacker_)
+        if(!isDefender_ && isAttacker_)
         {
             for (int i = 0; i < handCards_.size(); i++)
             {
@@ -206,7 +231,7 @@ public class Player
                     if (Attack.attack(card))
                     {
                         handCards_.remove(i);
-                        setPlayedCard_(true);
+                        setSkipped_(false);
                         return true;
                     }
                     return false;

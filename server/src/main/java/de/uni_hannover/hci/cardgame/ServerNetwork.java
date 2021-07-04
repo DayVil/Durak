@@ -41,8 +41,8 @@ public class ServerNetwork
 
         System.out.println("We Are FULL");
 
-        ExecuteGame ex = new ExecuteGame();
-        ex.runGame(IDs);
+        //ExecuteGame ex = new ExecuteGame();
+        //ex.runGame(IDs);
     }
 
     public boolean sendMessage(int clientID, String msg)

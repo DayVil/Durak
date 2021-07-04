@@ -7,48 +7,240 @@ import de.uni_hannover.hci.cardgame.gameLogic.Player.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 /**
  * This contains every function to execute the game and manage it.
  */
 public class GameManager
 {
-    public static CardStack cardStack_;
+    public static CardStack drawPile_;
     public static ArrayList<int[]> visibleCards_;
     private final ArrayList<Player> players_;
+    private final ArrayList<Player> viewers_;
     private static CardColor trump_;
     public static int activeId_;
+    public int firstAttacker;
 
-    // TODO implement run
-    // TODO Implement rest of game logic
-    // TODO figure it out how to to swap between attackers
+    // TODO: implement run
+    // TODO: Implement rest of game logic
+    // TODO: on playCard check for total cards that are able to be played as defender might not always have 6 cards
     // Problem finding both attackers
     public GameManager(int[] IDs, String[] names)
     {
         activeId_ = -1;
-        this.players_ = new ArrayList<>();
-        cardStack_ = new CardStack();
+        players_ = new ArrayList<>();
+        viewers_ = new ArrayList<>();
+        drawPile_ = new CardStack();
         visibleCards_ = new ArrayList<>();
         createTrump();
 
-        int count = 0;
+        int i = 0;
         for (int id : IDs)
         {
-            this.players_.add(new Player(id, names[count]));
-            count++;
+            players_.add(new Player(id, names[i]));
+            i++;
         }
 
         Collections.shuffle(players_);
+
+        for (Player p : players_)
+        {
+            p.drawCards(6, drawPile_);
+        }
+
+        firstAttacker = players_.get(0).getId_();
     }
 
-    public void sandBox()
+    public void newTurn ()
     {
-        /// SANDBOX
-        players_.get(0).drawCards(7, cardStack_);
-        int[] vis = {54, 60};
-        visibleCards_.add(vis);
-        System.out.println(gameBoardState(0));
-        ///
+        Player[] activePlayers = getActivePlayers(firstAttacker);
+        activePlayers[0].setActive_(true);
+        activePlayers[0].setAttacker_(true);
+        activePlayers[1].setDefender_(true);
+
+        boolean turnEnded = false;
+        boolean defWon = false;
+        //refreshActiveID();
+        while (!turnEnded)
+        {
+            Player activePlayer = null;
+            for (Player p : players_)
+            {
+                if (p.isActive_())
+                {
+                    activePlayer = p;
+                }
+            }
+            while (!Objects.requireNonNull(activePlayer).getTookAction_())
+            {
+                //Waiting, will always throw IntelliJ warning as there will not be code in here
+            }
+            activePlayer.setTookAction_(false);
+
+            String lastAction = activePlayer.getLastAction_();
+
+            switch (lastAction)
+            {
+                case "pass":
+                    //Switch if attacker
+                    if (activePlayers.length > 2)
+                    {
+                        if (!activePlayers[2].hasSkipped_())    switchAttacker(activePlayers);
+                    }
+                    else
+                    {
+                        defWon = true;
+                        turnEnded = true;
+                    }
+                    break;
+                case "take":
+                    //Take if defender
+                    defWon = false;
+                    turnEnded = true;
+                    break;
+                default:
+                    //card was played
+                    //Check for six existing cards?
+                    int card = Integer.parseInt(lastAction);
+                    if (activePlayer.playCard(card))
+                    {
+                        if (activePlayer.isAttacker_())
+                        {
+                            activePlayers[0].setActive_(false);
+                            activePlayers[1].setActive_(true);
+                        }
+                        else //if (activePlayer.isDefender_())
+                        {
+                            activePlayers[0].setActive_(true);
+                            activePlayers[1].setActive_(false);
+
+                            if (visibleCards_.size() == 6)
+                            {
+                                defWon = true;
+                                turnEnded = true;
+                            }
+                        }
+                    }
+                    break;
+            }
+        }
+        endTurn(activePlayers, defWon);
+    }
+
+    public void endTurn(Player[] activePlayers, boolean defenseWon)
+    {
+        if (defenseWon)
+        {
+            visibleCards_.clear();
+            activePlayers[0].drawCards(6 - activePlayers[0].getAmountOfHandCards(), drawPile_);
+            if (activePlayers.length > 2)
+            {
+                activePlayers[2].drawCards(6 - activePlayers[2].getAmountOfHandCards(), drawPile_);
+            }
+            activePlayers[1].drawCards(6 - activePlayers[1].getAmountOfHandCards(), drawPile_);
+            firstAttacker = activePlayers[1].getId_();
+        }
+        else
+        {
+            activePlayers[1].takeCards();
+            activePlayers[0].drawCards(6 - activePlayers[0].getAmountOfHandCards(), drawPile_);
+            if (activePlayers.length > 2)
+            {
+                activePlayers[2].drawCards(6 - activePlayers[2].getAmountOfHandCards(), drawPile_);
+                firstAttacker = activePlayers[2].getId_();
+            }
+        }
+        //Check for players that are left with no cards on their hands
+        if (clearPlayers())
+        {
+            newTurn();
+        }
+        //Game END
+        System.out.println("The Game has now officially ended!");
+    }
+
+    public boolean clearPlayers()
+    {
+        for (Player p : players_)
+        {
+            if (p.getAmountOfHandCards() == 0)
+            {
+                viewers_.add(p);
+                ////////////////////////////////////////////
+                //Didn't test it yet, might break the for-loop
+                players_.remove(p);
+                ////////////////////////////////////////////
+            }
+        }
+
+        if (players_.size() >= 2)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    //Will be used from the server
+    public void takeAction(String action, int id)
+    {
+        for (Player p : players_)
+        {
+            if (p.getId_() == id)
+            {
+                p.setLastAction_(action);
+                p.setTookAction_(true);
+                break;
+            }
+        }
+    }
+
+    public Player[] getActivePlayers(int idFirstPlayer)
+    {
+        Player[] returnArray;
+        if (players_.size() < 3)    returnArray = new Player[2];
+        else                        returnArray = new Player[3];
+        int index = 0;
+        for (Player p : players_)
+        {
+            if (p.getId_() == idFirstPlayer)  break;
+            index++;
+        }
+        returnArray[0] = players_.get(index++);
+
+        if (index == players_.size())
+        {
+            index = 0;
+        }
+        returnArray[1] = players_.get(index++);
+
+
+        if (players_.size() < 3)
+        {
+            if (index == players_.size())
+            {
+                index = 0;
+            }
+            returnArray[2] = players_.get(index);
+        }
+
+        return returnArray;
+    }
+
+    public Player[] switchAttacker(Player[] activePlayers)
+    {
+        activePlayers[0].setActive_(false);
+        activePlayers[0].setAttacker_(false);
+        activePlayers[0].setSkipped_(true);
+
+        Player helper = activePlayers[0];
+        activePlayers[0] = activePlayers[2];
+        activePlayers[2] = helper;
+
+        activePlayers[0].setActive_(true);
+        activePlayers[0].setAttacker_(true);
+
+        return activePlayers;
     }
 
     public static CardColor getTrump_ ()
@@ -56,27 +248,9 @@ public class GameManager
         return trump_;
     }
 
-    public void initGame()
-    {
-        int beginning = 0;
-        players_.get(beginning).setActive_(true);
-        players_.get(beginning).setActiveAttacker_(true);
-        players_.get(beginning).setAttacker_(true);
-        refreshActiveID();
-
-        players_.get(beginning + 2).setAttacker_(true);
-
-        players_.get(beginning + 1).setDefender_(true);
-
-        for (Player p : players_)
-        {
-            p.drawCards(6, cardStack_);
-        }
-    }
-
     private void createTrump()
     {
-        trump_ = Cards.getColor(cardStack_.getLastCard());
+        trump_ = Cards.getColor(drawPile_.getLastCard());
     }
 
     public int countVisibleCards()
@@ -118,7 +292,6 @@ public class GameManager
             pos++;
         }
 
-        players_.get(pos).setActiveAttacker_(true);
         players_.get(pos).setAttacker_(true);
         players_.get(pos).setActive_(true);
 
@@ -136,6 +309,7 @@ public class GameManager
             if (p.isActive_())
             {
                 activeId_ = p.getId_();
+                break;
             }
         }
     }
@@ -183,7 +357,7 @@ public class GameManager
 
         StringBuilder returnString = new StringBuilder();
 
-        returnString.append(String.format("%s ", cardStack_.remainingCards()));                 // StackSize
+        returnString.append(String.format("%s ", drawPile_.remainingCards()));                 // StackSize
         returnString.append(String.format("%s ", Cards.getColorInt(trump_)));                   // Trump color as Int
         returnString.append(String.format("%s ", players_.size()));                             // Player count
 
@@ -229,5 +403,15 @@ public class GameManager
             }
         }
         return "No active player found!";
+    }
+
+    public void sandBox()
+    {
+        /// SANDBOX
+        players_.get(0).drawCards(7, drawPile_);
+        int[] vis = {54, 60};
+        visibleCards_.add(vis);
+        System.out.println(gameBoardState(0));
+        ///
     }
 }

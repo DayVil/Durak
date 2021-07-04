@@ -15,7 +15,7 @@ public class ClientNetwork
     private static Socket clientSocket_ = null;
     private static BufferedWriter bufferOut_ = null;
     private static BufferedReader bufferIn_ = null;
-    private static String ip_ ="";
+    private static String ip_ = "";
 
     private static boolean loggedIn_ = false;
 

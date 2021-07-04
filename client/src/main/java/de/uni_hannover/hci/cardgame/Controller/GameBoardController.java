@@ -19,7 +19,8 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.net.Socket;
 
-public class GameBoardController implements ControllerInterface {
+public class GameBoardController implements ControllerInterface
+{
     @FXML
     public Label DrawPileCounter;
 
@@ -32,12 +33,14 @@ public class GameBoardController implements ControllerInterface {
     boolean killClientNetworkHandler;
 
 
-    public void killClient(){
+    public void killClient()
+    {
         killClientNetworkHandler = false;
     }
 
     @Override
-    public void init() {
+    public void init()
+    {
         Stage stage = gameClient.stage_;
         Scene scene = stage.getScene();
 
@@ -55,8 +58,10 @@ public class GameBoardController implements ControllerInterface {
     }
 
 
-    public void disconnect() {
-        if (ClientNetwork.isLoggedIn_()) {
+    public void disconnect()
+    {
+        if (ClientNetwork.isLoggedIn_())
+        {
             System.out.println("Shutdown client");
             ClientNetwork.sendMessage("disconnect");
             this.killClientNetworkHandler = true;
@@ -65,21 +70,26 @@ public class GameBoardController implements ControllerInterface {
         fxmlNavigator.loadFxml(fxmlNavigator.HOME);
     }
 
-    public void cardClicked(int nr) {
+    public void cardClicked(int nr)
+    {
         ClientNetwork.sendMessage(String.format("%d", nr));
     }
 
-    public void debugrequestgamestate() {
+    public void debugrequestgamestate()
+    {
         ClientNetwork.sendMessage("Gimme Gamestate");
     }
 
-    public void actionTake() {
+    public void actionTake()
+    {
         ClientNetwork.sendMessage("TakeAction");
     }
 
-    public void executeLine(String line) {
+    public void executeLine(String line)
+    {
         System.out.println("Message from server:" + line);
-        if (line.equals("error")) {
+        if (line.equals("error"))
+        {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Network Error");
             alert.setHeaderText("Server did not answer");
@@ -89,7 +99,8 @@ public class GameBoardController implements ControllerInterface {
             alert.showAndWait();
             return;
         }
-        if (line.equals("disconnect")) {
+        if (line.equals("disconnect"))
+        {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Message from Server");
             alert.setHeaderText("Server Disconnected");
@@ -105,7 +116,8 @@ public class GameBoardController implements ControllerInterface {
     }
 
 
-    public void draw(ParsedServerMessage parsedServerMessage) {
+    public void draw(ParsedServerMessage parsedServerMessage)
+    {
         Stage stage = gameClient.stage_;
         Scene GameBoard = stage.getScene();
 
@@ -124,7 +136,8 @@ public class GameBoardController implements ControllerInterface {
 
         int playerSpace = (playerEnd - playerStart) / playerCount;
 
-        for (int i = 0; i < playerCount; i++) {
+        for (int i = 0; i < playerCount; i++)
+        {
             int x = playerStart + i * playerSpace;
             int y = 30;
             drawPlayer(parsedServerMessage.getPlayers_().get(i), x, y);
@@ -136,7 +149,8 @@ public class GameBoardController implements ControllerInterface {
         int visibleCardsVerticalBottom = visibleCardsVerticalTop + 110;
 
         int visibleCardsCount = parsedServerMessage.getVisibleCards_().size();
-        for (int i = 0; i < visibleCardsCount; i++) {
+        for (int i = 0; i < visibleCardsCount; i++)
+        {
             int[] arr = parsedServerMessage.getVisibleCards_().get(i);
             int x = 140 + (i % 3) * visibleCardsHorizontalSpacing;
             drawCard(arr[0], x, (i < 3) ? visibleCardsVerticalTop : visibleCardsVerticalBottom, false);
@@ -151,14 +165,16 @@ public class GameBoardController implements ControllerInterface {
         int handSpace = handEnd - handStart - cardSize;
 
         int handSize = parsedServerMessage.getHandCards_().size();
-        for (int i = 0; i < handSize; i++) {
+        for (int i = 0; i < handSize; i++)
+        {
             int x = handStart + i * (handSpace / handSize);
             int y = 315;
             drawCard(parsedServerMessage.getHandCards_().get(i), x, y, true);
         }
 
         // WAS SUCCESSFUL
-        if (!parsedServerMessage.getWasSuccessful_()) {
+        if (!parsedServerMessage.getWasSuccessful_())
+        {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Invalid Card");
             alert.setHeaderText("You tried to play an invalid card");
@@ -169,7 +185,8 @@ public class GameBoardController implements ControllerInterface {
         }
     }
 
-    private void drawPlayer(ParsedServerMessage.Player player, int x, int y) {
+    private void drawPlayer(ParsedServerMessage.Player player, int x, int y)
+    {
         int cards = player.getHandCardAmount_();
         Label cardCountLabel = new Label();
         cardCountLabel.setText(String.format("%d", cards));
@@ -195,7 +212,8 @@ public class GameBoardController implements ControllerInterface {
         pane.setStyle("-fx-background-color: #a0a0a0");
         GameBoard.getChildren().add(pane);
 
-        if (player.isAttacker_()) {
+        if (player.isAttacker_())
+        {
             ImageView imageView = new ImageView();
             Image image = Cards.getSpecialImage(SpecialTexture.SwordIcon);
             imageView.setImage(image);
@@ -206,7 +224,8 @@ public class GameBoardController implements ControllerInterface {
             imageView.setFitHeight(40);
             GameBoard.getChildren().add(imageView);
         }
-        if (player.isDefender_()) {
+        if (player.isDefender_())
+        {
             ImageView imageView = new ImageView();
             Image image = Cards.getSpecialImage(SpecialTexture.ShieldIcon);
             imageView.setImage(image);
@@ -221,7 +240,8 @@ public class GameBoardController implements ControllerInterface {
     }
 
 
-    public void drawTrump(CardColor trump) {
+    public void drawTrump(CardColor trump)
+    {
         if (trump == null) return;
         ImageView imageView = new ImageView();
         Image image = Cards.getColorSymbolImage(trump);
@@ -234,7 +254,8 @@ public class GameBoardController implements ControllerInterface {
         GameBoard.getChildren().add(imageView);
     }
 
-    public void drawCard(int cardNumber, int x, int y, boolean isHandCard) {
+    public void drawCard(int cardNumber, int x, int y, boolean isHandCard)
+    {
         ImageView imageView = new ImageView();
         Image image = Cards.getImage(cardNumber);
         imageView.setImage(image);
@@ -243,33 +264,39 @@ public class GameBoardController implements ControllerInterface {
         imageView.setLayoutY(y);
         imageView.setPreserveRatio(true);
         imageView.setFitWidth(55);
-        if (isHandCard) {
+        if (isHandCard)
+        {
             imageView.setOnMouseClicked(event -> cardClicked(cardNumber));
         }
         GameBoard.getChildren().add(imageView);
     }
 
-    class networkHandler implements Runnable {
+    class networkHandler implements Runnable
+    {
         Socket socket_;
         BufferedReader inputBuffer_;
         BufferedWriter outputBuffer_;
 
-        networkHandler() {
+        networkHandler()
+        {
             socket_ = ClientNetwork.getClientSocket_();
             inputBuffer_ = ClientNetwork.getBufferIn_();
             outputBuffer_ = ClientNetwork.getBufferOut_();
         }
 
         @Override
-        public void run() {
+        public void run()
+        {
             System.out.print("In NetworkHandler Run\n");
-            while (!killClientNetworkHandler) {
+            while (!killClientNetworkHandler)
+            {
                 System.out.print("Waiting for input from server\n");
                 String line = ClientNetwork.getMessage();
                 System.out.printf("Got Message %s\n", line);
 
                 //TODO still necessary?
-                if (line != null) {
+                if (line != null)
+                {
                     Platform.runLater(() -> executeLine(line));
                     if (line.equals("disconnect")) break;
                     if (line.equals("error")) break;

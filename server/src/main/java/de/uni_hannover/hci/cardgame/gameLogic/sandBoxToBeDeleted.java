@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class sandBoxToBeDeleted
 {
 
-    public static void main(String[] args)
+    /*public static void main(String[] args)
     {
         int[] ids = {0, 3, 8, 4};
         String[] names = {"Hansel", "Franzl", "Dansl", "Mansl"};
@@ -16,7 +16,7 @@ public class sandBoxToBeDeleted
 
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n");
 
-        game.initGame();
+        game.newTurn();
 
         do
         {
@@ -48,5 +48,5 @@ public class sandBoxToBeDeleted
 //        System.out.println(game.gameBoardState(3));
 
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n");
-    }
+    }*/
 }

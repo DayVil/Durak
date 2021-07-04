@@ -5,13 +5,13 @@ package de.uni_hannover.hci.cardgame.gameLogic;
 public class ExecuteGame
 {
 
-    public void runGame(int[] ids)
+    /*public void runGame(int[] ids)
     {
         String[] names = {"Hansel", "Franzl", "Dansl", "Mansl"};
         GameManager game = new GameManager(ids, names);
         String str = "0";
 
-        game.initGame();
+        game.newTurn();
 
         do
         {
@@ -34,5 +34,5 @@ public class ExecuteGame
             }
 
         } while (false);
-    }
+    }*/
 }
