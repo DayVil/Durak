@@ -31,6 +31,11 @@ public class GameBoardController implements ControllerInterface {
 
     boolean killClientNetworkHandler;
 
+
+    public void killClient(){
+        killClientNetworkHandler = false;
+    }
+
     @Override
     public void init() {
         Stage stage = gameClient.stage_;
@@ -54,6 +59,7 @@ public class GameBoardController implements ControllerInterface {
         if (ClientNetwork.isLoggedIn_()) {
             System.out.println("Shutdown client");
             ClientNetwork.sendMessage("disconnect");
+            this.killClientNetworkHandler = true;
         }
         ClientNetwork.stopConnection();
         fxmlNavigator.loadFxml(fxmlNavigator.HOME);
@@ -262,6 +268,7 @@ public class GameBoardController implements ControllerInterface {
                 String line = ClientNetwork.getMessage();
                 System.out.printf("Got Message %s\n", line);
 
+                //TODO still necessary?
                 if (line != null) {
                     Platform.runLater(() -> executeLine(line));
                     if (line.equals("disconnect")) break;
