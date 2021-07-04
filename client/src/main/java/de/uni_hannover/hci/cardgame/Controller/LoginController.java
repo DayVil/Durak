@@ -15,7 +15,8 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
-public class LoginController implements ControllerInterface {
+public class LoginController implements ControllerInterface
+{
 
 
     @FXML
@@ -119,7 +120,8 @@ public class LoginController implements ControllerInterface {
      * Check login credentials and establish server client connection
      */
     @FXML
-    private void checkForEntrance() {
+    private void checkForEntrance()
+    {
         Stage stage = gameClient.stage_;
         Scene scene = stage.getScene();
 

@@ -22,7 +22,8 @@ public class Player
     private boolean isActive_;
     private boolean playedCard_;
 
-    public Player(int id, String name) {
+    public Player(int id, String name)
+    {
         resetFlags();
 
         setId_(id);
@@ -40,7 +41,8 @@ public class Player
         this.id_ = id_;
     }
 
-    public String getName_() {
+    public String getName_()
+    {
         return name_;
     }
 
@@ -59,37 +61,54 @@ public class Player
         this.isActiveAttacker_ = activeAttacker_;
     }
 
-    public boolean isAttacker_() { return isAttacker_; }
+    public boolean isAttacker_()
+    {
+        return isAttacker_;
+    }
 
-    public void setAttacker_(boolean attacker) { isAttacker_ = attacker; }
+    public void setAttacker_(boolean attacker)
+    {
+        isAttacker_ = attacker;
+    }
 
-    public void setPlayedCard_(boolean played) { playedCard_ = played; }
+    public void setPlayedCard_(boolean played)
+    {
+        playedCard_ = played;
+    }
 
-    public boolean getPlayedCard_() { return playedCard_; }
+    public boolean getPlayedCard_()
+    {
+        return playedCard_;
+    }
 
     public boolean isDefender_()
     {
         return isDefender_;
     }
 
-    public void setDefender_(boolean defender_) {
+    public void setDefender_(boolean defender_)
+    {
         isDefender_ = defender_;
     }
 
-    public boolean isActive_() {
+    public boolean isActive_()
+    {
         return isActive_;
     }
 
-    public int isActiveInt_() {
+    public int isActiveInt_()
+    {
         if (isActive_) return 1;
         return 0;
     }
 
-    public void setActive_(boolean active_) {
+    public void setActive_(boolean active_)
+    {
         isActive_ = active_;
     }
 
-    private ArrayList<Integer> getHandCards_() {
+    private ArrayList<Integer> getHandCards_()
+    {
         return handCards_;
     }
 
@@ -116,7 +135,8 @@ public class Player
         return 0;
     }
 
-    public void resetFlags() {
+    public void resetFlags()
+    {
         setActiveAttacker_(false);
         setDefender_(false);
         setActive_(false);
@@ -210,10 +230,12 @@ public class Player
         return returnString.toString();
     }
 
-    public String handCardsValColToString() {
+    public String handCardsValColToString()
+    {
         StringBuilder retStr = new StringBuilder();
 
-        for (Integer i: handCards_) {
+        for (Integer i: handCards_)
+        {
             retStr.append(String.format("[%s %s: %s] ", Cards.getCard(i), Cards.getColor(i), i));
         }
 
@@ -221,7 +243,8 @@ public class Player
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return String.format("ID: %s\tName: %s\tCards in hand: %s", getId_(), getName_(), handCards_.toString());
     }
 }

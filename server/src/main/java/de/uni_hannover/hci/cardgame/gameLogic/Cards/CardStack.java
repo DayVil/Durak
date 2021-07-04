@@ -7,19 +7,22 @@ import java.util.List;
 /**
  * Creates a card stack between the values: int 11 - 63
  */
-public class CardStack {
+public class CardStack
+{
     /** The stack of the  cards. */
     private final List<Integer> stack;
 
     /**
      * Creates the deck.
      */
-    public CardStack() {
+    public CardStack()
+    {
         int cardStart = 11;
         int cardEnd = 62;
 
         this.stack = new ArrayList<>();
-        for(int i = cardStart; i <= cardEnd; i++) {
+        for(int i = cardStart; i <= cardEnd; i++)
+        {
             this.stack.add(i);
         }
 
@@ -31,10 +34,11 @@ public class CardStack {
      * @return the described string.
      */
     @Override
-    public String toString() {
+    public String toString()
+    {
         StringBuilder str = new StringBuilder();
-        for (int x:
-             this.stack) {
+        for (int x : this.stack)
+        {
             str.append(String.format("Colour: %s\tValue: %s\n", Cards.getColor(x), Cards.getCard(x)));
         }
         return str.toString();
@@ -43,7 +47,8 @@ public class CardStack {
     /**
      * Shuffles the card stack.
      */
-    public void shuffleList() {
+    public void shuffleList()
+    {
         Collections.shuffle(stack);
         Collections.shuffle(stack);
     }

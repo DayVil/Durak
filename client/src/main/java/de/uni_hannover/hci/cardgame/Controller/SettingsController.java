@@ -199,7 +199,8 @@ public class SettingsController implements ControllerInterface
 		{
 			CSSController.changeTheme("ThemeRed");
 		}
-		else {
+		else
+		{
 			CSSController.changeTheme("ThemeBlue");
 		}
 	}

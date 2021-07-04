@@ -18,13 +18,16 @@ public class CSSController
         Scene scene = stage.getScene();
 
 
-        if (theme.equals("ThemeBlue")) {
+        if (theme.equals("ThemeBlue"))
+        {
             themeFile_ = Objects.requireNonNull(CSSController.class.getClassLoader().getResource("styles/cardGameStyle_blue.css")).toExternalForm();
         }
-        else if (theme.equals("ThemeRed")) {
+        else if (theme.equals("ThemeRed"))
+        {
             themeFile_ = Objects.requireNonNull(CSSController.class.getClassLoader().getResource("styles/cardGameStyle_red.css")).toExternalForm();
         }
-        else{
+        else
+        {
             themeFile_ = Objects.requireNonNull(CSSController.class.getClassLoader().getResource("styles/cardGameStyle.css")).toExternalForm();
         }
 

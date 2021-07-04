@@ -2,9 +2,11 @@ package de.uni_hannover.hci.cardgame.gameLogic;
 
 import java.util.Scanner;
 
-public class sandBoxToBeDeleted {
+public class sandBoxToBeDeleted
+{
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         int[] ids = {0, 3, 8, 4};
         String[] names = {"Hansel", "Franzl", "Dansl", "Mansl"};
 
@@ -16,20 +18,28 @@ public class sandBoxToBeDeleted {
 
         game.initGame();
 
-        do {
+        do
+        {
             System.out.println("Trump is: " + GameManager.getTrump_());
             System.out.println(game.getSelectedPlayerHandcards());
             System.out.print("play a card (pass/take/int): ");
             str = scan.nextLine();
 
 
-            if (game.countVisibleCards() == 12) {
+            if (game.countVisibleCards() == 12)
+            {
                 game.newTurn(true);
-            } else if (str.equals("pass")) {
+            }
+            else if (str.equals("pass"))
+            {
 
-            } else if (str.equals("take")) {
+            }
+            else if (str.equals("take"))
+            {
                 game.newTurn(false);
-            } else {
+            }
+            else
+            {
 
             }
 

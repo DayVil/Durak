@@ -11,7 +11,8 @@ import java.util.Collections;
 /**
  * This contains every function to execute the game and manage it.
  */
-public class GameManager {
+public class GameManager
+{
     public static CardStack cardStack_;
     public static ArrayList<int[]> visibleCards_;
     private final ArrayList<Player> players_;
@@ -22,7 +23,8 @@ public class GameManager {
     // TODO Implement rest of game logic
     // TODO figure it out how to to swap between attackers
     // Problem finding both attackers
-    public GameManager(int[] IDs, String[] names) {
+    public GameManager(int[] IDs, String[] names)
+    {
         activeId_ = -1;
         this.players_ = new ArrayList<>();
         cardStack_ = new CardStack();
@@ -30,7 +32,8 @@ public class GameManager {
         createTrump();
 
         int count = 0;
-        for (int id: IDs) {
+        for (int id : IDs)
+        {
             this.players_.add(new Player(id, names[count]));
             count++;
         }
@@ -38,7 +41,8 @@ public class GameManager {
         Collections.shuffle(players_);
     }
 
-    public void sandBox() {
+    public void sandBox()
+    {
         /// SANDBOX
         players_.get(0).drawCards(7, cardStack_);
         int[] vis = {54, 60};
@@ -52,7 +56,8 @@ public class GameManager {
         return trump_;
     }
 
-    public void initGame() {
+    public void initGame()
+    {
         int beginning = 0;
         players_.get(beginning).setActive_(true);
         players_.get(beginning).setActiveAttacker_(true);
@@ -63,8 +68,8 @@ public class GameManager {
 
         players_.get(beginning + 1).setDefender_(true);
 
-        for (Player p:
-             players_) {
+        for (Player p : players_)
+        {
             p.drawCards(6, cardStack_);
         }
     }
@@ -80,30 +85,36 @@ public class GameManager {
 
         int returnValue = visibleCards_.size() * 2;
 
-        if (visibleCards_.get(visibleCards_.size() - 1)[1] == -1) {
+        if (visibleCards_.get(visibleCards_.size() - 1)[1] == -1)
+        {
             returnValue--;
         }
 
         return returnValue;
     }
 
-    public void newTurn(boolean defWon) {
+    public void newTurn(boolean defWon)
+    {
         int pos = 0;
         boolean found = false;
 
-        for (Player p : players_) {
-            if(p.isDefender_()) { //Found defender
+        for (Player p : players_)
+        {
+            if(p.isDefender_())
+            { //Found defender
                 found = true;
             }
 
-            if (!found) { //Stop counting
+            if (!found)
+            { //Stop counting
                 pos++;
             }
 
             p.resetFlags(); // Sets all flags false
         }
 
-        if(!defWon) {
+        if(!defWon)
+        {
             pos++;
         }
 
@@ -118,9 +129,12 @@ public class GameManager {
         refreshActiveID();
     }
 
-    private void refreshActiveID() {
-        for (Player p: players_) {
-            if (p.isActive_()) {
+    private void refreshActiveID()
+    {
+        for (Player p : players_)
+        {
+            if (p.isActive_())
+            {
                 activeId_ = p.getId_();
             }
         }
@@ -129,7 +143,7 @@ public class GameManager {
     private String visibleCardsToString()
     {
         StringBuilder returnString = new StringBuilder();
-        for (int[] arr:visibleCards_)
+        for (int[] arr : visibleCards_)
         {
             returnString.append(String.format("%d ", arr[0]));
             if(arr[1] < 11) continue;
@@ -138,12 +152,15 @@ public class GameManager {
         return returnString.toString();
     }
 
-    public boolean playPCard(int id, int card) {
+    public boolean playPCard(int id, int card)
+    {
         Player player = null;
 
         // Gets the Player
-        for (Player p: players_) {
-            if (id == p.getId_()) {
+        for (Player p : players_)
+        {
+            if (id == p.getId_())
+            {
                 player = p;
             }
         }
@@ -200,9 +217,12 @@ public class GameManager {
 
     ///DEBUG
 
-    public String getSelectedPlayerHandcards() {
-        for (Player p: players_) {
-            if (p.getId_() == activeId_ && p.isActive_()) {
+    public String getSelectedPlayerHandcards()
+    {
+        for (Player p : players_)
+        {
+            if (p.getId_() == activeId_ && p.isActive_())
+            {
                 String str = p.handCardsValColToString();
                 if (str.equals("")) return "EMPTY HAND";
                 return str;
