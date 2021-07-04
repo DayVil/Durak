@@ -15,6 +15,7 @@ public class Player
     private int id_; //is Equal to Client ID
     private String name_;
     private final ArrayList<Integer> handCards_;
+    private boolean isActiveAttacker_;
     private boolean isAttacker_;
     private boolean isDefender_;
     private boolean isActive_;
@@ -47,15 +48,19 @@ public class Player
         this.name_ = name_;
     }
 
-    public boolean isAttacker_()
+    public boolean isActiveAttacker_()
     {
-        return isAttacker_;
+        return isActiveAttacker_;
     }
 
-    public void setAttacker_(boolean attacker_)
+    public void setActiveAttacker_(boolean activeAttacker_)
     {
-        isAttacker_ = attacker_;
+        this.isActiveAttacker_ = activeAttacker_;
     }
+
+    public boolean isAttacker_() { return isAttacker_; }
+
+    public void setAttacker_(boolean attacker) { isAttacker_ = attacker; }
 
     public void setPlayedCard_(boolean played) { playedCard_ = played; }
 
@@ -94,7 +99,7 @@ public class Player
 
     public int isAttackerInt_()
     {
-        if (isAttacker_)
+        if (isActiveAttacker_)
         {
             return 1;
         }
@@ -111,7 +116,7 @@ public class Player
     }
 
     public void resetFlags() {
-        setAttacker_(false);
+        setActiveAttacker_(false);
         setDefender_(false);
         setActive_(false);
         setPlayedCard_(false);
@@ -163,7 +168,7 @@ public class Player
     {
         if(!isActive_) return false;
 
-        if(isDefender_ && !isAttacker_)
+        if(isDefender_ && !isActiveAttacker_)
         {
             for (int i = 0; i < handCards_.size(); i++)
             {
@@ -183,7 +188,7 @@ public class Player
             return false;
         }
 
-        if(!isDefender_ && isAttacker_)
+        if(!isDefender_ && isActiveAttacker_)
         {
             for (int i = 0; i < handCards_.size(); i++)
             {

@@ -22,31 +22,20 @@ public class GameManager {
     // TODO Implement rest of game logic
     // TODO figure it out how to to swap between attackers
     // Problem finding both attackers
-    public GameManager(int[] IDs) {
+    public GameManager(int[] IDs, String[] names) {
         activeId_ = -1;
         this.players_ = new ArrayList<>();
         cardStack_ = new CardStack();
         visibleCards_ = new ArrayList<>();
         createTrump();
 
+        int count = 0;
         for (int id: IDs) {
-            this.players_.add(new Player(id, "TestPlayer"));
+            this.players_.add(new Player(id, names[count]));
+            count++;
         }
+
         Collections.shuffle(players_);
-    }
-
-    public static CardColor getTrump_ ()
-    {
-        return trump_;
-    }
-
-    public void initGame() {
-        int beginning = 0;
-        players_.get(beginning).setActive_(true);
-        players_.get(beginning).setAttacker_(true);
-        refreshActiveID();
-
-        players_.get(beginning + 1).setDefender_(true);
     }
 
     public void sandBox() {
@@ -58,6 +47,23 @@ public class GameManager {
         ///
     }
 
+    public static CardColor getTrump_ ()
+    {
+        return trump_;
+    }
+
+    public void initGame() {
+        int beginning = 0;
+        players_.get(beginning).setActive_(true);
+        players_.get(beginning).setActiveAttacker_(true);
+        players_.get(beginning).setAttacker_(true);
+        refreshActiveID();
+
+        players_.get(beginning + 2).setAttacker_(true);
+
+        players_.get(beginning + 1).setDefender_(true);
+    }
+
     private void createTrump()
     {
         trump_ = Cards.getColor(cardStack_.getLastCard());
@@ -65,21 +71,21 @@ public class GameManager {
 
     private int countVisibleCards()
     {
-        // per int-array there is 2 cards lying down, one from attacker and the second from defender
-        int returnValue = visibleCards_.size() * 2;
+        if (visibleCards_.size() == 0) return 0;
 
-        // looks for empty spot of defenders card, if it is empty the amount is one less.
-        // as there is no way we have multiple open spots this is the only thing we have to check here
-        if(visibleCards_.get(visibleCards_.size() - 1)[1] == -1) returnValue -= 1;
+        int returnValue = visibleCards_.size() * 2 - 2;
+
+        if (visibleCards_.get(visibleCards_.size() - 1)[1] == -1) {
+            returnValue++;
+        }
+        returnValue++;
 
         return returnValue;
     }
 
     public boolean isVisibleCardsfull() {
         if (visibleCards_.size() == 6) {
-            if (visibleCards_.get(5)[1] != -1) {
-                return true;
-            }
+            return visibleCards_.get(5)[1] != -1;
         }
         return false;
     }
@@ -104,7 +110,12 @@ public class GameManager {
             pos++;
         }
 
+        players_.get(pos).setActiveAttacker_(true);
         players_.get(pos).setAttacker_(true);
+        players_.get(pos).setActive_(true);
+
+        players_.get(pos + 2).setAttacker_(true);
+
         players_.get(pos + 1).setDefender_(true);
 
         refreshActiveID();
@@ -142,7 +153,6 @@ public class GameManager {
 
         // Player doesn't exist
         if (player == null) return false;
-
 
         return player.playCard(card);
     }

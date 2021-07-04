@@ -1,16 +1,12 @@
 package de.uni_hannover.hci.cardgame.gameLogic;
 
-import de.uni_hannover.hci.cardgame.gameLogic.GameManager;
-
-import java.util.ArrayList;
-
-
 //TODO receive message with getMessage()
 //TODO get names
 public class ExecuteGame {
 
     public void runGame(int[] ids) {
-        GameManager game = new GameManager(ids);
+        String[] names = {"Hansel", "Franzl", "Dansl", "Mansl"};
+        GameManager game = new GameManager(ids, names);
         String str = "0";
 
         game.initGame();
