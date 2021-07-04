@@ -139,6 +139,8 @@ public class ClientNetwork
             alert.setTitle("Network Error");
             alert.setHeaderText("Could not send message to server");
             alert.setContentText("Try to reconnect");
+            alert.setResizable(true);
+            alert.onShownProperty().addListener(ebox -> Platform.runLater(() -> alert.setResizable(false)));
             alert.showAndWait();
             return false;
         }
