@@ -62,6 +62,11 @@ public class GameManager {
         players_.get(beginning + 2).setAttacker_(true);
 
         players_.get(beginning + 1).setDefender_(true);
+
+        for (Player p:
+             players_) {
+            p.drawCards(6, cardStack_);
+        }
     }
 
     private void createTrump()
@@ -69,25 +74,17 @@ public class GameManager {
         trump_ = Cards.getColor(cardStack_.getLastCard());
     }
 
-    private int countVisibleCards()
+    public int countVisibleCards()
     {
         if (visibleCards_.size() == 0) return 0;
 
-        int returnValue = visibleCards_.size() * 2 - 2;
+        int returnValue = visibleCards_.size() * 2;
 
         if (visibleCards_.get(visibleCards_.size() - 1)[1] == -1) {
-            returnValue++;
+            returnValue--;
         }
-        returnValue++;
 
         return returnValue;
-    }
-
-    public boolean isVisibleCardsfull() {
-        if (visibleCards_.size() == 6) {
-            return visibleCards_.get(5)[1] != -1;
-        }
-        return false;
     }
 
     public void newTurn(boolean defWon) {
@@ -121,7 +118,7 @@ public class GameManager {
         refreshActiveID();
     }
 
-    public void refreshActiveID() {
+    private void refreshActiveID() {
         for (Player p: players_) {
             if (p.isActive_()) {
                 activeId_ = p.getId_();
@@ -197,5 +194,20 @@ public class GameManager {
 
         returnString.append(String.format("%s", 1));                                            // Was successful
         return returnString.toString();
+    }
+
+
+
+    ///DEBUG
+
+    public String getSelectedPlayerHandcards() {
+        for (Player p: players_) {
+            if (p.getId_() == activeId_ && p.isActive_()) {
+                String str = p.handCardsValColToString();
+                if (str.equals("")) return "EMPTY HAND";
+                return str;
+            }
+        }
+        return "No active player found!";
     }
 }

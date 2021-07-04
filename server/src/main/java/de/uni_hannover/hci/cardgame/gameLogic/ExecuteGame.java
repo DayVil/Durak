@@ -12,7 +12,7 @@ public class ExecuteGame {
         game.initGame();
 
         do {
-            if (game.isVisibleCardsfull()) { //Defender won
+            if (game.countVisibleCards() == 12) { //Defender won
                 game.newTurn(true);
             } else if (str.equals("pass")) {
 

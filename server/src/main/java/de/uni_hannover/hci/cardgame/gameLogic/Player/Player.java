@@ -2,6 +2,7 @@ package de.uni_hannover.hci.cardgame.gameLogic.Player;
 
 import de.uni_hannover.hci.cardgame.gameLogic.Attack;
 import de.uni_hannover.hci.cardgame.gameLogic.Cards.CardStack;
+import de.uni_hannover.hci.cardgame.gameLogic.Cards.Cards;
 import de.uni_hannover.hci.cardgame.gameLogic.Defend;
 
 import java.util.ArrayList;
@@ -152,18 +153,6 @@ public class Player
         }
     }
 
-    public String handCardsToString()
-    {
-        StringBuilder returnString = new StringBuilder();
-        for (Integer i: handCards_)
-        {
-            returnString.append(String.format("%s ", i));
-        }
-        return returnString.toString();
-    }
-
-
-
     public boolean playCard(int card)
     {
         if(!isActive_) return false;
@@ -209,6 +198,26 @@ public class Player
         }
         System.out.println("User is neither Attacker, nor Defender OR Attacker AND Defender and is marked as Active!");
         return false;
+    }
+
+    public String handCardsToString()
+    {
+        StringBuilder returnString = new StringBuilder();
+        for (Integer i: handCards_)
+        {
+            returnString.append(String.format("%s ", i));
+        }
+        return returnString.toString();
+    }
+
+    public String handCardsValColToString() {
+        StringBuilder retStr = new StringBuilder();
+
+        for (Integer i: handCards_) {
+            retStr.append(String.format("[%s %s: %s] ", Cards.getCard(i), Cards.getColor(i), i));
+        }
+
+        return retStr.toString();
     }
 
     @Override
