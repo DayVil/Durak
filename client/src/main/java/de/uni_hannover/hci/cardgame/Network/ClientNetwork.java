@@ -101,6 +101,8 @@ public class ClientNetwork
             answer = getMessage();
         }while (answer == null);
 
+        System.out.println("I am answer of server at starting connection: " + answer);
+
         if (answer.equals("failed"))
         {
             stopConnection();

@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class ServerConsoleInput
 {
 
-    public static Scanner sc = new Scanner(System.in);
+    public static Scanner sc;
 
     public static String[] getStartingArgs ()
     {
@@ -25,6 +25,7 @@ public class ServerConsoleInput
         System.out.println("Please put in the number of the maximum amount of players that you want to have in your game.\nNote: It has to be a number between 2 and 8.\n");
         boolean valid = false;
         int maxplayers = -1;
+        sc = new Scanner(System.in);
         do{
             if (sc.hasNextInt())
             {
@@ -70,30 +71,52 @@ public class ServerConsoleInput
         sc = new Scanner(System.in);
         boolean valid = false;
         int port = 8000;
+        String portString;
 
         do{
             if (sc.hasNextLine())
             {
-                if (sc.hasNextInt())
+                portString = sc.nextLine();
+
+                if (portString.equals(""))
                 {
-                    port = sc.nextInt();
+                    valid = true;
+                    port = 8000;
+                }
+                else if (isInt(portString))
+                {
+                    port = Integer.parseInt(portString);
                     if (port >= 1 && port <= 65535)
                     {
                         valid = true;
+                        break;
                     }
                     else
                     {
                         System.out.println("Your input of " + port + " Maximum players is invalid, it has to be a number between 1 and 65535!\n");
                     }
+
                 }
                 else
                 {
-                    port = 8000;
-                    valid = true;
+                    System.out.println("Your input of " + portString + " Maximum players is invalid, it has to be a number between 1 and 65535!\n");
                 }
             }
         } while (!valid);
 
         return String.valueOf(port);
+    }
+
+    public static boolean isInt(String toCheck)
+    {
+        char[] chars = toCheck.toCharArray();
+        for (char character : chars)
+        {
+            if (character < '0' || character > '9')
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
