@@ -7,6 +7,7 @@ import de.uni_hannover.hci.cardgame.PaneResizer;
 import de.uni_hannover.hci.cardgame.fxmlNavigator;
 import de.uni_hannover.hci.cardgame.gameClient;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -75,14 +76,14 @@ public class GameBoardController implements ControllerInterface
         ClientNetwork.sendMessage(String.format("%d", nr));
     }
 
-    public void debugrequestgamestate()
+    public void pass()
     {
-        ClientNetwork.sendMessage("Gimme Gamestate");
+        ClientNetwork.sendMessage("pass");
     }
 
-    public void actionTake()
+    public void take()
     {
-        ClientNetwork.sendMessage("TakeAction");
+        ClientNetwork.sendMessage("take");
     }
 
     public void executeLine(String line)
@@ -272,6 +273,8 @@ public class GameBoardController implements ControllerInterface
         }
         GameBoard.getChildren().add(imageView);
     }
+
+
 
     class networkHandler implements Runnable
     {
