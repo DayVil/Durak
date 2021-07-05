@@ -102,6 +102,7 @@ public class GameManager
                     //card was played
                     //Check for six existing cards?
                     int card = Integer.parseInt(lastAction);
+                    sendGameStateToAll();
                     if (activePlayer.playCard(card))
                     {
                         if (activePlayer.isAttacker_())
@@ -127,7 +128,7 @@ public class GameManager
                     }
                     break;
             }
-            sendGameStateToAll();
+
         }
         endTurn(activePlayers, defWon);
     }
