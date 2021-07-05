@@ -69,27 +69,29 @@ public class ServerConsoleInput
         System.out.println("Please put in the number of the Port your server should use (Leave blank for Standard Port of 8000).\nNote: It has to be a number between 1 and 65535.\n");
         sc = new Scanner(System.in);
         boolean valid = false;
-        int port;
+        int port = 8000;
 
         do{
-            if (sc.hasNextInt())
+            if (sc.hasNextLine())
             {
-                port = sc.nextInt();
-                if (port >= 1 && port <= 65535)
+                if (sc.hasNextInt())
                 {
-                    valid = true;
+                    port = sc.nextInt();
+                    if (port >= 1 && port <= 65535)
+                    {
+                        valid = true;
+                    }
+                    else
+                    {
+                        System.out.println("Your input of " + port + " Maximum players is invalid, it has to be a number between 1 and 65535!\n");
+                    }
                 }
                 else
                 {
-                    System.out.println("Your input of " + port + " Maximum players is invalid, it has to be a number between 1 and 65535!\n");
+                    port = 8000;
+                    valid = true;
                 }
             }
-            else
-            {
-                port = 8000;
-                valid = true;
-            }
-
         } while (!valid);
 
         return String.valueOf(port);

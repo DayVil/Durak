@@ -12,7 +12,6 @@ import java.util.Date;
 public class ServerNetwork
 {
     ServerSocket serverSocket;
-    GameManager gameManager;
     String serverPassword;
     public static int maxPlayerCount;
     int clients_ = 0;
@@ -131,52 +130,9 @@ public class ServerNetwork
                             break;
                         }
 
-                        if(line.equals("Gimme Gamestate"))
+                        if(!loggedIn && line.length() > "Password: ".length() + serverPassword.length())
                         {
-                            sendMessage(id, "12 " +    //StackSize         DONE
-                                    "1 " +                  //TrumpColor        DONE
-                                    "2 " +                  //PlayerCount       DONE
-                                    "1 " +                  //Player ID         DONE
-                                    "Werner " +             //PLayerName        DONE
-                                    "3 " +                  //PlayerHandCards   DONE
-                                    "0 " +                  //IsAttacker        DONE
-                                    "1 " +                  //IsDefender        DONE
-                                    "0 " +                  //IsActive          DONE
-                                    "25 " +                 //PlayerID          DONE
-                                    "Sebastian " +          //PLayerName        DONE
-                                    "5 " +                  //PlayerHandCards   DONE
-                                    "1 " +                  //IsAttacker        DONE
-                                    "0 " +                  //IsDefender        DONE
-                                    "1 " +                  //IsActive          DONE
-                                    "10 " +                 //VisibleCardsCount DONE
-                                    "12 " +                 //VisibleCard       DONE
-                                    "13 " +                 //VisibleCard       DONE
-                                    "25 " +                 //VisibleCard       DONE
-                                    "26 " +                 //VisibleCard       DONE
-                                    "43 " +                 //VisibleCard       DONE
-                                    "44 " +                 //VisibleCard       DONE
-                                    "59 " +                 //VisibleCard       DONE
-                                    "60 " +                 //VisibleCard       DONE
-                                    "55 " +                 //VisibleCard       DONE
-                                    "56 " +                 //VisibleCard       DONE
-                                    "10 " +                 //MyHandCardCount   DONE
-                                    "14 " +                 //HandCard          DONE
-                                    "15 " +                 //HandCard          DONE
-                                    "16 " +                 //HandCard          DONE
-                                    "17 " +                 //HandCard          DONE
-                                    "18 " +                 //HandCard          DONE
-                                    "19 " +                 //HandCard          DONE
-                                    "20 " +                 //HandCard          DONE
-                                    "21 " +                 //HandCard          DONE
-                                    "22 " +                 //HandCard          DONE
-                                    "23 " +                 //HandCard          DONE
-                                    "0");                   //WasSuccessful     DONE
-                        }
-
-                        if(!loggedIn && line.length() > 10 + serverPassword.length())
-                        {
-
-                            String p = line.substring(0, 10 + serverPassword.length());
+                            String p = line.substring(0, "Password: ".length() + serverPassword.length());
                             if(p.equals("Password: " + serverPassword))
                             {
                                 loggedIn = true;
@@ -187,11 +143,10 @@ public class ServerNetwork
                                 sendMessage(id, "failed");
                             }
                         }
-                        // TODO: give user to gamelogic for processing
                         if(GameManager.activeId_ == id && (line.equals("take") || line.equals("pass") || line.matches("^(1[1-9]|[2-5]\\d?|6[0-2])$")))
                         {
                             GameManager.takeAction(line, id);
-                            System.out.printf("Client is accessing gameLogic with %s", line); // TODO: sendToGameLogic;
+                            System.out.printf("Client is accessing gameLogic with %s", line);
                         }
                     }
                 }
