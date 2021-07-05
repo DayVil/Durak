@@ -35,7 +35,7 @@ public class Player
     public String getLastAction_ ()
     {
         String returnAction = lastAction_;
-        lastAction_ = "no action";
+        //lastAction_ = "no action";
         return returnAction;
     }
 

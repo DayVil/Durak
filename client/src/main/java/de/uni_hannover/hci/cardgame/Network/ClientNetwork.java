@@ -92,12 +92,17 @@ public class ClientNetwork
             return false;
         }
 
-        String logInMessage = "Password: " + password +  " User: " + user;
+        String logInMessage = "Password: " + password + " User: " + user;
 
-        if(!sendMessage(logInMessage)) return false;
+        if (!sendMessage(logInMessage)) return false;
 
-        String answer = getMessage();
-        if(answer != null && answer.equals("failed"))
+        String answer;
+        do
+        {
+            answer = getMessage();
+        }while (answer == null);
+
+        if (answer.equals("failed"))
         {
             stopConnection();
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -109,7 +114,7 @@ public class ClientNetwork
             alert.showAndWait();
             return false;
         }
-        if(answer == null || !answer.equals("logged in"))
+        if (!answer.equals("logged in"))
         {
             stopConnection();
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -132,7 +137,7 @@ public class ClientNetwork
             bufferOut_.write(msg + "\n");
             bufferOut_.flush();
         }
-        catch(IOException e)
+        catch (IOException e)
         {
             stopConnection();
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -149,18 +154,18 @@ public class ClientNetwork
 
     public static String getMessage()
     {
-        if(bufferIn_ == null) return "error";
+        if (bufferIn_ == null) return "error";
         String answer = null;
         try
         {
             answer = bufferIn_.readLine();
-            if(answer != null && answer.equals("disconnect"))
+            if (answer != null && answer.equals("disconnect"))
             {
                 stopConnection();
                 return answer;
             }
         }
-        catch(IOException e)
+        catch (IOException e)
         {
             stopConnection();
             return "error";
@@ -173,17 +178,17 @@ public class ClientNetwork
         loggedIn_ = false;
         try
         {
-            if(bufferIn_ != null)
+            if (bufferIn_ != null)
             {
                 bufferIn_.close();
                 bufferIn_ = null;
             }
-            if(bufferOut_ != null)
+            if (bufferOut_ != null)
             {
                 bufferOut_.close();
                 bufferOut_ = null;
             }
-            if(clientSocket_ != null)
+            if (clientSocket_ != null)
             {
                 clientSocket_.close();
                 clientSocket_ = null;

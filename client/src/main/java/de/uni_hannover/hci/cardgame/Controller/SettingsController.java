@@ -22,78 +22,78 @@ import java.util.Objects;
 public class SettingsController implements ControllerInterface
 {
 
-	@FXML
-	private Pane Settings;
+    @FXML
+    private Pane Settings;
 
-	private static ArrayList<Node> nodeRescaleArrayList_;
-	private static ArrayList<Node> nodeArrayList_;
+    private static ArrayList<Node> nodeRescaleArrayList_;
+    private static ArrayList<Node> nodeArrayList_;
 
-	@FXML
-	private Pane Content;
-	
-	@FXML
-	private SplitMenuButton Resolution;
-	
-	@FXML
-	private MenuItem res_1;
-	
-	@FXML
-	private MenuItem res_2;
+    @FXML
+    private Pane Content;
 
-	@FXML
-	private Label label;
+    @FXML
+    private SplitMenuButton Resolution;
 
-	@FXML
-	private ImageView picture;
+    @FXML
+    private MenuItem res_1;
 
-	@FXML
-	private CheckBox FullScreenCheckBox;
+    @FXML
+    private MenuItem res_2;
 
-	@FXML
-	private Slider SoundSlider;
+    @FXML
+    private Label label;
 
-	@FXML
-	private Button BackButton;
+    @FXML
+    private ImageView picture;
 
-	@FXML
-	private Label SoundLabel;
+    @FXML
+    private CheckBox FullScreenCheckBox;
 
-	@FXML
-	private SplitMenuButton Theme;
+    @FXML
+    private Slider SoundSlider;
 
-	@FXML
-	private MenuItem ThemeBlue_;
+    @FXML
+    private Button BackButton;
 
-	@FXML
-	private MenuItem ThemeRed_;
+    @FXML
+    private Label SoundLabel;
 
-	@Override
-	public void init()
-	{
-		nodeRescaleArrayList_ = new ArrayList<>();
-		nodeArrayList_ = new ArrayList<>();
+    @FXML
+    private SplitMenuButton Theme;
 
-		Stage stage = gameClient.stage_;
-		if (stage.isFullScreen())
-		{
-			FullScreenCheckBox.setSelected(true);
-		}
-		Scene scene = stage.getScene();
+    @FXML
+    private MenuItem ThemeBlue_;
 
-		nodeRescaleArrayList_.add(scene.lookup("#SoundSlider"));
-		nodeRescaleArrayList_.add(scene.lookup("#FullScreenCheckBox"));
-		nodeRescaleArrayList_.add(scene.lookup("#Resolution"));
-		nodeRescaleArrayList_.add(scene.lookup("#Theme"));
-		nodeRescaleArrayList_.add(scene.lookup("#label"));
-		nodeRescaleArrayList_.add(scene.lookup("#SoundLabel"));
-		nodeRescaleArrayList_.add(scene.lookup("#BackButton"));
-		nodeRescaleArrayList_.add(scene.lookup("#picture"));
+    @FXML
+    private MenuItem ThemeRed_;
 
-		picture = (ImageView) scene.lookup("#picture");
-		Image image = Cards.getSpecialImage(SpecialTexture.BackLowsat);
-		picture.setImage(image);
+    @Override
+    public void init()
+    {
+        nodeRescaleArrayList_ = new ArrayList<>();
+        nodeArrayList_ = new ArrayList<>();
 
-		PaneResizer.resizePane(scene.getHeight(), true);
+        Stage stage = gameClient.stage_;
+        if (stage.isFullScreen())
+        {
+            FullScreenCheckBox.setSelected(true);
+        }
+        Scene scene = stage.getScene();
+
+        nodeRescaleArrayList_.add(scene.lookup("#SoundSlider"));
+        nodeRescaleArrayList_.add(scene.lookup("#FullScreenCheckBox"));
+        nodeRescaleArrayList_.add(scene.lookup("#Resolution"));
+        nodeRescaleArrayList_.add(scene.lookup("#Theme"));
+        nodeRescaleArrayList_.add(scene.lookup("#label"));
+        nodeRescaleArrayList_.add(scene.lookup("#SoundLabel"));
+        nodeRescaleArrayList_.add(scene.lookup("#BackButton"));
+        nodeRescaleArrayList_.add(scene.lookup("#picture"));
+
+        picture = (ImageView) scene.lookup("#picture");
+        Image image = Cards.getSpecialImage(SpecialTexture.BackLowsat);
+        picture.setImage(image);
+
+        PaneResizer.resizePane(scene.getHeight(), true);
 
 /*
 		PauseTransition pause = new PauseTransition(Duration.millis(10));
@@ -103,7 +103,7 @@ public class SettingsController implements ControllerInterface
 				);
 		pause.play();
 */
-	}
+    }
 
 /*
 	@Override
@@ -147,61 +147,61 @@ public class SettingsController implements ControllerInterface
 	}
 */
 
-	@FXML
-	private void goToHome()
-	{
-		fxmlNavigator.loadFxml(fxmlNavigator.HOME);
-	}
+    @FXML
+    private void goToHome()
+    {
+        fxmlNavigator.loadFxml(fxmlNavigator.HOME);
+    }
 
-	@FXML
-	private void changeSound()
-	{
-		//TODO: only if sound is ever added: change volume of sound to percentage value of soundslider
-	}
+    @FXML
+    private void changeSound()
+    {
+        //TODO: only if sound is ever added: change volume of sound to percentage value of soundslider
+    }
 
-	@FXML
-	private void goFullScreen()
-	{
-		gameClient.stage_.setFullScreen(!gameClient.stage_.isFullScreen());
-	}
+    @FXML
+    private void goFullScreen()
+    {
+        gameClient.stage_.setFullScreen(!gameClient.stage_.isFullScreen());
+    }
 
-	@FXML
-	public void ChangeResolution(ActionEvent event)
-	{
-		if(gameClient.stage_.isFullScreen())
-		{
-			//FIXME: doesn't really work like i thought it would, leaving this empty so it cannot be resized for now in fullscreen
-			System.out.println("Left empty resolution change while fullscreen is activated");
-		}
-		else
-		{
-			if(event.getSource().equals(res_1))		// If event source (selected button of resolution changer) is res_1 (600 x 400) do following
-			{
-				gameClient.stage_.setWidth(600.0);
-				gameClient.stage_.setHeight(400.0);
-			}
-			else if (event.getSource().equals(res_2))	// If event source (selected button of resolution changer) is res_2 (1200 x 800) do following
-			{
-				gameClient.stage_.setWidth(1200.0);
-				gameClient.stage_.setHeight(800.0);
-			}
-			gameClient.stage_.centerOnScreen();
-		}
-	}
+    @FXML
+    public void ChangeResolution(ActionEvent event)
+    {
+        if (gameClient.stage_.isFullScreen())
+        {
+            //FIXME: doesn't really work like i thought it would, leaving this empty so it cannot be resized for now in fullscreen
+            System.out.println("Left empty resolution change while fullscreen is activated");
+        }
+        else
+        {
+            if (event.getSource().equals(res_1))        // If event source (selected button of resolution changer) is res_1 (600 x 400) do following
+            {
+                gameClient.stage_.setWidth(600.0);
+                gameClient.stage_.setHeight(400.0);
+            }
+            else if (event.getSource().equals(res_2))    // If event source (selected button of resolution changer) is res_2 (1200 x 800) do following
+            {
+                gameClient.stage_.setWidth(1200.0);
+                gameClient.stage_.setHeight(800.0);
+            }
+            gameClient.stage_.centerOnScreen();
+        }
+    }
 
-	public void changeStyle(ActionEvent event)
-	{
-		if(event.getSource().equals(ThemeBlue_))		// If event source (selected button of resolution changer) is res_1 (600 x 400) do following
-		{
-			CSSController.changeTheme("ThemeBlue");
-		}
-		else if (event.getSource().equals(ThemeRed_))	// If event source (selected button of resolution changer) is res_2 (1200 x 800) do following
-		{
-			CSSController.changeTheme("ThemeRed");
-		}
-		else
-		{
-			CSSController.changeTheme("ThemeBlue");
-		}
-	}
+    public void changeStyle(ActionEvent event)
+    {
+        if (event.getSource().equals(ThemeBlue_))        // If event source (selected button of resolution changer) is res_1 (600 x 400) do following
+        {
+            CSSController.changeTheme("ThemeBlue");
+        }
+        else if (event.getSource().equals(ThemeRed_))    // If event source (selected button of resolution changer) is res_2 (1200 x 800) do following
+        {
+            CSSController.changeTheme("ThemeRed");
+        }
+        else
+        {
+            CSSController.changeTheme("ThemeBlue");
+        }
+    }
 }

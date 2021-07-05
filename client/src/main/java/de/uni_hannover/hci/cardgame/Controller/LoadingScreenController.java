@@ -18,45 +18,45 @@ import java.time.LocalDateTime;
 
 public class LoadingScreenController implements ControllerInterface
 {
-	@FXML
-	private Pane Loading;
+    @FXML
+    private Pane Loading;
 
-	double progressBarValue;
-	int imageNumber;
+    double progressBarValue;
+    int imageNumber;
 
-	@Override
-	public void init ()
-	{
-		Stage stage = gameClient.stage_;
-		Scene scene = stage.getScene();
+    @Override
+    public void init()
+    {
+        Stage stage = gameClient.stage_;
+        Scene scene = stage.getScene();
 
-		ProgressBar progressBar = (ProgressBar) scene.lookup("#LoadingBar");
-		progressBar.setProgress(0);
+        ProgressBar progressBar = (ProgressBar) scene.lookup("#LoadingBar");
+        progressBar.setProgress(0);
 
-		progressBarValue = 0.0;
-		imageNumber = 0;
+        progressBarValue = 0.0;
+        imageNumber = 0;
 
-		PauseTransition pause = new PauseTransition(Duration.millis(1));
-		pause.setOnFinished
-		(
-			e ->
-			{
-				if (imageNumber < Cards.getImageBufferSize())
-				{
-					Cards.getImage(imageNumber);
-					progressBarValue = 1.0 * imageNumber / Cards.getImageBufferSize();
-					progressBar.setProgress(progressBarValue);
-					imageNumber++;
-					pause.playFromStart();
-				}
-				else
-				{
-					fxmlNavigator.loadFxml(fxmlNavigator.HOME);
-				}
-			}
-		);
-		pause.play();
+        PauseTransition pause = new PauseTransition(Duration.millis(1));
+        pause.setOnFinished
+                (
+                        e ->
+                        {
+                            if (imageNumber < Cards.getImageBufferSize())
+                            {
+                                Cards.getImage(imageNumber);
+                                progressBarValue = 1.0 * imageNumber / Cards.getImageBufferSize();
+                                progressBar.setProgress(progressBarValue);
+                                imageNumber++;
+                                pause.playFromStart();
+                            }
+                            else
+                            {
+                                fxmlNavigator.loadFxml(fxmlNavigator.HOME);
+                            }
+                        }
+                );
+        pause.play();
 
-		PaneResizer.resizePane(scene.getHeight(), true);
-	}
+        PaneResizer.resizePane(scene.getHeight(), true);
+    }
 }

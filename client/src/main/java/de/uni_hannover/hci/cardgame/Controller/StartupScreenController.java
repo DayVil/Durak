@@ -14,59 +14,59 @@ import javafx.stage.Stage;
 public class StartupScreenController implements ControllerInterface
 {
 
-	@FXML
-	private Pane Startup;
+    @FXML
+    private Pane Startup;
 
-	@Override
-	public void init()
-	{
+    @Override
+    public void init()
+    {
 
-		Stage stage = gameClient.stage_;
-		Scene scene = stage.getScene();
+        Stage stage = gameClient.stage_;
+        Scene scene = stage.getScene();
 
-		ImageView iv1 = new ImageView();
-		Image image = Cards.getImage(36); //Ace of Diamonds
-		iv1.setImage(image);
-		iv1.setCache(true);
-		iv1.setLayoutX(205.0);
-		iv1.setLayoutY(150.0);
-		iv1.setPreserveRatio(true);
-		iv1.setFitWidth(75);
-		iv1.setRotate(330.0);
-		Startup.getChildren().add(iv1);
+        ImageView iv1 = new ImageView();
+        Image image = Cards.getImage(36); //Ace of Diamonds
+        iv1.setImage(image);
+        iv1.setCache(true);
+        iv1.setLayoutX(205.0);
+        iv1.setLayoutY(150.0);
+        iv1.setPreserveRatio(true);
+        iv1.setFitWidth(75);
+        iv1.setRotate(330.0);
+        Startup.getChildren().add(iv1);
 
-		ImageView iv2 = new ImageView();
-		image = Cards.getImage(49); //Ace of Hearts
-		iv2.setImage(image);
-		iv2.setCache(true);
-		iv2.setLayoutX(245.0);
-		iv2.setLayoutY(135.0);
-		iv2.setPreserveRatio(true);
-		iv2.setFitWidth(75);
-		iv2.setRotate(350.0);
-		Startup.getChildren().add(iv2);
+        ImageView iv2 = new ImageView();
+        image = Cards.getImage(49); //Ace of Hearts
+        iv2.setImage(image);
+        iv2.setCache(true);
+        iv2.setLayoutX(245.0);
+        iv2.setLayoutY(135.0);
+        iv2.setPreserveRatio(true);
+        iv2.setFitWidth(75);
+        iv2.setRotate(350.0);
+        Startup.getChildren().add(iv2);
 
-		ImageView iv3 = new ImageView();
-		image = Cards.getImage(23); //Ace of Clubs
-		iv3.setImage(image);
-		iv3.setCache(true);
-		iv3.setLayoutX(285.0);
-		iv3.setLayoutY(135.0);
-		iv3.setPreserveRatio(true);
-		iv3.setFitWidth(75);
-		iv3.setRotate(10.0);
-		Startup.getChildren().add(iv3);
+        ImageView iv3 = new ImageView();
+        image = Cards.getImage(23); //Ace of Clubs
+        iv3.setImage(image);
+        iv3.setCache(true);
+        iv3.setLayoutX(285.0);
+        iv3.setLayoutY(135.0);
+        iv3.setPreserveRatio(true);
+        iv3.setFitWidth(75);
+        iv3.setRotate(10.0);
+        Startup.getChildren().add(iv3);
 
-		ImageView iv4 = new ImageView();
-		image = Cards.getImage(62); //Ace of Spades
-		iv4.setImage(image);
-		iv4.setCache(true);
-		iv4.setLayoutX(325.0);
-		iv4.setLayoutY(150.0);
-		iv4.setPreserveRatio(true);
-		iv4.setFitWidth(75);
-		iv4.setRotate(30.0);
-		Startup.getChildren().add(iv4);
+        ImageView iv4 = new ImageView();
+        image = Cards.getImage(62); //Ace of Spades
+        iv4.setImage(image);
+        iv4.setCache(true);
+        iv4.setLayoutX(325.0);
+        iv4.setLayoutY(150.0);
+        iv4.setPreserveRatio(true);
+        iv4.setFitWidth(75);
+        iv4.setRotate(30.0);
+        Startup.getChildren().add(iv4);
 
 /*
 		// no need to resize the startupScreen at the beginning, because it has always the right (beginning) size
@@ -77,11 +77,11 @@ public class StartupScreenController implements ControllerInterface
 				);
 		pause.play();
 */
-	}
+    }
 
-	@FXML
-	private void goToLoading()
-	{
-		fxmlNavigator.loadFxml(fxmlNavigator.LOADING);
-	}
+    @FXML
+    private void goToLoading()
+    {
+        fxmlNavigator.loadFxml(fxmlNavigator.LOADING);
+    }
 }

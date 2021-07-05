@@ -57,7 +57,7 @@ public class GameManager
         activePlayers[1].setDefender_(true);
         refreshActiveID();
         sendGameStateToAll();
-
+        System.out.println("Send GameState to all clients");
         boolean turnEnded = false;
         boolean defWon = false;
         while (!turnEnded)
@@ -75,8 +75,10 @@ public class GameManager
             do
             {
                 lastAction = activePlayer.getLastAction_();
+                System.out.printf("%s\n", lastAction);
             } while (lastAction.equals("no action"));
-
+            activePlayer.setLastAction_("no action");
+            System.out.println("Action wait loop broke");
             switch (lastAction)
             {
                 case "pass":
@@ -191,6 +193,7 @@ public class GameManager
             if (p.getId_() == id)
             {
                 p.setLastAction_(action);
+                System.out.println("Found player and set action for player");
                 break;
             }
         }
@@ -216,7 +219,7 @@ public class GameManager
         returnArray[1] = players_.get(index++);
 
 
-        if (players_.size() < 3)
+        if (players_.size() >= 3)
         {
             if (index == players_.size())
             {

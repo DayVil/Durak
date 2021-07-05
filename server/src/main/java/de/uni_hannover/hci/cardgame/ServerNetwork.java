@@ -14,7 +14,7 @@ public class ServerNetwork
     ServerSocket serverSocket;
     GameManager gameManager;
     String serverPassword;
-    int maxPlayerCount;
+    public static int maxPlayerCount;
     int clients_ = 0;
 
     void run()
@@ -34,12 +34,16 @@ public class ServerNetwork
         }
 
         waitingForClients(maxPlayerCount);
+        while (!ClientManager.fullyLoaded)
+        {
+            // Waiting for threads to add Clients
+        }
         int[] IDs = new int[maxPlayerCount];
-        String[] names =new String[maxPlayerCount];
+        String[] names = new String[maxPlayerCount];
         for(int i = 0; i < maxPlayerCount; i++)
         {
             IDs[i] = ClientManager.getClientList().get(i).getID_();
-            names[i] = "Player " + Integer.toString(i);
+            names[i] = "Player_" + Integer.toString(i);
         }
 
         System.out.println("We Are FULL");

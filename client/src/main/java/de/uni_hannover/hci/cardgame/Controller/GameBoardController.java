@@ -155,7 +155,9 @@ public class GameBoardController implements ControllerInterface
             int x = 140 + (i % 3) * visibleCardsHorizontalSpacing;
             drawCard(arr[0], x, (i < 3) ? visibleCardsVerticalTop : visibleCardsVerticalBottom, false);
             if (arr[1] >= 11)
+            {
                 drawCard(arr[1], x, (i < 3) ? visibleCardsVerticalTop + 15 : visibleCardsVerticalBottom + 15, false);
+            }
         }
 
         //HANDCARDS

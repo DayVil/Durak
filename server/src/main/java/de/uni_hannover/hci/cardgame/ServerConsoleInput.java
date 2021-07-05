@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class ServerConsoleInput
 {
 
-    public static Scanner sc = null;
+    public static Scanner sc = new Scanner(System.in);
 
     public static String[] getStartingArgs ()
     {
@@ -23,7 +23,6 @@ public class ServerConsoleInput
     public static String getMaxPlayers ()
     {
         System.out.println("Please put in the number of the maximum amount of players that you want to have in your game.\nNote: It has to be a number between 2 and 8.\n");
-        sc = new Scanner(System.in);
         boolean valid = false;
         int maxplayers = -1;
         do{
@@ -53,7 +52,16 @@ public class ServerConsoleInput
     {
         System.out.println("Please put in the password that you want to use for your server!\n");
         sc = new Scanner(System.in);
-        return sc.nextLine();
+        boolean valid = false;
+        String returnPassword = "";
+        do{
+            if (sc.hasNextLine())
+            {
+                returnPassword = sc.nextLine();
+                valid = true;
+            }
+        } while (!valid);
+        return returnPassword;
     }
 
     public static String getServerPort ()
