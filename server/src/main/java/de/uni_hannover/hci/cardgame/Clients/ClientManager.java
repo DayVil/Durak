@@ -5,14 +5,8 @@ import java.util.ArrayList;
 
 public class ClientManager
 {
-    private static ArrayList<Client> clientList;
-    static int newID;
-
-    public ClientManager()
-    {
-        newID = 0;
-        clientList = new ArrayList<>();
-    }
+    private static ArrayList<Client> clientList = new ArrayList<>();
+    static int newID = 0;
 
     public static int addClient(BufferedWriter writer)
     {
