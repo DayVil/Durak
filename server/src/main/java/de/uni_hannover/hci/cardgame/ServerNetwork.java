@@ -13,15 +13,19 @@ public class ServerNetwork
 {
     ServerSocket serverSocket;
     GameManager gameManager;
-    String serverPassword = "TollerServer";
-    int maxPlayerCount = 2;
+    String serverPassword;
+    int maxPlayerCount;
     int clients_ = 0;
 
     void run()
     {
+        //  This method getStartingArgs() has not been tested but it shouldn't fail. server can't start if this is not answered correctly
+        String[] args = ServerConsoleInput.getStartingArgs();
+        maxPlayerCount = Integer.parseInt(args[0]);
+        serverPassword = args[1];
         try
         {
-            serverSocket = new ServerSocket(8000);
+            serverSocket = new ServerSocket(Integer.parseInt(args[2]));
             System.out.print("Server started at " + new Date() + '\n');
         }
         catch (IOException ex)
