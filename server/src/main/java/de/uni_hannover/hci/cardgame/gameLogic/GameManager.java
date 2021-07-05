@@ -1,5 +1,6 @@
 package de.uni_hannover.hci.cardgame.gameLogic;
 
+import de.uni_hannover.hci.cardgame.ServerNetwork;
 import de.uni_hannover.hci.cardgame.gameLogic.Cards.CardColor;
 import de.uni_hannover.hci.cardgame.gameLogic.Cards.CardStack;
 import de.uni_hannover.hci.cardgame.gameLogic.Cards.Cards;
@@ -7,7 +8,6 @@ import de.uni_hannover.hci.cardgame.gameLogic.Player.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Objects;
 
 /**
  * This contains every function to execute the game and manage it.
@@ -15,24 +15,20 @@ import java.util.Objects;
 public class GameManager
 {
     public static CardStack drawPile_;
-    public static ArrayList<int[]> visibleCards_;
-    private final ArrayList<Player> players_;
-    private final ArrayList<Player> viewers_;
+    public static final ArrayList<int[]> visibleCards_ = new ArrayList<>();
+    private static final ArrayList<Player> players_ = new ArrayList<>();
+    private static final ArrayList<Player> viewers_ = new ArrayList<>();
     private static CardColor trump_;
     public static int activeId_;
-    public int firstAttacker;
+    public static int firstAttacker;
 
     // TODO: implement run
     // TODO: Implement rest of game logic
     // TODO: on playCard check for total cards that are able to be played as defender might not always have 6 cards
-    // Problem finding both attackers
-    public GameManager(int[] IDs, String[] names)
+    public static void initGameManager(int[] IDs, String[] names)
     {
-        activeId_ = -1;
-        players_ = new ArrayList<>();
-        viewers_ = new ArrayList<>();
         drawPile_ = new CardStack();
-        visibleCards_ = new ArrayList<>();
+        activeId_ = -1;
         createTrump();
 
         int i = 0;
@@ -50,18 +46,20 @@ public class GameManager
         }
 
         firstAttacker = players_.get(0).getId_();
+        newTurn();
     }
 
-    public void newTurn ()
+    public static void newTurn ()
     {
         Player[] activePlayers = getActivePlayers(firstAttacker);
         activePlayers[0].setActive_(true);
         activePlayers[0].setAttacker_(true);
         activePlayers[1].setDefender_(true);
+        refreshActiveID();
+        sendGameStateToAll();
 
         boolean turnEnded = false;
         boolean defWon = false;
-        //refreshActiveID();
         while (!turnEnded)
         {
             Player activePlayer = null;
@@ -72,13 +70,12 @@ public class GameManager
                     activePlayer = p;
                 }
             }
-            while (!Objects.requireNonNull(activePlayer).getTookAction_())
-            {
-                //Waiting, will always throw IntelliJ warning as there will not be code in here
-            }
-            activePlayer.setTookAction_(false);
 
-            String lastAction = activePlayer.getLastAction_();
+            String lastAction;
+            do
+            {
+                lastAction = activePlayer.getLastAction_();
+            } while (lastAction.equals("no action"));
 
             switch (lastAction)
             {
@@ -122,13 +119,18 @@ public class GameManager
                             }
                         }
                     }
+                    else
+                    {
+                        ServerNetwork.sendMessage(activePlayer.getId_(), gameBoardStateToString(activePlayer.getId_(), false));
+                    }
                     break;
             }
+            sendGameStateToAll();
         }
         endTurn(activePlayers, defWon);
     }
 
-    public void endTurn(Player[] activePlayers, boolean defenseWon)
+    public static void endTurn(Player[] activePlayers, boolean defenseWon)
     {
         if (defenseWon)
         {
@@ -160,7 +162,7 @@ public class GameManager
         System.out.println("The Game has now officially ended!");
     }
 
-    public boolean clearPlayers()
+    public static boolean clearPlayers()
     {
         for (Player p : players_)
         {
@@ -182,20 +184,19 @@ public class GameManager
     }
 
     //Will be used from the server
-    public void takeAction(String action, int id)
+    public static void takeAction(String action, int id)
     {
         for (Player p : players_)
         {
             if (p.getId_() == id)
             {
                 p.setLastAction_(action);
-                p.setTookAction_(true);
                 break;
             }
         }
     }
 
-    public Player[] getActivePlayers(int idFirstPlayer)
+    public static Player[] getActivePlayers(int idFirstPlayer)
     {
         Player[] returnArray;
         if (players_.size() < 3)    returnArray = new Player[2];
@@ -227,7 +228,7 @@ public class GameManager
         return returnArray;
     }
 
-    public Player[] switchAttacker(Player[] activePlayers)
+    public static Player[] switchAttacker(Player[] activePlayers)
     {
         activePlayers[0].setActive_(false);
         activePlayers[0].setAttacker_(false);
@@ -248,12 +249,12 @@ public class GameManager
         return trump_;
     }
 
-    private void createTrump()
+    private static void createTrump()
     {
         trump_ = Cards.getColor(drawPile_.getLastCard());
     }
 
-    public int countVisibleCards()
+    public static int countVisibleCards()
     {
         if (visibleCards_.size() == 0) return 0;
 
@@ -267,42 +268,7 @@ public class GameManager
         return returnValue;
     }
 
-    public void newTurn(boolean defWon)
-    {
-        int pos = 0;
-        boolean found = false;
-
-        for (Player p : players_)
-        {
-            if(p.isDefender_())
-            { //Found defender
-                found = true;
-            }
-
-            if (!found)
-            { //Stop counting
-                pos++;
-            }
-
-            p.resetFlags(); // Sets all flags false
-        }
-
-        if(!defWon)
-        {
-            pos++;
-        }
-
-        players_.get(pos).setAttacker_(true);
-        players_.get(pos).setActive_(true);
-
-        players_.get(pos + 2).setAttacker_(true);
-
-        players_.get(pos + 1).setDefender_(true);
-
-        refreshActiveID();
-    }
-
-    private void refreshActiveID()
+    private static void refreshActiveID()
     {
         for (Player p : players_)
         {
@@ -314,7 +280,7 @@ public class GameManager
         }
     }
 
-    private String visibleCardsToString()
+    private static String visibleCardsToString()
     {
         StringBuilder returnString = new StringBuilder();
         for (int[] arr : visibleCards_)
@@ -326,32 +292,13 @@ public class GameManager
         return returnString.toString();
     }
 
-    public boolean playPCard(int id, int card)
-    {
-        Player player = null;
-
-        // Gets the Player
-        for (Player p : players_)
-        {
-            if (id == p.getId_())
-            {
-                player = p;
-            }
-        }
-
-        // Player doesn't exist
-        if (player == null) return false;
-
-        return player.playCard(card);
-    }
-
     /**
      * The format the the client can process.
      *
      * @param playerId id of the current player.
      * @return returns the state of the game.
      */
-    public String gameBoardState(int playerId)
+    public static String gameBoardStateToString(int playerId, boolean wasSuccessfull)
     {
         // As per String convention specified in ServerNetwork.java this would be the correct approach to generate the String
 
@@ -374,17 +321,26 @@ public class GameManager
         returnString.append(String.format("%s ", countVisibleCards()));                         // Amount of visible cards
         returnString.append(String.format("%s", visibleCardsToString()));                       // Visible cards
 
-        for (Player pID : players_)
+        for (Player p : players_)
         {
-            if (pID.getId_() == playerId)
+            if (p.getId_() == playerId)
             {
-                returnString.append(String.format("%s ", pID.getAmountOfHandCards()));          // specified players hand cards amount
-                returnString.append(String.format("%s", pID.handCardsToString()));              // specified players hand cards
+                returnString.append(String.format("%s ", p.getAmountOfHandCards()));            // specified players hand cards amount
+                returnString.append(String.format("%s", p.handCardsToString()));                // specified players hand cards
             }
         }
 
-        returnString.append(String.format("%s", 1));                                            // Was successful
+        if (wasSuccessfull) returnString.append(String.format("%s", 1));
+        else returnString.append(String.format("%s", 0));                                       // Was successful
         return returnString.toString();
+    }
+
+    public static void sendGameStateToAll()
+    {
+        for (Player p : players_)
+        {
+            ServerNetwork.sendMessage(p.getId_(), gameBoardStateToString(p.getId_(), true));
+        }
     }
 
 
@@ -411,7 +367,7 @@ public class GameManager
         players_.get(0).drawCards(7, drawPile_);
         int[] vis = {54, 60};
         visibleCards_.add(vis);
-        System.out.println(gameBoardState(0));
+        System.out.println(gameBoardStateToString(0,true));
         ///
     }
 }

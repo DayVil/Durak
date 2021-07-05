@@ -1,7 +1,6 @@
 package de.uni_hannover.hci.cardgame;
 
 import de.uni_hannover.hci.cardgame.Clients.ClientManager;
-import de.uni_hannover.hci.cardgame.gameLogic.ExecuteGame;
 import de.uni_hannover.hci.cardgame.gameLogic.GameManager;
 
 import java.io.*;
@@ -13,7 +12,7 @@ import java.util.Date;
 public class ServerNetwork
 {
     ServerSocket serverSocket;
-    ClientManager clientManager;
+    GameManager gameManager;
     String serverPassword = "TollerServer";
     int maxPlayerCount = 2;
     int clients_ = 0;
@@ -30,24 +29,26 @@ public class ServerNetwork
             ex.printStackTrace();
         }
 
-        clientManager = new ClientManager();
-
         waitingForClients(maxPlayerCount);
         int[] IDs = new int[maxPlayerCount];
+        String[] names =new String[maxPlayerCount];
         for(int i = 0; i < maxPlayerCount; i++)
         {
-            IDs[i] = clientManager.getClientList().get(i).getID_();
+            IDs[i] = ClientManager.getClientList().get(i).getID_();
+            names[i] = "Player " + Integer.toString(i);
         }
 
         System.out.println("We Are FULL");
 
         //ExecuteGame ex = new ExecuteGame();
         //ex.runGame(IDs);
+
+        GameManager.initGameManager(IDs, names);
     }
 
-    public boolean sendMessage(int clientID, String msg)
+    public static boolean sendMessage(int clientID, String msg)
     {
-        BufferedWriter bufferOut =  clientManager.getWriter(clientID);
+        BufferedWriter bufferOut =  ClientManager.getWriter(clientID);
         try
         {
             bufferOut.write(msg + "\n");
@@ -104,8 +105,8 @@ public class ServerNetwork
                 BufferedReader inputBuffer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 BufferedWriter outputBuffer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 
-                int id = clientManager.addClient(outputBuffer);
-                clients_ = clientManager.getClientCount();
+                int id = ClientManager.addClient(outputBuffer);
+                clients_ = ClientManager.getClientCount();
                 while (true)
                 {
                     //System.out.printf("Waiting for message from Client: %d\n", id);
@@ -116,8 +117,8 @@ public class ServerNetwork
 
                         if(line.equals("disconnect"))
                         {
-                            clientManager.removeClient(id);
-                            clients_ = clientManager.getClientCount();
+                            ClientManager.removeClient(id);
+                            clients_ = ClientManager.getClientCount();
                             // TODO: Start a bot player in its place
                             break;
                         }
@@ -179,11 +180,15 @@ public class ServerNetwork
                             }
                         }
                         // TODO: give user to gamelogic for processing
-                        if(GameManager.activeId_ == id && (line.equals("take") || line.equals("pass") || line.matches("^(1[1-9]|[2-5]\\d?|6[0-2])$"))) System.out.printf("Client is accessing gameLogic with %s", line); // TODO: sendToGameLogic;
+                        if(GameManager.activeId_ == id && (line.equals("take") || line.equals("pass") || line.matches("^(1[1-9]|[2-5]\\d?|6[0-2])$")))
+                        {
+                            GameManager.takeAction(line, id);
+                            System.out.printf("Client is accessing gameLogic with %s", line); // TODO: sendToGameLogic;
+                        }
                     }
                 }
                 socket.close();
-                clientManager.removeClient(id);
+                ClientManager.removeClient(id);
             }
             catch (IOException e)
             {

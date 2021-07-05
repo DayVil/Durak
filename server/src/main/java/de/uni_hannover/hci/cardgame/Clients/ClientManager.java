@@ -5,13 +5,8 @@ import java.util.ArrayList;
 
 public class ClientManager
 {
-    public ArrayList<Client> getClientList()
-    {
-        return clientList;
-    }
-
-    private ArrayList<Client> clientList;
-    int newID;
+    private static ArrayList<Client> clientList;
+    static int newID;
 
     public ClientManager()
     {
@@ -19,13 +14,17 @@ public class ClientManager
         clientList = new ArrayList<>();
     }
 
-    public int addClient(BufferedWriter writer)
+    public static int addClient(BufferedWriter writer)
     {
         clientList.add(new Client(newID,writer));
         return newID++;
     }
+    public static ArrayList<Client> getClientList()
+    {
+        return clientList;
+    }
 
-    public void removeClient(int id)
+    public static void removeClient(int id)
     {
         for(Client c: clientList)
         {
@@ -37,7 +36,7 @@ public class ClientManager
         }
     }
 
-    public BufferedWriter getWriter(int id)
+    public static BufferedWriter getWriter(int id)
     {
         for(Client c: clientList)
         {
@@ -49,7 +48,7 @@ public class ClientManager
         return null;
     }
 
-    public int getClientCount()
+    public static int getClientCount()
     {
         return clientList.size();
     }

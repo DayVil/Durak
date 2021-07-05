@@ -22,7 +22,6 @@ public class Player
     private boolean isActive_;
     private boolean skipped_;
     private String lastAction_;
-    private boolean tookAction_;
 
     public Player(int id, String name)
     {
@@ -35,22 +34,14 @@ public class Player
 
     public String getLastAction_ ()
     {
-        return lastAction_;
-    }
-
-    public boolean getTookAction_ ()
-    {
-        return tookAction_;
+        String returnAction = lastAction_;
+        lastAction_ = "no action";
+        return returnAction;
     }
 
     public void setLastAction_ (String lastAction_)
     {
         this.lastAction_ = lastAction_;
-    }
-
-    public void setTookAction_ (boolean tookAction_)
-    {
-        this.tookAction_ = tookAction_;
     }
 
     public int getId_()
@@ -152,8 +143,7 @@ public class Player
         setDefender_(false);
         setActive_(false);
         setSkipped_(false);
-        setTookAction_(false);
-        setLastAction_(null);
+        setLastAction_("no action");
     }
 
     /**
