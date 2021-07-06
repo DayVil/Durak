@@ -8,7 +8,7 @@ public class ServerConsoleInput
 
     public static int getMaxPlayers ()
     {
-        System.out.println("Enter Maxplayer Number <2-8 | Blank for 2>:\n");
+        System.out.println("Enter Maxplayer Number <2-8 | Blank for 2>:");
         int maxplayers = -1;
         sc = new Scanner(System.in);
 
@@ -28,7 +28,7 @@ public class ServerConsoleInput
                 }
             }
 
-            if(maxplayers  < 2 || maxplayers > 8) System.out.println("Your input of " + maxplayers + " Maximum players is invalid, it has to be a number between 2 and 8!\n");
+            if(maxplayers  < 2 || maxplayers > 8) System.out.println("Your input of " + maxplayers + " Maximum players is invalid, it has to be a number between 2 and 8!");
         }while(maxplayers  < 2 || maxplayers > 8);
 
         return maxplayers;
@@ -36,7 +36,7 @@ public class ServerConsoleInput
 
     public static String getServerPassword ()
     {
-        System.out.println("Enter Password <blank for none>:\n");
+        System.out.println("Enter Password <blank for none>:");
         sc = new Scanner(System.in);
         while(!sc.hasNextLine());
         return sc.nextLine();
@@ -44,7 +44,7 @@ public class ServerConsoleInput
 
     public static int getServerPort ()
     {
-        System.out.println("Enter server Port <1-65535> (Leave blank for Standard Port 8000):\n");
+        System.out.println("Enter server Port <1-65535> (Leave blank for Standard Port 8000):");
         sc = new Scanner(System.in);
         int port = -1;
         do
@@ -63,7 +63,7 @@ public class ServerConsoleInput
                 }
             }
 
-            if(port < 1 || port > 65535) System.out.println("Your input of " + port + " as server port is invalid, it has to be a number between 1 and 65535!\n");
+            if(port < 1 || port > 65535) System.out.println("Your input of " + port + " as server port is invalid, it has to be a number between 1 and 65535!");
         }while(port < 1 || port > 65535);
         return port;
     }

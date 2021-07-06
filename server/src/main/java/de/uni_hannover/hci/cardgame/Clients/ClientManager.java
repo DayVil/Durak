@@ -7,12 +7,12 @@ public class ClientManager
 {
     private static ArrayList<Client> clientList = new ArrayList<>();
     static int newID = 0;
-    public static boolean hasAddedClient = false;
+    public static boolean hasHandledClient = false;
 
     public static int addClient(BufferedWriter writer)
     {
         clientList.add(new Client(newID,writer));
-        hasAddedClient = true;
+        hasHandledClient = true;
         return newID++;
     }
     public static ArrayList<Client> getClientList()

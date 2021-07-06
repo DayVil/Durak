@@ -79,12 +79,12 @@ public class ServerNetwork
                 System.out.println("Starting new client task");
                 socketHandler task = new socketHandler(socket);
                 new Thread(task).start();
-                while (!ClientManager.hasAddedClient)
+                while (!ClientManager.hasHandledClient)
                 {
-                    System.out.println("Server waiting for client added");
-                    // Waiting for new thread to add Client
+                    System.out.println("Server waiting for client handled");
+                    // Waiting for new thread to handle Client (login or reject)
                 }
-                ClientManager.hasAddedClient = false;
+                ClientManager.hasHandledClient = false;
             }
             catch (IOException ex)
             {
@@ -114,7 +114,49 @@ public class ServerNetwork
                 BufferedReader inputBuffer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 BufferedWriter outputBuffer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 
-                int id = ClientManager.addClient(outputBuffer);
+                int id = -1;
+                try
+                {
+                    while (!loggedIn)
+                    {
+                        String line = inputBuffer.readLine();
+                        if(line != null)
+                        {
+                            if (line.length() > "Password: ".length() + serverPassword.length())
+                            {
+                                String p = line.substring(0, "Password: ".length() + serverPassword.length());
+                                if (p.equals("Password: " + serverPassword))
+                                {
+                                    loggedIn = true;
+                                    id = ClientManager.addClient(outputBuffer);
+                                    sendMessage(id, "logged in");
+                                }
+                                else
+                                {
+                                    ClientManager.hasHandledClient = true;  // handled, but not logged in
+                                    outputBuffer.write("failed\n");
+                                    outputBuffer.flush();
+                                    socket.close();
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (IOException e)
+                {
+                    System.out.printf("Error: could not login client");
+                    try
+                    {
+                        socket.close();
+                    }
+                    catch(IOException ex)
+                    {
+                        System.out.println("Could not close socket, but it's no problem.");
+                    }
+                    return;
+                }
+
                 while (true)
                 {
                     //System.out.printf("Waiting for message from Client: %d\n", id);
@@ -125,23 +167,8 @@ public class ServerNetwork
 
                         if(line.equals("disconnect"))
                         {
-                            ClientManager.removeClient(id);
                             // TODO: Start a bot player in its place
                             break;
-                        }
-
-                        if(!loggedIn && line.length() > "Password: ".length() + serverPassword.length())
-                        {
-                            String p = line.substring(0, "Password: ".length() + serverPassword.length());
-                            if(p.equals("Password: " + serverPassword))
-                            {
-                                loggedIn = true;
-                                sendMessage(id, "logged in");
-                            }
-                            else
-                            {
-                                sendMessage(id, "failed");
-                            }
                         }
                         if(GameManager.activeId_ == id && (line.equals("take") || line.equals("pass") || line.matches("^(1[1-9]|[2-5]\\d?|6[0-2])$")))
                         {

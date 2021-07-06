@@ -167,7 +167,7 @@ public class ClientNetwork
         catch (IOException e)
         {
             stopConnection();
-            return "error";
+            return "connection_stopped";
         }
         return answer;
     }

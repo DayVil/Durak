@@ -82,6 +82,10 @@ public class GameBoardController implements ControllerInterface
     public void executeLine(String line)
     {
         System.out.println("Message from server:" + line);
+        if (line.equals("connection_stopped"))
+        {
+            return;
+        }
         if (line.equals("error"))
         {
             Alert alert = new Alert(Alert.AlertType.ERROR);
