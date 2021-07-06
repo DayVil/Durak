@@ -44,8 +44,8 @@
     -fx-text-fill: -text-color;
     -fx-fill: -text-color;
     -fx-background-color: -brightopac;
-    -fx-padding: 10 15 10 15;
-    -fx-background-radius: 10;
+    -fx-padding: 1 2 1 2;
+    -fx-background-radius: 3;
 }
 
 .menu-bar {
