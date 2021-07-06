@@ -22,8 +22,7 @@ public class GameManager
     public static int activeId_;
     public static int firstAttacker;
 
-    // TODO: implement run
-    // TODO: Implement rest of game logic
+
     // TODO: on playCard check for total cards that are able to be played as defender might not always have 6 cards
     public static void initGameManager(int[] IDs, String[] names)
     {
@@ -187,11 +186,7 @@ public class GameManager
             }
         }
 
-        if (players_.size() >= 2)
-        {
-            return true;
-        }
-        return false;
+        return players_.size() >= 2;
     }
 
     //Will be used from the server

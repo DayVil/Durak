@@ -2,8 +2,6 @@ package de.uni_hannover.hci.cardgame.gameLogic.Cards;
 
 import javafx.scene.image.Image;
 
-import java.time.LocalDateTime;
-
 public class Cards
 {
     private static final String[] textures =
@@ -50,7 +48,7 @@ public class Cards
                     "/textures/cards/diamonds/four_of_diamonds.png",
                     "/textures/cards/diamonds/five_of_diamonds.png",
                     "/textures/cards/diamonds/six_of_diamonds.png",
-                    "/textures/cards/diamonds/seven_o_diamonds.png",
+                    "/textures/cards/diamonds/seven_of_diamonds.png",
                     "/textures/cards/diamonds/eight_of_diamonds.png",
                     "/textures/cards/diamonds/nine_of_diamonds.png",
                     "/textures/cards/diamonds/ten_of_diamonds.png",
