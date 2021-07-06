@@ -18,12 +18,11 @@ public class ServerNetwork
     void run()
     {
         //  This method getStartingArgs() has not been tested but it shouldn't fail. server can't start if this is not answered correctly
-        String[] args = ServerConsoleInput.getStartingArgs();
-        maxPlayerCount = Integer.parseInt(args[0]);
-        serverPassword = args[1];
+        maxPlayerCount = ServerConsoleInput.getMaxPlayers();
+        serverPassword = ServerConsoleInput.getServerPassword();
         try
         {
-            serverSocket = new ServerSocket(Integer.parseInt(args[2]));
+            serverSocket = new ServerSocket(ServerConsoleInput.getServerPort());
             System.out.print("Server started at " + new Date() + '\n');
         }
         catch (IOException ex)

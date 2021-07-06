@@ -4,111 +4,73 @@ import java.util.Scanner;
 
 public class ServerConsoleInput
 {
-
     public static Scanner sc;
 
-    public static String[] getStartingArgs ()
+    public static int getMaxPlayers ()
     {
-        String[] returnArgs = new String[3];
-
-        returnArgs[0] = getMaxPlayers();
-
-        returnArgs[1] = getServerPassword();
-
-        returnArgs[2] = getServerPort();
-
-        return returnArgs;
-    }
-
-    public static String getMaxPlayers ()
-    {
-        System.out.println("Please put in the number of the maximum amount of players that you want to have in your game.\nNote: It has to be a number between 2 and 8.\n");
-        boolean valid = false;
+        System.out.println("Enter Maxplayer Number <2-8 | Blank for 2>:\n");
         int maxplayers = -1;
         sc = new Scanner(System.in);
-        do{
-            if (sc.hasNextInt())
+
+        do
+        {
+            String s = sc.nextLine();
+
+            if(isInt(s))
             {
-                maxplayers = sc.nextInt();
-                if (maxplayers >= 2 && maxplayers <= 8)
+                maxplayers = Integer.parseInt(s);
+            }
+            else
+            {
+                if(s.equals(""))
                 {
-                    valid = true;
-                }
-                else        //It has been an int but was not a valid int
-                {
-                    System.out.println("Your input of " + maxplayers + " Maximum players is invalid, it has to be a number between 2 and 8!\n");
+                    maxplayers = 2;
                 }
             }
-            else        //It was not an int but something else
-            {
-                System.out.println("Your input of " + sc.nextLine() + " Maximum players is invalid, it has to be a number between 2 and 8!\n");
-            }
 
-        } while (!valid);
+            if(maxplayers  < 2 || maxplayers > 8) System.out.println("Your input of " + maxplayers + " Maximum players is invalid, it has to be a number between 2 and 8!\n");
+        }while(maxplayers  < 2 || maxplayers > 8);
 
-        return String.valueOf(maxplayers);
+        return maxplayers;
     }
 
     public static String getServerPassword ()
     {
-        System.out.println("Please put in the password that you want to use for your server!\n");
+        System.out.println("Enter Password <blank for none>:\n");
         sc = new Scanner(System.in);
-        boolean valid = false;
-        String returnPassword = "";
-        do{
-            if (sc.hasNextLine())
-            {
-                returnPassword = sc.nextLine();
-                valid = true;
-            }
-        } while (!valid);
-        return returnPassword;
+        while(!sc.hasNextLine());
+        return sc.nextLine();
     }
 
-    public static String getServerPort ()
+    public static int getServerPort ()
     {
-        System.out.println("Please put in the number of the Port your server should use (Leave blank for Standard Port of 8000).\nNote: It has to be a number between 1 and 65535.\n");
+        System.out.println("Enter server Port <1-65535> (Leave blank for Standard Port 8000):\n");
         sc = new Scanner(System.in);
-        boolean valid = false;
-        int port = 8000;
-        String portString;
+        int port = -1;
+        do
+        {
+            String s = sc.nextLine();
 
-        do{
-            if (sc.hasNextLine())
+            if(isInt(s))
             {
-                portString = sc.nextLine();
-
-                if (portString.equals(""))
+                port = Integer.parseInt(s);
+            }
+            else
+            {
+                if(s.equals(""))
                 {
-                    valid = true;
                     port = 8000;
                 }
-                else if (isInt(portString))
-                {
-                    port = Integer.parseInt(portString);
-                    if (port >= 1 && port <= 65535)
-                    {
-                        valid = true;
-                        break;
-                    }
-                    else
-                    {
-                        System.out.println("Your input of " + port + " Maximum players is invalid, it has to be a number between 1 and 65535!\n");
-                    }
-
-                }
-                else
-                {
-                    System.out.println("Your input of " + portString + " Maximum players is invalid, it has to be a number between 1 and 65535!\n");
-                }
             }
-        } while (!valid);
 
-        return String.valueOf(port);
+            if(port < 1 || port > 65535) System.out.println("Your input of " + port + " as server port is invalid, it has to be a number between 1 and 65535!\n");
+        }while(port < 1 || port > 65535);
+        return port;
     }
 
     public static boolean isInt(String toCheck)
     {
+        if(toCheck == null || toCheck.length() == 0) return false;
         char[] chars = toCheck.toCharArray();
         for (char character : chars)
         {
