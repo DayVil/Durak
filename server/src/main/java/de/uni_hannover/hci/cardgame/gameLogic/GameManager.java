@@ -8,6 +8,7 @@ import de.uni_hannover.hci.cardgame.gameLogic.Player.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 /**
  * This contains every function to execute the game and manage it.
@@ -73,7 +74,7 @@ public class GameManager
             String lastAction;
             do
             {
-                lastAction = activePlayer.getLastAction_();
+                lastAction = Objects.requireNonNull(activePlayer).getLastAction_();
             } while (lastAction.equals("no action"));
 
             System.out.printf("%s\n", lastAction);
@@ -115,11 +116,13 @@ public class GameManager
                         {
                             activePlayers[0].setActive_(false);
                             activePlayers[1].setActive_(true);
+                            activeId_ = activePlayers[1].getId_();
                         }
                         else //if (activePlayer.isDefender_())
                         {
                             activePlayers[0].setActive_(true);
                             activePlayers[1].setActive_(false);
+                            activeId_ = activePlayers[0].getId_();
 
                             if (visibleCards_.size() == 6)
                             {
@@ -247,6 +250,7 @@ public class GameManager
 
         activePlayers[0].setActive_(true);
         activePlayers[0].setAttacker_(true);
+        activeId_ = activePlayers[0].getId_();
 
         return activePlayers;
     }
