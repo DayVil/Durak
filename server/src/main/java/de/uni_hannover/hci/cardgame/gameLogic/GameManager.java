@@ -75,13 +75,16 @@ public class GameManager
             do
             {
                 lastAction = activePlayer.getLastAction_();
-                System.out.printf("%s\n", lastAction);
             } while (lastAction.equals("no action"));
+
+            System.out.printf("%s\n", lastAction);
+
             activePlayer.setLastAction_("no action");
             System.out.println("Action wait loop broke");
             switch (lastAction)
             {
                 case "pass":
+                {
                     //Switch if attacker
                     if (activePlayers.length > 2)
                     {
@@ -93,16 +96,20 @@ public class GameManager
                         turnEnded = true;
                     }
                     break;
+                }
                 case "take":
+                {
                     //Take if defender
                     defWon = false;
                     turnEnded = true;
                     break;
+                }
+
                 default:
+                {
                     //card was played
                     //Check for six existing cards?
                     int card = Integer.parseInt(lastAction);
-                    sendGameStateToAll();
                     if (activePlayer.playCard(card))
                     {
                         if (activePlayer.isAttacker_())
@@ -127,8 +134,9 @@ public class GameManager
                         ServerNetwork.sendMessage(activePlayer.getId_(), gameBoardStateToString(activePlayer.getId_(), false));
                     }
                     break;
+                }
             }
-
+            sendGameStateToAll();
         }
         endTurn(activePlayers, defWon);
     }

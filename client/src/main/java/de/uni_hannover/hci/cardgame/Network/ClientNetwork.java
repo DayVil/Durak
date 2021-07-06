@@ -96,8 +96,7 @@ public class ClientNetwork
         if (!sendMessage(logInMessage)) return false;
 
         String answer = getMessage();
-
-        System.out.println("I am answer of server at starting connection: " + answer);
+        System.out.println(answer);
 
         if (answer.equals("failed"))
         {

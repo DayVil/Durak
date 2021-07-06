@@ -31,7 +31,7 @@ public class ServerNetwork
         }
 
         waitingForClients(maxPlayerCount);
-
+        System.out.println("All clients found");
         int[] IDs = new int[maxPlayerCount];
         String[] names = new String[maxPlayerCount];
         for(int i = 0; i < maxPlayerCount; i++)
@@ -70,15 +70,18 @@ public class ServerNetwork
         {
             try
             {
+                System.out.println("Server waiting for clients" + String.format("%d", ClientManager.getClientCount()));
                 Socket socket = serverSocket.accept();
                 InetAddress inetAddress = socket.getInetAddress();
 
                 System.out.print("host name: " + inetAddress.getHostName() + "\n\tIP address " + inetAddress.getHostAddress() + "\n\n");
 
+                System.out.println("Starting new client task");
                 socketHandler task = new socketHandler(socket);
                 new Thread(task).start();
                 while (!ClientManager.hasAddedClient)
                 {
+                    System.out.println("Server waiting for client added");
                     // Waiting for new thread to add Client
                 }
                 ClientManager.hasAddedClient = false;
