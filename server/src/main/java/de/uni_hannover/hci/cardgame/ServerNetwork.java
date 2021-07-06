@@ -14,7 +14,6 @@ public class ServerNetwork
     ServerSocket serverSocket;
     String serverPassword;
     public static int maxPlayerCount;
-    int clients_ = 0;
 
     void run()
     {
@@ -33,10 +32,7 @@ public class ServerNetwork
         }
 
         waitingForClients(maxPlayerCount);
-        while (!ClientManager.fullyLoaded)
-        {
-            // Waiting for threads to add Clients
-        }
+
         int[] IDs = new int[maxPlayerCount];
         String[] names = new String[maxPlayerCount];
         for(int i = 0; i < maxPlayerCount; i++)
@@ -71,18 +67,22 @@ public class ServerNetwork
 
     void waitingForClients(int maxNumber)
     {
-        while(clients_ < maxNumber)
+        while(ClientManager.getClientCount() < maxNumber)
         {
             try
             {
                 Socket socket = serverSocket.accept();
-                clients_++;
                 InetAddress inetAddress = socket.getInetAddress();
 
                 System.out.print("host name: " + inetAddress.getHostName() + "\n\tIP address " + inetAddress.getHostAddress() + "\n\n");
 
                 socketHandler task = new socketHandler(socket);
                 new Thread(task).start();
+                while (!ClientManager.hasAddedClient)
+                {
+                    // Waiting for new thread to add Client
+                }
+                ClientManager.hasAddedClient = false;
             }
             catch (IOException ex)
             {
@@ -113,7 +113,6 @@ public class ServerNetwork
                 BufferedWriter outputBuffer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 
                 int id = ClientManager.addClient(outputBuffer);
-                clients_ = ClientManager.getClientCount();
                 while (true)
                 {
                     //System.out.printf("Waiting for message from Client: %d\n", id);
@@ -125,7 +124,6 @@ public class ServerNetwork
                         if(line.equals("disconnect"))
                         {
                             ClientManager.removeClient(id);
-                            clients_ = ClientManager.getClientCount();
                             // TODO: Start a bot player in its place
                             break;
                         }
