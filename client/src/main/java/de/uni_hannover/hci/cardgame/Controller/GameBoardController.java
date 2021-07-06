@@ -192,14 +192,14 @@ public class GameBoardController implements ControllerInterface
         int cards = player.getHandCardAmount_();
         Label cardCountLabel = new Label();
         cardCountLabel.setText(String.format("%d", cards));
-        cardCountLabel.setLayoutX(0);
+        cardCountLabel.setLayoutX(5);
         cardCountLabel.setLayoutY(5);
         //NodeArrayList.add(cardCountLabel);
 
         String name = player.getName_();
         Label nameLabel = new Label();
         nameLabel.setText(name);
-        nameLabel.setLayoutX(40);
+        nameLabel.setLayoutX(45);
         nameLabel.setLayoutY(5);
         //NodeArrayList.add(nameLabel);
 
