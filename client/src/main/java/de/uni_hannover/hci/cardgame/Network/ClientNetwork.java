@@ -95,11 +95,7 @@ public class ClientNetwork
 
         if (!sendMessage(logInMessage)) return false;
 
-        String answer;
-        do
-        {
-            answer = getMessage();
-        }while (answer == null);
+        String answer = getMessage();
 
         System.out.println("I am answer of server at starting connection: " + answer);
 
@@ -159,11 +155,14 @@ public class ClientNetwork
         String answer = null;
         try
         {
-            answer = bufferIn_.readLine();
-            if (answer != null && answer.equals("disconnect"))
+            while(answer == null)
             {
-                stopConnection();
-                return answer;
+                answer = bufferIn_.readLine();
+                if (answer != null && answer.equals("disconnect"))
+                {
+                    stopConnection();
+                    return answer;
+                }
             }
         }
         catch (IOException e)
