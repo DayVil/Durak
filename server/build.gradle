@@ -17,6 +17,10 @@ application {
     mainClass = 'de.uni_hannover.hci.cardgame.GameServerMain'
 }
 
+run{
+    standardInput = System.in
+}
+
 test {
     useJUnitPlatform()
 }
