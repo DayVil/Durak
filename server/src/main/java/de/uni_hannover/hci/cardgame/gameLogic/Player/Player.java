@@ -21,14 +21,13 @@ public class Player
     private boolean isDefender_;
     private boolean isActive_;
     private boolean skipped_;
-    private String lastAction_;
+    private volatile String lastAction_;
 
     public Player(int id, String name)
     {
-        resetFlags();
-
         setId_(id);
         setName_(name);
+        resetFlags();
         handCards_ = new ArrayList<>();
     }
 
@@ -39,9 +38,10 @@ public class Player
         return returnAction;
     }
 
-    public void setLastAction_ (String lastAction_)
+    public void setLastAction_ (String lastAction)
     {
-        this.lastAction_ = lastAction_;
+        System.out.printf("Action: %s, ID: %d\n", lastAction, id_);
+        lastAction_ = lastAction;
     }
 
     public int getId_()
@@ -201,7 +201,6 @@ public class Player
                     if (Defend.defend(card))
                     {
                         handCards_.remove(i);
-                        setSkipped_(false);
                         return true;
                     }
                     return false;
@@ -243,18 +242,6 @@ public class Player
             returnString.append(String.format("%s ", i));
         }
         return returnString.toString();
-    }
-
-    public String handCardsValColToString()
-    {
-        StringBuilder retStr = new StringBuilder();
-
-        for (Integer i: handCards_)
-        {
-            retStr.append(String.format("[%s %s: %s] ", Cards.getCard(i), Cards.getColor(i), i));
-        }
-
-        return retStr.toString();
     }
 
     @Override

@@ -77,7 +77,7 @@ public class GameManager
                 lastAction = Objects.requireNonNull(activePlayer).getLastAction_();
             } while (lastAction.equals("no action"));
 
-            System.out.printf("%s\n", lastAction);
+            System.out.printf("Action %s in new Turn\n", lastAction);
 
             activePlayer.setLastAction_("no action");
             System.out.println("Action wait loop broke");
@@ -133,7 +133,9 @@ public class GameManager
                         if (activePlayer.isAttacker_())
                         {
                             activePlayers[0].setActive_(false);
+                            activePlayers[0].setSkipped_(false);
                             activePlayers[1].setActive_(true);
+                            if (activePlayers.length > 2)   activePlayers[2].setSkipped_(false);
                             activeId_ = activePlayers[1].getId_();
                         }
                         else
@@ -224,12 +226,13 @@ public class GameManager
     {
         for (Player p : players_)
         {
+            System.out.printf("Searching for id %d found %d\n", id, p.getId_());
             if (p.getId_() == id)
             {
                 if (activeId_ == id)
                 {
                     p.setLastAction_(action);
-                    System.out.println("Found player and set action for player");
+                    System.out.printf("Found player and set action %s for player\n", action);
                 }
                 break;
             }

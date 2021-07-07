@@ -170,11 +170,12 @@ public class ServerNetwork
                             // TODO: Start a bot player in its place
                             break;
                         }
+                        System.out.printf("Client wants to access gameLogic with %s\n", line);
                         if(line.equals("take") || line.equals("pass") || line.matches("^(1[1-9]|[2-5]\\d?|6[0-2])$"))
                         {
                             System.out.println(line);
                             GameManager.takeAction(line, id);
-                            System.out.printf("Client is accessing gameLogic with %s", line);
+                            System.out.printf("Client is accessing gameLogic with %s\n", line);
                         }
                     }
                 }
