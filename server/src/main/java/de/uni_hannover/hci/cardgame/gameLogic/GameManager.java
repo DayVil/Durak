@@ -89,7 +89,15 @@ public class GameManager
                     {
                         if (activePlayers.length > 2)
                         {
-                            if (!activePlayers[2].hasSkipped_())    switchAttacker(activePlayers);
+                            if (!activePlayers[2].hasSkipped_())
+                            {
+                                switchAttacker(activePlayers);
+                            }
+                            else
+                            {
+                                defWon = true;
+                                turnEnded = true;
+                            }
                         }
                         else
                         {
