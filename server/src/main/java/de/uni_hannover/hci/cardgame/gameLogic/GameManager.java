@@ -199,8 +199,11 @@ public class GameManager
         {
             if (p.getId_() == id)
             {
-                p.setLastAction_(action);
-                System.out.println("Found player and set action for player");
+                if (activeId_ == id)
+                {
+                    p.setLastAction_(action);
+                    System.out.println("Found player and set action for player");
+                }
                 break;
             }
         }

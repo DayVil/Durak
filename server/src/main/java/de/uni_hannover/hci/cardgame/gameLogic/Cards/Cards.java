@@ -66,7 +66,7 @@ public class Cards
         if (cardColorNr1 == Trump && cardColorNr2 != Trump) return 1;
         if (cardColorNr1 != Trump && cardColorNr2 == Trump) return -1;
         // card Nr1 is attack, if both of the cards color differs from one another attacker "beats" defender. this can only be done if none of the cards is a trump
-        if (cardColorNr1 != cardColorNr2)                   return -1;
+        if (cardColorNr1 != cardColorNr2)                   return 1;
         return Integer.compare(attackerCard, defenderCard);
     }
 }

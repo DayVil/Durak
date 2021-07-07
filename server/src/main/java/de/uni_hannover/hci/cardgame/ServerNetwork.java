@@ -170,7 +170,7 @@ public class ServerNetwork
                             // TODO: Start a bot player in its place
                             break;
                         }
-                        if(GameManager.activeId_ == id && (line.equals("take") || line.equals("pass") || line.matches("^(1[1-9]|[2-5]\\d?|6[0-2])$")))
+                        if(line.equals("take") || line.equals("pass") || line.matches("^(1[1-9]|[2-5]\\d?|6[0-2])$"))
                         {
                             System.out.println(line);
                             GameManager.takeAction(line, id);
