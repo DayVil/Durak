@@ -9,6 +9,7 @@ import de.uni_hannover.hci.cardgame.gameClient;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -19,6 +20,7 @@ import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class GameBoardController implements ControllerInterface
 {
@@ -30,6 +32,8 @@ public class GameBoardController implements ControllerInterface
 
     @FXML
     private ImageView leftoverDeck;
+
+    private final ArrayList<Node> addedNodesArrayList = new ArrayList<Node>();
 
     boolean killClientNetworkHandler;
 
@@ -116,10 +120,7 @@ public class GameBoardController implements ControllerInterface
 
     public void draw(ParsedServerMessage parsedServerMessage)
     {
-        // TODO: remove old drawn objects
-
-        Stage stage = gameClient.stage_;
-        Scene GameBoard = stage.getScene();
+        undrawOldNodes();
 
         //CARDSTACKCOUNT
         String drawPileText = String.format("%d", parsedServerMessage.getDrawPileHeight_());
@@ -187,6 +188,14 @@ public class GameBoardController implements ControllerInterface
         }
     }
 
+    private void undrawOldNodes()
+    {
+        for (Node n:addedNodesArrayList)
+        {
+            GameBoard.getChildren().remove(n);
+        }
+    }
+
     private void drawPlayer(ParsedServerMessage.Player player, int x, int y)
     {
         int cards = player.getHandCardAmount_();
@@ -194,14 +203,14 @@ public class GameBoardController implements ControllerInterface
         cardCountLabel.setText(String.format("%d", cards));
         cardCountLabel.setLayoutX(5);
         cardCountLabel.setLayoutY(5);
-        //NodeArrayList.add(cardCountLabel);
+        addedNodesArrayList.add(cardCountLabel);
 
         String name = player.getName_();
         Label nameLabel = new Label();
         nameLabel.setText(name);
         nameLabel.setLayoutX(45);
         nameLabel.setLayoutY(5);
-        //NodeArrayList.add(nameLabel);
+        addedNodesArrayList.add(nameLabel);
 
 
         Pane pane = new Pane();
@@ -213,6 +222,7 @@ public class GameBoardController implements ControllerInterface
         pane.setPrefWidth(120);
         pane.setStyle("-fx-background-color: #a0a0a0");
         GameBoard.getChildren().add(pane);
+        addedNodesArrayList.add(pane);
 
         if (player.isAttacker_())
         {
@@ -225,6 +235,7 @@ public class GameBoardController implements ControllerInterface
             imageView.setPreserveRatio(true);
             imageView.setFitHeight(40);
             GameBoard.getChildren().add(imageView);
+            addedNodesArrayList.add(imageView);
         }
         if (player.isDefender_())
         {
@@ -237,6 +248,7 @@ public class GameBoardController implements ControllerInterface
             imageView.setPreserveRatio(true);
             imageView.setFitHeight(40);
             GameBoard.getChildren().add(imageView);
+            addedNodesArrayList.add(imageView);
         }
         if (player.isActive_()) pane.setStyle("-fx-background-color: #a0f0a0");
     }
@@ -254,6 +266,7 @@ public class GameBoardController implements ControllerInterface
         imageView.setPreserveRatio(true);
         imageView.setFitHeight(40);
         GameBoard.getChildren().add(imageView);
+        addedNodesArrayList.add(imageView);
     }
 
     public void drawCard(int cardNumber, int x, int y, boolean isHandCard)
@@ -271,6 +284,7 @@ public class GameBoardController implements ControllerInterface
             imageView.setOnMouseClicked(event -> cardClicked(cardNumber));
         }
         GameBoard.getChildren().add(imageView);
+        addedNodesArrayList.add(imageView);
     }
 
 

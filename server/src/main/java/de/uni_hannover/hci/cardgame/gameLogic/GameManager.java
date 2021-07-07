@@ -145,6 +145,11 @@ public class GameManager
 
     public static void endTurn(Player[] activePlayers, boolean defenseWon)
     {
+        for (Player p:activePlayers)
+        {
+            resetPlayer(p);
+        }
+
         if (defenseWon)
         {
             visibleCards_.clear();
@@ -294,6 +299,15 @@ public class GameManager
         }
     }
 
+    private static void resetPlayer (Player player)
+    {
+        player.setActive_(false);
+        player.setAttacker_(false);
+        player.setDefender_(false);
+        player.setSkipped_(false);
+        player.setLastAction_("no action");
+    }
+
     private static String visibleCardsToString()
     {
         StringBuilder returnString = new StringBuilder();
@@ -358,30 +372,4 @@ public class GameManager
     }
 
 
-
-    ///DEBUG
-
-    public String getSelectedPlayerHandcards()
-    {
-        for (Player p : players_)
-        {
-            if (p.getId_() == activeId_ && p.isActive_())
-            {
-                String str = p.handCardsValColToString();
-                if (str.equals("")) return "EMPTY HAND";
-                return str;
-            }
-        }
-        return "No active player found!";
-    }
-
-    public void sandBox()
-    {
-        /// SANDBOX
-        players_.get(0).drawCards(7, drawPile_);
-        int[] vis = {54, 60};
-        visibleCards_.add(vis);
-        System.out.println(gameBoardStateToString(0,true));
-        ///
-    }
 }
