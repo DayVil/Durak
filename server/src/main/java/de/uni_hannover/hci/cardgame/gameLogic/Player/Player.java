@@ -182,7 +182,7 @@ public class Player
         {
             for (int card : intArr)
             {
-                handCards_.add(card);
+                if (card != -1) handCards_.add(card);
             }
         }
         GameManager.visibleCards_.clear();
