@@ -85,30 +85,40 @@ public class GameManager
             {
                 case "pass":
                 {
-                    //Switch if attacker
-                    if (activePlayers.length > 2)
+                    if(activePlayer.isAttacker_())
                     {
-                        if (!activePlayers[2].hasSkipped_())    switchAttacker(activePlayers);
+                        if (activePlayers.length > 2)
+                        {
+                            if (!activePlayers[2].hasSkipped_())    switchAttacker(activePlayers);
+                        }
+                        else
+                        {
+                            defWon = true;
+                            turnEnded = true;
+                        }
+                        break;
                     }
                     else
                     {
-                        defWon = true;
-                        turnEnded = true;
+                        ServerNetwork.sendMessage(activePlayer.getId_(), gameBoardStateToString(activePlayer.getId_(), false));
                     }
-                    break;
                 }
                 case "take":
                 {
-                    //Take if defender
-                    defWon = false;
-                    turnEnded = true;
-                    break;
+                    if(activePlayer.isDefender_())
+                    {
+                        defWon = false;
+                        turnEnded = true;
+                        break;
+                    }
+                    else
+                    {
+                        ServerNetwork.sendMessage(activePlayer.getId_(), gameBoardStateToString(activePlayer.getId_(), false));
+                    }
                 }
 
                 default:
                 {
-                    //card was played
-                    //Check for six existing cards?
                     int card = Integer.parseInt(lastAction);
                     if (activePlayer.playCard(card))
                     {
@@ -118,7 +128,7 @@ public class GameManager
                             activePlayers[1].setActive_(true);
                             activeId_ = activePlayers[1].getId_();
                         }
-                        else //if (activePlayer.isDefender_())
+                        else
                         {
                             activePlayers[0].setActive_(true);
                             activePlayers[1].setActive_(false);
@@ -169,6 +179,10 @@ public class GameManager
             {
                 activePlayers[2].drawCards(6 - activePlayers[2].getAmountOfHandCards(), drawPile_);
                 firstAttacker = activePlayers[2].getId_();
+            }
+            else
+            {
+                firstAttacker = activePlayers[0].getId_();
             }
         }
         //Check for players that are left with no cards on their hands

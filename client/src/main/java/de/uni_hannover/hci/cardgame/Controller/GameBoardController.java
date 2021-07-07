@@ -179,9 +179,9 @@ public class GameBoardController implements ControllerInterface
         if (!parsedServerMessage.getWasSuccessful_())
         {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Invalid Card");
-            alert.setHeaderText("You tried to play an invalid card");
-            alert.setContentText("Its either not your turn or the card you tried to play\ncant be played without violating the rules of the game.\n");
+            alert.setTitle("Invalid Action");
+            alert.setHeaderText("You tried to take an invalid action");
+            alert.setContentText("Its either not your turn or the action you tried to do\nis not acceptable by the rules of the game\n");
             alert.setResizable(true);
             alert.onShownProperty().addListener(ebox -> Platform.runLater(() -> alert.setResizable(false)));
             alert.showAndWait();
