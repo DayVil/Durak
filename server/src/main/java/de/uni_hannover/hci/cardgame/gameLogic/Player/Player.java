@@ -34,7 +34,6 @@ public class Player
     public String getLastAction_ ()
     {
         String returnAction = lastAction_;
-        //lastAction_ = "no action";
         return returnAction;
     }
 
@@ -140,6 +139,7 @@ public class Player
 
     public void resetFlags()
     {
+        setAttacker_(false);
         setDefender_(false);
         setActive_(false);
         setSkipped_(false);

@@ -20,7 +20,6 @@ public class GameManager
     private static final ArrayList<Player> players_ = new ArrayList<>();
     private static final ArrayList<Player> viewers_ = new ArrayList<>();
     private static CardColor trump_;
-    public static int activeId_;
     public static int firstAttacker;
 
 
@@ -28,7 +27,6 @@ public class GameManager
     public static void initGameManager(int[] IDs, String[] names)
     {
         drawPile_ = new CardStack();
-        activeId_ = -1;
         createTrump();
 
         int i = 0;
@@ -55,7 +53,6 @@ public class GameManager
         activePlayers[0].setActive_(true);
         activePlayers[0].setAttacker_(true);
         activePlayers[1].setDefender_(true);
-        refreshActiveID();
         sendGameStateToAll();
         System.out.println("Send GameState to all clients");
         boolean turnEnded = false;
@@ -71,6 +68,7 @@ public class GameManager
                 }
             }
 
+            System.out.printf("newturn waiting for action ID %d\n", activePlayer.getId_());
             String lastAction;
             do
             {
@@ -78,8 +76,8 @@ public class GameManager
             } while (lastAction.equals("no action"));
 
             System.out.printf("Action %s in new Turn\n", lastAction);
-
             activePlayer.setLastAction_("no action");
+
             System.out.println("Action wait loop broke");
             switch (lastAction)
             {
@@ -87,17 +85,9 @@ public class GameManager
                 {
                     if(activePlayer.isAttacker_())
                     {
-                        if (activePlayers.length > 2)
+                        if (activePlayers.length > 2 && !activePlayers[2].hasSkipped_())
                         {
-                            if (!activePlayers[2].hasSkipped_())
-                            {
                                 switchAttacker(activePlayers);
-                            }
-                            else
-                            {
-                                defWon = true;
-                                turnEnded = true;
-                            }
                         }
                         else
                         {
@@ -115,6 +105,8 @@ public class GameManager
                 {
                     if(activePlayer.isDefender_())
                     {
+                        throwIn(activePlayers);
+
                         defWon = false;
                         turnEnded = true;
                         break;
@@ -136,13 +128,11 @@ public class GameManager
                             activePlayers[0].setSkipped_(false);
                             activePlayers[1].setActive_(true);
                             if (activePlayers.length > 2)   activePlayers[2].setSkipped_(false);
-                            activeId_ = activePlayers[1].getId_();
                         }
                         else
                         {
                             activePlayers[0].setActive_(true);
                             activePlayers[1].setActive_(false);
-                            activeId_ = activePlayers[0].getId_();
 
                             if (visibleCards_.size() == 6)
                             {
@@ -167,7 +157,7 @@ public class GameManager
     {
         for (Player p:activePlayers)
         {
-            resetPlayer(p);
+            p.resetFlags();
         }
 
         if (defenseWon)
@@ -204,24 +194,62 @@ public class GameManager
         System.out.println("The Game has now officially ended!");
     }
 
-    public static boolean clearPlayers()
+    private static void throwIn(Player[] players)
+    {
+        players[0].setActive_(true);
+        players[1].setActive_(false);
+
+        while(visibleCards_.size() < 6)
+        {
+            sendGameStateToAll();
+            System.out.printf("ThrowIN waiting for action ID %d\n", players[0].getId_());
+            String lastAction;
+            do
+            {
+                lastAction = Objects.requireNonNull(players[0]).getLastAction_();
+            } while (lastAction.equals("no action"));
+            players[0].setLastAction_("no action");
+
+            if(lastAction.equals("pass"))
+            {
+                if (players.length > 2 && !players[2].hasSkipped_())
+                {
+                    switchAttacker(players);
+                }
+                else
+                {
+                   break;
+                }
+            }
+            else if (lastAction.equals("take"))
+            {
+                ServerNetwork.sendMessage(players[0].getId_(), gameBoardStateToString(players[0].getId_(), false));
+            }
+            else
+            {
+                int card = Integer.parseInt(lastAction);
+                if (!players[0].playCard(card))
+                {
+                    ServerNetwork.sendMessage(players[0].getId_(), gameBoardStateToString(players[0].getId_(), false));
+                }
+            }
+        }
+    }
+
+    private static boolean clearPlayers()
     {
         for (Player p : players_)
         {
             if (p.getAmountOfHandCards() == 0)
             {
                 viewers_.add(p);
-                ////////////////////////////////////////////
-                //Didn't test it yet, might break the for-loop
                 players_.remove(p);
-                ////////////////////////////////////////////
             }
         }
 
         return players_.size() >= 2;
     }
 
-    //Will be used from the server
     public static void takeAction(String action, int id)
     {
         for (Player p : players_)
@@ -229,7 +257,7 @@ public class GameManager
             System.out.printf("Searching for id %d found %d\n", id, p.getId_());
             if (p.getId_() == id)
             {
-                if (activeId_ == id)
+                if (p.isActive_())
                 {
                     p.setLastAction_(action);
                     System.out.printf("Found player and set action %s for player\n", action);
@@ -283,7 +311,6 @@ public class GameManager
 
         activePlayers[0].setActive_(true);
         activePlayers[0].setAttacker_(true);
-        activeId_ = activePlayers[0].getId_();
 
         return activePlayers;
     }
@@ -304,33 +331,7 @@ public class GameManager
 
         int returnValue = visibleCards_.size() * 2;
 
-        if (visibleCards_.get(visibleCards_.size() - 1)[1] == -1)
-        {
-            returnValue--;
-        }
-
         return returnValue;
-    }
-
-    private static void refreshActiveID()
-    {
-        for (Player p : players_)
-        {
-            if (p.isActive_())
-            {
-                activeId_ = p.getId_();
-                break;
-            }
-        }
-    }
-
-    private static void resetPlayer (Player player)
-    {
-        player.setActive_(false);
-        player.setAttacker_(false);
-        player.setDefender_(false);
-        player.setSkipped_(false);
-        player.setLastAction_("no action");
     }
 
     private static String visibleCardsToString()
@@ -339,14 +340,13 @@ public class GameManager
         for (int[] arr : visibleCards_)
         {
             returnString.append(String.format("%d ", arr[0]));
-            if(arr[1] < 11) continue;
             returnString.append(String.format("%d ", arr[1]));
         }
         return returnString.toString();
     }
 
     /**
-     * The format the the client can process.
+     * The format that the client can process.
      *
      * @param playerId id of the current player.
      * @return returns the state of the game.
@@ -391,6 +391,10 @@ public class GameManager
     public static void sendGameStateToAll()
     {
         for (Player p : players_)
+        {
+            ServerNetwork.sendMessage(p.getId_(), gameBoardStateToString(p.getId_(), true));
+        }
+        for (Player p : viewers_)
         {
             ServerNetwork.sendMessage(p.getId_(), gameBoardStateToString(p.getId_(), true));
         }
