@@ -345,8 +345,6 @@ public class GameManager
 
     public static int countVisibleCards()
     {
-        if (visibleCards_.size() == 0) return 0;
-
         return visibleCards_.size() * 2;
     }
 
