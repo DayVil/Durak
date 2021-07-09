@@ -68,7 +68,7 @@ public class GameManager
                 }
             }
 
-            System.out.printf("newturn waiting for action ID %d\n", Objects.requireNonNull(activePlayer).getId_());
+            System.out.printf("newTurn waiting for action ID %d\n", Objects.requireNonNull(activePlayer).getId_());
             String lastAction;
             do
             {
@@ -365,7 +365,7 @@ public class GameManager
      * @param playerId id of the current player.
      * @return returns the state of the game.
      */
-    public static String gameBoardStateToString(int playerId, boolean wasSuccessfull)
+    public static String gameBoardStateToString(int playerId, boolean wasSuccessful)
     {
         // As per String convention specified in ServerNetwork.java this would be the correct approach to generate the String
 
@@ -397,7 +397,7 @@ public class GameManager
             }
         }
 
-        if (wasSuccessfull) returnString.append(String.format("%s", 1));
+        if (wasSuccessful) returnString.append(String.format("%s", 1));
         else returnString.append(String.format("%s", 0));                                       // Was successful
         return returnString.toString();
     }
