@@ -94,12 +94,12 @@ public class GameManager
                             defWon = true;
                             turnEnded = true;
                         }
-                        break;
                     }
                     else
                     {
                         ServerNetwork.sendMessage(activePlayer.getId_(), gameBoardStateToString(activePlayer.getId_(), false));
                     }
+                    break;
                 }
                 case "take":
                 {
@@ -109,14 +109,13 @@ public class GameManager
 
                         defWon = false;
                         turnEnded = true;
-                        break;
                     }
                     else
                     {
                         ServerNetwork.sendMessage(activePlayer.getId_(), gameBoardStateToString(activePlayer.getId_(), false));
                     }
+                    break;
                 }
-
                 default:
                 {
                     int card = Integer.parseInt(lastAction);
