@@ -139,7 +139,8 @@ public class LoginController implements ControllerInterface
 
         boolean isValidIP = validateIP(ip);
         boolean isValidUserName = user.length() > 0;
-        boolean isValidPassword = password.length() > 0;
+        //boolean isValidPassword = password.length() > 0;
+        boolean isValidPassword = true;
 
         if (!isValidIP)
         {
