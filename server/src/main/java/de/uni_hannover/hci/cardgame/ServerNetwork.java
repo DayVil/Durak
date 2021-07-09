@@ -130,7 +130,7 @@ public class ServerNetwork
                                 String u = args[3];
                                 if (p.equals(serverPassword))
                                 {
-                                    if (u!=null & u.length()>0)
+                                    if (u!=null && u.length()>0)
                                     {
                                         for (int i = 0; i < names_.length; i++)
                                         {

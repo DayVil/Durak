@@ -42,8 +42,7 @@ public class GameBoardController implements ControllerInterface
     {
         Stage stage = gameClient.stage_;
         Scene scene = stage.getScene();
-
-        GameBoard.setStyle("-fx-background-color: #0000ff");
+        //GameBoard.setStyle("-fx-background-color: #0000ff");
 
         leftoverDeck = (ImageView) scene.lookup("#leftoverDeck");
         Image image = Cards.getSpecialImage(SpecialTexture.BackLowsat);
@@ -131,7 +130,7 @@ public class GameBoardController implements ControllerInterface
 
         //PLAYERLIST
         int playerStart = 60;
-        int playerEnd = 480;
+        int playerEnd = 465;
 
         int playerCount = parsedServerMessage.getPlayers_().size();
 
@@ -140,8 +139,8 @@ public class GameBoardController implements ControllerInterface
         for (int i = 0; i < playerCount; i++)
         {
             int x = playerStart + i * playerSpace;
-            int y = 30;
-            drawPlayer(parsedServerMessage.getPlayers_().get(i), x, y);
+            int y = 10;
+            drawPlayer(parsedServerMessage.getPlayers_().get(i), x, y, playerSpace);
         }
 
         //VISIBLECARDS
@@ -196,30 +195,44 @@ public class GameBoardController implements ControllerInterface
         }
     }
 
-    private void drawPlayer(ParsedServerMessage.Player player, int x, int y)
+    private void drawPlayer(ParsedServerMessage.Player player, int x, int y, int playerSpace)
     {
+        int offsetX = 10;
+        int playerPaneWidth = 120;
+        int playerCardsWidth = 8;
+        int playerSymbolHeight = 30;
+
+        if(playerSpace < playerPaneWidth) {
+            playerPaneWidth = playerSpace;
+        }
         int cards = player.getHandCardAmount_();
         Label cardCountLabel = new Label();
         cardCountLabel.setText(String.format("%d", cards));
-        cardCountLabel.setLayoutX(5);
+        cardCountLabel.setLayoutX(0);
         cardCountLabel.setLayoutY(5);
+        cardCountLabel.maxWidth(playerCardsWidth);
         addedNodesArrayList.add(cardCountLabel);
 
         String name = player.getName_();
         Label nameLabel = new Label();
         nameLabel.setText(name);
-        nameLabel.setLayoutX(45);
+        nameLabel.setLayoutX(playerCardsWidth+offsetX);
         nameLabel.setLayoutY(5);
+        //nameLabel.prefWidth(playerPaneWidth - playerCardsWidth - playerSymbolWidth - 2*offsetX);
+        nameLabel.prefWidth(playerPaneWidth - playerCardsWidth - offsetX);
+        //nameLabel.setMaxWidth(playerPaneWidth - playerCardsWidth - playerSymbolWidth - 2*offsetX);
+        nameLabel.setMaxWidth(playerPaneWidth - playerCardsWidth - offsetX);
         addedNodesArrayList.add(nameLabel);
 
 
         Pane pane = new Pane();
         pane.getChildren().add(nameLabel);
         pane.getChildren().add(cardCountLabel);
-        pane.setLayoutX(x + 40);
+        pane.setLayoutX(x);
         pane.setLayoutY(y);
-        pane.setPrefHeight(50);
-        pane.setPrefWidth(120);
+        pane.setPrefHeight(30);
+        pane.setPrefWidth(playerPaneWidth);
+        pane.maxWidth(playerPaneWidth);
         pane.setStyle("-fx-background-color: #a0a0a0");
         GameBoard.getChildren().add(pane);
         addedNodesArrayList.add(pane);
@@ -230,10 +243,10 @@ public class GameBoardController implements ControllerInterface
             Image image = Cards.getSpecialImage(SpecialTexture.SwordIcon);
             imageView.setImage(image);
             imageView.setCache(true);
-            imageView.setLayoutX(x);
-            imageView.setLayoutY(y);
+            imageView.setLayoutX(x + 0.5*playerPaneWidth - 0.5*imageView.getFitWidth());
+            imageView.setLayoutY(1.5*playerSymbolHeight);
             imageView.setPreserveRatio(true);
-            imageView.setFitHeight(40);
+            imageView.setFitHeight(playerSymbolHeight);
             GameBoard.getChildren().add(imageView);
             addedNodesArrayList.add(imageView);
         }
@@ -243,10 +256,10 @@ public class GameBoardController implements ControllerInterface
             Image image = Cards.getSpecialImage(SpecialTexture.ShieldIcon);
             imageView.setImage(image);
             imageView.setCache(true);
-            imageView.setLayoutX(x);
-            imageView.setLayoutY(y);
+            imageView.setLayoutX(x + 0.5*playerPaneWidth - 0.5*imageView.getFitWidth());
+            imageView.setLayoutY(1.5*playerSymbolHeight);
             imageView.setPreserveRatio(true);
-            imageView.setFitHeight(40);
+            imageView.setFitHeight(playerSymbolHeight);
             GameBoard.getChildren().add(imageView);
             addedNodesArrayList.add(imageView);
         }
@@ -261,7 +274,7 @@ public class GameBoardController implements ControllerInterface
         Image image = Cards.getColorSymbolImage(trump);
         imageView.setImage(image);
         imageView.setCache(true);
-        imageView.setLayoutX(20);
+        imageView.setLayoutX(10);
         imageView.setLayoutY(20);
         imageView.setPreserveRatio(true);
         imageView.setFitHeight(40);
