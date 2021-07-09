@@ -14,6 +14,7 @@ public class ServerNetwork
     ServerSocket serverSocket;
     String serverPassword;
     public static int maxPlayerCount;
+    public String[] names_;
 
     void run()
     {
@@ -30,14 +31,14 @@ public class ServerNetwork
             ex.printStackTrace();
         }
 
+        names_ = new String[maxPlayerCount];
+
         waitingForClients(maxPlayerCount);
         System.out.println("All clients found");
         int[] IDs = new int[maxPlayerCount];
-        String[] names = new String[maxPlayerCount];
         for(int i = 0; i < maxPlayerCount; i++)
         {
             IDs[i] = ClientManager.getClientList().get(i).getID_();
-            names[i] = "Player_" + Integer.toString(i);
         }
 
         System.out.println("We Are FULL");
@@ -45,7 +46,7 @@ public class ServerNetwork
         //ExecuteGame ex = new ExecuteGame();
         //ex.runGame(IDs);
 
-        GameManager.initGameManager(IDs, names);
+        GameManager.initGameManager(IDs, names_);
     }
 
     public static boolean sendMessage(int clientID, String msg)
@@ -124,9 +125,23 @@ public class ServerNetwork
                         {
                             if (line.length() > "Password: ".length() + serverPassword.length())
                             {
+                                String[] args = line.split("Password: " + serverPassword);
                                 String p = line.substring(0, "Password: ".length() + serverPassword.length());
+                                String u = args[1];
                                 if (p.equals("Password: " + serverPassword))
                                 {
+                                    if (u.startsWith(" User: "))
+                                    {
+                                        String name = u.split(" User: ")[1];
+                                        for (int i = 0; i < names_.length; i++)
+                                        {
+                                            if (names_[i] == null)
+                                            {
+                                                names_[i] = name;
+                                                break;
+                                            }
+                                        }
+                                    }
                                     loggedIn = true;
                                     id = ClientManager.addClient(outputBuffer);
                                     sendMessage(id, "logged in");
