@@ -91,7 +91,9 @@ public class ClientNetwork
             return false;
         }
 
-        String logInMessage = "Password: " + password + " User: " + user;
+        //String logInMessage = "Password: " + password + " User: " + user;
+        String logInMessage = "Password;" + password + ";" + " User;" + user;
+
 
         if (!sendMessage(logInMessage)) return false;
 

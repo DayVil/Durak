@@ -123,21 +123,20 @@ public class ServerNetwork
                         String line = inputBuffer.readLine();
                         if(line != null)
                         {
-                            if (line.length() > "Password: ".length() + serverPassword.length())
+                            if (line.contains("Password;"))
                             {
-                                String[] args = line.split("Password: " + serverPassword);
-                                String p = line.substring(0, "Password: ".length() + serverPassword.length());
-                                String u = args[1];
-                                if (p.equals("Password: " + serverPassword))
+                                String[] args = line.split(";");
+                                String p = args[1];
+                                String u = args[3];
+                                if (p.equals(serverPassword))
                                 {
-                                    if (u.startsWith(" User: "))
+                                    if (u!=null & u.length()>0)
                                     {
-                                        String name = u.split(" User: ")[1];
                                         for (int i = 0; i < names_.length; i++)
                                         {
                                             if (names_[i] == null)
                                             {
-                                                names_[i] = name;
+                                                names_[i] = u;
                                                 break;
                                             }
                                         }
