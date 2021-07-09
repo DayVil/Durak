@@ -85,7 +85,7 @@ public class GameManager
                 {
                     if(activePlayer.isAttacker_())
                     {
-                        if (activePlayers.length > 2 && !activePlayers[2].hasSkipped_())
+                        if (activePlayers.length > 2 && !activePlayers[2].hasSkipped_() && activePlayers[2].getAmountOfHandCards() != 0)
                         {
                                 switchAttacker(activePlayers);
                         }
@@ -126,17 +126,19 @@ public class GameManager
                             activePlayers[0].setActive_(false);
                             activePlayers[0].setSkipped_(false);
                             activePlayers[1].setActive_(true);
-                            if (activePlayers.length > 2)   activePlayers[2].setSkipped_(false);
+                            if (activePlayers.length > 2 && activePlayers[2].getAmountOfHandCards() != 0)   activePlayers[2].setSkipped_(false);
                         }
                         else
                         {
-                            activePlayers[0].setActive_(true);
-                            activePlayers[1].setActive_(false);
-
-                            if (visibleCards_.size() == 6)
+                            if (activePlayer.getAmountOfHandCards() == 0 || visibleCards_.size() == 6)
                             {
                                 defWon = true;
                                 turnEnded = true;
+                            }
+                            else
+                            {
+                                activePlayers[0].setActive_(true);
+                                activePlayers[1].setActive_(false);
                             }
                         }
                     }
@@ -146,6 +148,10 @@ public class GameManager
                     }
                     break;
                 }
+            }
+            if (activePlayer.getAmountOfHandCards() == 0)
+            {
+                switchAttacker(activePlayers);
             }
             sendGameStateToAll();
         }
@@ -208,6 +214,7 @@ public class GameManager
         while(visibleCards_.size() < 6)
         {
             sendGameStateToAll();
+            if (players[0].getAmountOfHandCards() == 0)     switchAttacker(players);
             System.out.printf("ThrowIN waiting for action ID %d\n", players[0].getId_());
             String lastAction;
             do
@@ -262,9 +269,13 @@ public class GameManager
                     }
                 }
                 viewers_.add(p);
-                players_.remove(p);
             }
             index++;
+        }
+
+        for (Player p : viewers_)
+        {
+            players_.remove(p);
         }
 
         return players_.size() >= 2;
@@ -321,6 +332,12 @@ public class GameManager
 
     public static void switchAttacker(Player[] activePlayers)
     {
+        if (activePlayers[2].getAmountOfHandCards() == 0)
+        {
+            activePlayers[2].setSkipped_(true);
+            activePlayers[0].setSkipped_(true);
+            return;
+        }
         activePlayers[0].setActive_(false);
         activePlayers[0].setAttacker_(false);
         activePlayers[0].setSkipped_(true);
