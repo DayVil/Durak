@@ -182,6 +182,7 @@ public class ServerNetwork
 
                         if(line.equals("disconnect"))
                         {
+                            names_[id] = null;
                             // TODO: Start a bot player in its place
                             break;
                         }
