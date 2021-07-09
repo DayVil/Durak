@@ -68,7 +68,7 @@ public class GameManager
                 }
             }
 
-            System.out.printf("newturn waiting for action ID %d\n", activePlayer.getId_());
+            System.out.printf("newturn waiting for action ID %d\n", Objects.requireNonNull(activePlayer).getId_());
             String lastAction;
             do
             {
@@ -177,7 +177,14 @@ public class GameManager
             if (activePlayers.length > 2)
             {
                 activePlayers[2].drawCards(6 - activePlayers[2].getAmountOfHandCards(), drawPile_);
-                firstAttacker = activePlayers[2].getId_();
+                if (activePlayers[2].getId_() == firstAttacker)
+                {
+                    firstAttacker = activePlayers[0].getId_();
+                }
+                else
+                {
+                    firstAttacker = activePlayers[2].getId_();
+                }
             }
             else
             {
@@ -237,13 +244,27 @@ public class GameManager
 
     private static boolean clearPlayers()
     {
+        int index = 0;
         for (Player p : players_)
         {
             if (p.getAmountOfHandCards() == 0)
             {
+                if (firstAttacker == p.getId_())
+                {
+                    if (index + 1 == players_.size())
+                    {
+                        index = 0;
+                        firstAttacker = players_.get(index).getId_();
+                    }
+                    else
+                    {
+                        firstAttacker = players_.get(index + 1).getId_();
+                    }
+                }
                 viewers_.add(p);
                 players_.remove(p);
             }
+            index++;
         }
 
         return players_.size() >= 2;
@@ -328,9 +349,7 @@ public class GameManager
     {
         if (visibleCards_.size() == 0) return 0;
 
-        int returnValue = visibleCards_.size() * 2;
-
-        return returnValue;
+        return visibleCards_.size() * 2;
     }
 
     private static String visibleCardsToString()
