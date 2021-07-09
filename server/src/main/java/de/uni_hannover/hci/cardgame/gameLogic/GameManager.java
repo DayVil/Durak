@@ -319,7 +319,7 @@ public class GameManager
         return returnArray;
     }
 
-    public static Player[] switchAttacker(Player[] activePlayers)
+    public static void switchAttacker(Player[] activePlayers)
     {
         activePlayers[0].setActive_(false);
         activePlayers[0].setAttacker_(false);
@@ -331,8 +331,6 @@ public class GameManager
 
         activePlayers[0].setActive_(true);
         activePlayers[0].setAttacker_(true);
-
-        return activePlayers;
     }
 
     public static CardColor getTrump_ ()
