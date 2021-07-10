@@ -279,8 +279,7 @@ public class GameManager
             }
             index++;
         }
-
-        for (Player p : viewers_)
+        for (Player p:viewers_)
         {
             players_.remove(p);
         }
@@ -413,13 +412,20 @@ public class GameManager
         returnString.append(String.format("%s ", countVisibleCards()));                         // Amount of visible cards
         returnString.append(String.format("%s", visibleCardsToString()));                       // Visible cards
 
+        boolean found = false;
         for (Player p : players_)
         {
             if (p.getId_() == playerId)
             {
                 returnString.append(String.format("%s ", p.getAmountOfHandCards()));            // specified players hand cards amount
                 returnString.append(String.format("%s", p.handCardsToString()));                // specified players hand cards
+                found = true;
+                break;
             }
+        }
+        if(!found)
+        {
+            returnString.append("0 ");                                                          // If the player is not a player he is a viewer so he has no handcards
         }
 
         if (wasSuccessful) returnString.append(String.format("%s", 1));
