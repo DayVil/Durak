@@ -462,7 +462,7 @@ public class GameManager
                 break;
             }
         }
-        Objects.requireNonNull(bot).setName_("Bot_" + botCount + 1);
+        Objects.requireNonNull(bot).setName_("Bot_" + (botCount + 1));
         bot.setBot_(true);
     }
 
