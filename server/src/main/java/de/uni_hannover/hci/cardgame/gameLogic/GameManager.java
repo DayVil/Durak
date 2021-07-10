@@ -353,7 +353,8 @@ public class GameManager
         activePlayers[0] = activePlayers[2];
         activePlayers[2] = helper;
 
-        activePlayers[0].setActive_(true);
+        if (activePlayers[2].getAmountOfHandCards() > 0)    activePlayers[0].setActive_(true);
+
         activePlayers[0].setAttacker_(true);
     }
 
