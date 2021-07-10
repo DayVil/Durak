@@ -344,10 +344,12 @@ public class GameManager
             activePlayers[0].setSkipped_(true);
             return;
         }
+
         activePlayers[0].setActive_(false);
         activePlayers[0].setAttacker_(false);
         activePlayers[0].setSkipped_(true);
 
+        if (activePlayers.length < 3) return;
         Player helper = activePlayers[0];
         activePlayers[0] = activePlayers[2];
         activePlayers[2] = helper;
