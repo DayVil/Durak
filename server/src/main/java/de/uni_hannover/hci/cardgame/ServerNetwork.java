@@ -116,6 +116,7 @@ public class ServerNetwork
                 BufferedWriter outputBuffer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 
                 int id = -1;
+                int index = -1;
                 try
                 {
                     while (!loggedIn)
@@ -137,6 +138,7 @@ public class ServerNetwork
                                             if (names_[i] == null)
                                             {
                                                 names_[i] = u;
+                                                index = i;
                                                 break;
                                             }
                                         }
@@ -181,8 +183,9 @@ public class ServerNetwork
 
                         if(line.equals("disconnect"))
                         {
-                            names_[id] = null;
+                            names_[index] = null;
                             // TODO: Start a bot player in its place
+                            // only when a game is running
                             break;
                         }
                         System.out.printf("Client wants to access gameLogic with <%s>\n", line);
