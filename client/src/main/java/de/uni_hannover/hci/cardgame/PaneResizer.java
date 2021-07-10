@@ -1,10 +1,9 @@
 package de.uni_hannover.hci.cardgame;
 
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
-import java.util.ArrayList;
+import java.util.Objects;
 
 public class PaneResizer
 {
@@ -52,7 +51,7 @@ public class PaneResizer
         if (scene.lookup("#Login") != null)		pane = (Pane)scene.lookup("#Login");
         if (scene.lookup("#Credits") != null)	pane = (Pane)scene.lookup("#Credits");
 
-        pane.setTranslateX(translateX);
+        Objects.requireNonNull(pane).setTranslateX(translateX);
         pane.setTranslateY(translateY);
 
         pane.setScaleX(newFactor);

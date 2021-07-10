@@ -17,7 +17,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class SettingsController implements ControllerInterface
 {

@@ -7,14 +7,11 @@ import de.uni_hannover.hci.cardgame.gameClient;
 import de.uni_hannover.hci.cardgame.gameLogic.Cards.Cards;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import java.time.LocalDateTime;
 
 public class LoadingScreenController implements ControllerInterface
 {

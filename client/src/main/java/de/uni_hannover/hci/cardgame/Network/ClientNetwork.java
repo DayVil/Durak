@@ -53,7 +53,7 @@ public class ClientNetwork
             alert.onShownProperty().addListener(e -> Platform.runLater(() -> alert.setResizable(false)));
             Optional<ButtonType> result = alert.showAndWait();
 
-            if (result.get() == buttonTypeNo) return true;
+            if (result.isPresent() && result.get() == buttonTypeNo) return true;
         }
         loggedIn_ = false;
 

@@ -556,6 +556,24 @@ public class GameManager
             //if there is a card that is able to be played with its worth already on the field play it
             if (possibleActions.size() > 0)
             {
+                ArrayList<Integer> trumps = new ArrayList<>();
+                for (int possible : possibleActions)
+                {
+                    if (Cards.getColor(possible).equals(trump_))
+                    {
+                        trumps.add(possible);
+                    }
+                }
+
+                //removing all trumps if there is at least one more card to play
+                if (trumps.size() < possibleActions.size())
+                {
+                    for (int trump : trumps)
+                    {
+                        possibleActions.remove(trump);
+                    }
+                }
+
                 Collections.sort(possibleActions);
                 bot.setLastAction_(possibleActions.get(0).toString());
                 return;
@@ -573,6 +591,24 @@ public class GameManager
             //If he is able to play a card he will play the lowest possible card
             if (possibleActions.size() > 0)
             {
+                ArrayList<Integer> trumps = new ArrayList<>();
+                for (int possible : possibleActions)
+                {
+                    if (Cards.getColor(possible).equals(trump_))
+                    {
+                        trumps.add(possible);
+                    }
+                }
+
+                //removing all trumps if there is at least one more card to play
+                if (trumps.size() < possibleActions.size())
+                {
+                    for (int trump : trumps)
+                    {
+                        possibleActions.remove(trump);
+                    }
+                }
+
                 Collections.sort(possibleActions);
                 bot.setLastAction_(possibleActions.get(0).toString());
             }
