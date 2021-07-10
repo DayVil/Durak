@@ -222,7 +222,10 @@ public class GameManager
             String lastAction;
             do
             {
-                if (players[0].isBot_())    botAction(players[0]);
+                if (players[0].isBot_())
+                {
+                    botAction(players[0]);
+                }
                 lastAction = Objects.requireNonNull(players[0]).getLastAction_();
             } while (lastAction.equals("no action"));
             players[0].setLastAction_("no action");
@@ -452,7 +455,7 @@ public class GameManager
         Player bot = null;
         for (Player p : players_)
         {
-            if (p.getName_().contains("Bot_"))
+            if (p.getName_().contains("Bot"))
             {
                 botCount++;
             }
@@ -468,6 +471,14 @@ public class GameManager
 
     public static void botAction (Player bot)
     {
+        try
+        {
+            Thread.sleep(1000);
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
         //setAction(int card)
         ArrayList<Integer> possibleActions = new ArrayList<>();
         ArrayList<Integer> botHandCards = bot.getHandCards_();
