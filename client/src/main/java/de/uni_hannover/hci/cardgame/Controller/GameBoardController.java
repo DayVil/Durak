@@ -6,8 +6,8 @@ import de.uni_hannover.hci.cardgame.Network.ClientNetwork;
 import de.uni_hannover.hci.cardgame.PaneResizer;
 import de.uni_hannover.hci.cardgame.fxmlNavigator;
 import de.uni_hannover.hci.cardgame.gameClient;
+
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -33,7 +33,7 @@ public class GameBoardController implements ControllerInterface
     @FXML
     private ImageView leftoverDeck;
 
-    private final ArrayList<Node> addedNodesArrayList = new ArrayList<Node>();
+    private final ArrayList<Node> addedNodesArrayList = new ArrayList<>();
 
     boolean killClientNetworkHandler;
 
@@ -130,7 +130,7 @@ public class GameBoardController implements ControllerInterface
 
         //PLAYERLIST
         int playerStart = 60;
-        int playerEnd = 465;
+        int playerEnd = 480;
 
         int playerCount = parsedServerMessage.getPlayers_().size();
 
@@ -139,8 +139,8 @@ public class GameBoardController implements ControllerInterface
         for (int i = 0; i < playerCount; i++)
         {
             int x = playerStart + i * playerSpace;
-            int y = 10;
-            drawPlayer(parsedServerMessage.getPlayers_().get(i), x, y, playerSpace);
+            int y = 30;
+            drawPlayer(parsedServerMessage.getPlayers_().get(i), x, y);
         }
 
         //VISIBLECARDS
@@ -195,75 +195,39 @@ public class GameBoardController implements ControllerInterface
         }
     }
 
-    private void drawPlayer(ParsedServerMessage.Player player, int x, int y, int playerSpace)
+    private void drawPlayer(ParsedServerMessage.Player player, int x, int y)
     {
-        int offsetX = 10;
-        int playerPaneWidth = 120;
-        int playerCardsWidth = 8;
-        int playerSymbolHeight = 30;
-
-        if(playerSpace < playerPaneWidth) {
-            playerPaneWidth = playerSpace;
-        }
         int cards = player.getHandCardAmount_();
-        Label cardCountLabel = new Label();
-        cardCountLabel.setText(String.format("%d", cards));
-        cardCountLabel.setLayoutX(0);
-        cardCountLabel.setLayoutY(5);
-        cardCountLabel.maxWidth(playerCardsWidth);
-        addedNodesArrayList.add(cardCountLabel);
-
         String name = player.getName_();
-        Label nameLabel = new Label();
-        nameLabel.setText(name);
-        nameLabel.setLayoutX(playerCardsWidth+offsetX);
-        nameLabel.setLayoutY(5);
-        //nameLabel.prefWidth(playerPaneWidth - playerCardsWidth - playerSymbolWidth - 2*offsetX);
-        nameLabel.prefWidth(playerPaneWidth - playerCardsWidth - offsetX);
-        //nameLabel.setMaxWidth(playerPaneWidth - playerCardsWidth - playerSymbolWidth - 2*offsetX);
-        nameLabel.setMaxWidth(playerPaneWidth - playerCardsWidth - offsetX);
-        addedNodesArrayList.add(nameLabel);
 
+        String playerString = String.format("%s\t%d", name, cards);
 
-        Pane pane = new Pane();
-        pane.getChildren().add(nameLabel);
-        pane.getChildren().add(cardCountLabel);
-        pane.setLayoutX(x);
-        pane.setLayoutY(y);
-        pane.setPrefHeight(30);
-        pane.setPrefWidth(playerPaneWidth);
-        pane.maxWidth(playerPaneWidth);
-        pane.setStyle("-fx-background-color: #a0a0a0");
-        GameBoard.getChildren().add(pane);
-        addedNodesArrayList.add(pane);
+        Label playerLable = new Label();
+        playerLable.setLayoutX(x);
+        playerLable.setLayoutY(y);
+        playerLable.setText(playerString);
 
         if (player.isAttacker_())
         {
-            ImageView imageView = new ImageView();
             Image image = Cards.getSpecialImage(SpecialTexture.SwordIcon);
-            imageView.setImage(image);
-            imageView.setCache(true);
-            imageView.setLayoutX(x + 0.5*playerPaneWidth - 0.5*imageView.getFitWidth());
-            imageView.setLayoutY(1.5*playerSymbolHeight);
+            ImageView imageView = new ImageView(image);
             imageView.setPreserveRatio(true);
-            imageView.setFitHeight(playerSymbolHeight);
-            GameBoard.getChildren().add(imageView);
-            addedNodesArrayList.add(imageView);
+            imageView.setFitHeight(30);
+            playerLable.setGraphic(imageView);
         }
         if (player.isDefender_())
         {
-            ImageView imageView = new ImageView();
             Image image = Cards.getSpecialImage(SpecialTexture.ShieldIcon);
-            imageView.setImage(image);
-            imageView.setCache(true);
-            imageView.setLayoutX(x + 0.5*playerPaneWidth - 0.5*imageView.getFitWidth());
-            imageView.setLayoutY(1.5*playerSymbolHeight);
+            ImageView imageView = new ImageView(image);
             imageView.setPreserveRatio(true);
-            imageView.setFitHeight(playerSymbolHeight);
-            GameBoard.getChildren().add(imageView);
-            addedNodesArrayList.add(imageView);
+            imageView.setFitHeight(30);
+            playerLable.setGraphic(imageView);
         }
-        if (player.isActive_()) pane.setStyle("-fx-background-color: #a0f0a0");
+
+        if (player.isActive_()) playerLable.setStyle("-fx-background-color: #a0f0a0");
+
+        GameBoard.getChildren().add(playerLable);
+        addedNodesArrayList.add(playerLable);
     }
 
 
