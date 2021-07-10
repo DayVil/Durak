@@ -517,7 +517,7 @@ public class GameManager
             {
                 for (int trump : trumps)
                 {
-                    possibleActions.remove(trump);
+                    possibleActions.remove((Object)trump);
                 }
             }
 
@@ -570,7 +570,7 @@ public class GameManager
                 {
                     for (int trump : trumps)
                     {
-                        possibleActions.remove(trump);
+                        possibleActions.remove((Object)trump);
                     }
                 }
 
@@ -605,7 +605,7 @@ public class GameManager
                 {
                     for (int trump : trumps)
                     {
-                        possibleActions.remove(trump);
+                        possibleActions.remove((Object)trump);
                     }
                 }
 
