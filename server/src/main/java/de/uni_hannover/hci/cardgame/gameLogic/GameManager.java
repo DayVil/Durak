@@ -7,7 +7,6 @@ import de.uni_hannover.hci.cardgame.gameLogic.Cards.Cards;
 import de.uni_hannover.hci.cardgame.gameLogic.Player.Player;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
 
@@ -23,8 +22,6 @@ public class GameManager
     private static CardColor trump_;
     public static int firstAttacker;
 
-
-    // TODO: on playCard check for total cards that are able to be played as defender might not always have 6 cards
     public static void initGameManager(int[] IDs, String[] names)
     {
         drawPile_ = new CardStack();

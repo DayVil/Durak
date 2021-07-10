@@ -8,6 +8,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
+import java.util.Objects;
 
 public class ServerNetwork
 {
@@ -43,26 +44,21 @@ public class ServerNetwork
 
         System.out.println("We Are FULL");
 
-        //ExecuteGame ex = new ExecuteGame();
-        //ex.runGame(IDs);
-
         GameManager.initGameManager(IDs, names_);
     }
 
-    public static boolean sendMessage(int clientID, String msg)
+    public static void sendMessage(int clientID, String msg)
     {
         BufferedWriter bufferOut =  ClientManager.getWriter(clientID);
         try
         {
-            bufferOut.write(msg + "\n");
+            Objects.requireNonNull(bufferOut).write(msg + "\n");
             bufferOut.flush();
         }
         catch(IOException e)
         {
             System.out.printf("Error: could not send message %s to client %d", msg, clientID);
-            return false;
         }
-        return true;
     }
 
     void waitingForClients(int maxNumber)
@@ -161,7 +157,7 @@ public class ServerNetwork
                 }
                 catch (IOException e)
                 {
-                    System.out.printf("Error: could not login client");
+                    System.out.print("Error: could not login client");
                     try
                     {
                         socket.close();
@@ -184,8 +180,6 @@ public class ServerNetwork
                         if(line.equals("disconnect"))
                         {
                             names_[index] = null;
-                            // TODO: Start a bot player in its place
-                            // only when a game is running
                             if (GameManager.isRunning())
                             {
                                 GameManager.addBot(id);

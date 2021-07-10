@@ -2,7 +2,6 @@ package de.uni_hannover.hci.cardgame.gameLogic.Player;
 
 import de.uni_hannover.hci.cardgame.gameLogic.Attack;
 import de.uni_hannover.hci.cardgame.gameLogic.Cards.CardStack;
-import de.uni_hannover.hci.cardgame.gameLogic.Cards.Cards;
 import de.uni_hannover.hci.cardgame.gameLogic.Defend;
 import de.uni_hannover.hci.cardgame.gameLogic.GameManager;
 
@@ -45,8 +44,7 @@ public class Player
 
     public String getLastAction_ ()
     {
-        String returnAction = lastAction_;
-        return returnAction;
+        return lastAction_;
     }
 
     public void setLastAction_ (String lastAction)
