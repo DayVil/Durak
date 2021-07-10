@@ -156,6 +156,10 @@ public class GameManager
                 switchAttacker(activePlayers);
             }
             sendGameStateToAll();
+            if (activePlayer.getAmountOfHandCards() == 0)
+            {
+                break;
+            }
         }
         endTurn(activePlayers, defWon);
     }
@@ -240,6 +244,7 @@ public class GameManager
                 {
                    break;
                 }
+                if (players[0].getAmountOfHandCards() == 0)     break;
             }
             else if (lastAction.equals("take"))
             {
