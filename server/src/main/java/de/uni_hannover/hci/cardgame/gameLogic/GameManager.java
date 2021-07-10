@@ -47,121 +47,126 @@ public class GameManager
 
     public static void newTurn ()
     {
-        Player[] activePlayers = getActivePlayers(firstAttacker);
-        activePlayers[0].setActive_(true);
-        activePlayers[0].setAttacker_(true);
-        activePlayers[1].setDefender_(true);
-        sendGameStateToAll();
-        System.out.println("Send GameState to all clients");
-        boolean turnEnded = false;
-        boolean defWon = false;
-        while (!turnEnded)
-        {
-            Player activePlayer = null;
-            for (Player p : players_)
+        do{
+            Player[] activePlayers = getActivePlayers(firstAttacker);
+            activePlayers[0].setActive_(true);
+            activePlayers[0].setAttacker_(true);
+            activePlayers[1].setDefender_(true);
+            sendGameStateToAll();
+            System.out.println("Send GameState to all clients");
+            boolean turnEnded = false;
+            boolean defWon = false;
+            while (!turnEnded)
             {
-                if (p.isActive_())
+                Player activePlayer = null;
+                for (Player p : players_)
                 {
-                    activePlayer = p;
-                }
-            }
-
-            System.out.printf("newTurn waiting for action ID %d\n", Objects.requireNonNull(activePlayer).getId_());
-            String lastAction;
-            do
-            {
-                if (Objects.requireNonNull(activePlayer).isBot_())
-                {
-                    botAction(activePlayer);
-                }
-                lastAction = Objects.requireNonNull(activePlayer).getLastAction_();
-            } while (lastAction.equals("no action"));
-
-            System.out.printf("Action %s in new Turn\n", lastAction);
-            activePlayer.setLastAction_("no action");
-
-            System.out.println("Action wait loop broke");
-            switch (lastAction)
-            {
-                case "pass":
-                {
-                    if(activePlayer.isAttacker_())
+                    if (p.isActive_())
                     {
-                        if (activePlayers.length > 2 && !activePlayers[2].hasSkipped_() && activePlayers[2].getAmountOfHandCards() != 0)
+                        activePlayer = p;
+                    }
+                }
+
+                System.out.printf("newTurn waiting for action ID %d\n", Objects.requireNonNull(activePlayer).getId_());
+                String lastAction;
+                do
+                {
+                    if (Objects.requireNonNull(activePlayer).isBot_())
+                    {
+                        botAction(activePlayer);
+                    }
+                    lastAction = Objects.requireNonNull(activePlayer).getLastAction_();
+                } while (lastAction.equals("no action"));
+
+                System.out.printf("Action %s in new Turn\n", lastAction);
+                activePlayer.setLastAction_("no action");
+
+                System.out.println("Action wait loop broke");
+                switch (lastAction)
+                {
+                    case "pass":
+                    {
+                        if(activePlayer.isAttacker_())
                         {
+                            if (activePlayers.length > 2 && !activePlayers[2].hasSkipped_() && activePlayers[2].getAmountOfHandCards() != 0)
+                            {
                                 switchAttacker(activePlayers);
-                        }
-                        else
-                        {
-                            defWon = true;
-                            turnEnded = true;
-                        }
-                    }
-                    else
-                    {
-                        ServerNetwork.sendMessage(activePlayer.getId_(), gameBoardStateToString(activePlayer.getId_(), false));
-                    }
-                    break;
-                }
-                case "take":
-                {
-                    if(activePlayer.isDefender_())
-                    {
-                        throwIn(activePlayers);
-
-                        defWon = false;
-                        turnEnded = true;
-                    }
-                    else
-                    {
-                        ServerNetwork.sendMessage(activePlayer.getId_(), gameBoardStateToString(activePlayer.getId_(), false));
-                    }
-                    break;
-                }
-                default:
-                {
-                    int card = Integer.parseInt(lastAction);
-                    if (activePlayer.playCard(card))
-                    {
-                        if (activePlayer.isAttacker_())
-                        {
-                            activePlayers[0].setActive_(false);
-                            activePlayers[0].setSkipped_(false);
-                            activePlayers[1].setActive_(true);
-                            if (activePlayers.length > 2 && activePlayers[2].getAmountOfHandCards() != 0)   activePlayers[2].setSkipped_(false);
-                        }
-                        else
-                        {
-                            if (activePlayer.getAmountOfHandCards() == 0 || visibleCards_.size() == 6)
+                            }
+                            else
                             {
                                 defWon = true;
                                 turnEnded = true;
                             }
+                        }
+                        else
+                        {
+                            if (!activePlayer.isBot_()) ServerNetwork.sendMessage(activePlayer.getId_(), gameBoardStateToString(activePlayer.getId_(), false));
+                        }
+                        break;
+                    }
+                    case "take":
+                    {
+                        if(activePlayer.isDefender_())
+                        {
+                            throwIn(activePlayers);
+
+                            defWon = false;
+                            turnEnded = true;
+                        }
+                        else
+                        {
+                            if (!activePlayer.isBot_()) ServerNetwork.sendMessage(activePlayer.getId_(), gameBoardStateToString(activePlayer.getId_(), false));
+                        }
+                        break;
+                    }
+                    default:
+                    {
+                        int card = Integer.parseInt(lastAction);
+                        if (activePlayer.playCard(card))
+                        {
+                            if (activePlayer.isAttacker_())
+                            {
+                                activePlayers[0].setActive_(false);
+                                activePlayers[0].setSkipped_(false);
+                                activePlayers[1].setActive_(true);
+                                if (activePlayers.length > 2 && activePlayers[2].getAmountOfHandCards() != 0)   activePlayers[2].setSkipped_(false);
+                            }
                             else
                             {
-                                activePlayers[0].setActive_(true);
-                                activePlayers[1].setActive_(false);
+                                if (activePlayer.getAmountOfHandCards() == 0 || visibleCards_.size() == 6)
+                                {
+                                    defWon = true;
+                                    turnEnded = true;
+                                }
+                                else
+                                {
+                                    activePlayers[0].setActive_(true);
+                                    activePlayers[1].setActive_(false);
+                                }
                             }
                         }
+                        else
+                        {
+                            if (!activePlayer.isBot_()) ServerNetwork.sendMessage(activePlayer.getId_(), gameBoardStateToString(activePlayer.getId_(), false));
+                        }
+                        break;
                     }
-                    else
-                    {
-                        ServerNetwork.sendMessage(activePlayer.getId_(), gameBoardStateToString(activePlayer.getId_(), false));
-                    }
+                }
+                if (activePlayer.getAmountOfHandCards() == 0)
+                {
+                    switchAttacker(activePlayers);
+                }
+                sendGameStateToAll();
+                if (activePlayer.getAmountOfHandCards() == 0)
+                {
                     break;
                 }
             }
-            if (activePlayer.getAmountOfHandCards() == 0)
-            {
-                switchAttacker(activePlayers);
-            }
-            sendGameStateToAll();
-            if (activePlayer.getAmountOfHandCards() == 0)
-            {
-                break;
-            }
-        }
-        endTurn(activePlayers, defWon);
+            endTurn(activePlayers, defWon);
+        } while (clearPlayers());
+        //Game END
+        System.out.println("The Game has now officially ended!");
+        drawPile_ = null;
     }
 
     public static void endTurn(Player[] activePlayers, boolean defenseWon)
@@ -203,13 +208,6 @@ public class GameManager
                 firstAttacker = activePlayers[0].getId_();
             }
         }
-        //Check for players that are left with no cards on their hands
-        if (clearPlayers())
-        {
-            newTurn();
-        }
-        //Game END
-        System.out.println("The Game has now officially ended!");
     }
 
     private static void throwIn(Player[] players)
@@ -248,12 +246,12 @@ public class GameManager
             }
             else if (lastAction.equals("take"))
             {
-                ServerNetwork.sendMessage(players[0].getId_(), gameBoardStateToString(players[0].getId_(), false));
+                if (!players[0].isBot_())   ServerNetwork.sendMessage(players[0].getId_(), gameBoardStateToString(players[0].getId_(), false));
             }
             else
             {
                 int card = Integer.parseInt(lastAction);
-                if (!players[0].playCard(card))
+                if (!players[0].playCard(card) && !players[0].isBot_())
                 {
                     ServerNetwork.sendMessage(players[0].getId_(), gameBoardStateToString(players[0].getId_(), false));
                 }
@@ -449,11 +447,11 @@ public class GameManager
                 ServerNetwork.sendMessage(p.getId_(), gameBoardStateToString(p.getId_(), true));
             }
         }
-        for (Player p : viewers_)
+        for (Player v : viewers_)
         {
-            if (!p.isBot_())
+            if (!v.isBot_())
             {
-                ServerNetwork.sendMessage(p.getId_(), gameBoardStateToString(p.getId_(), true));
+                ServerNetwork.sendMessage(v.getId_(), gameBoardStateToString(v.getId_(), true));
             }
         }
     }
@@ -476,7 +474,13 @@ public class GameManager
             if (p.getId_() == id)
             {
                 bot = p;
-                break;
+            }
+        }
+        for (Player v : viewers_)
+        {
+            if (v.getId_() == id)
+            {
+                return;
             }
         }
         Objects.requireNonNull(bot).setName_("Bot_" + (botCount + 1));
