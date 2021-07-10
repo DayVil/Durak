@@ -186,6 +186,10 @@ public class ServerNetwork
                             names_[index] = null;
                             // TODO: Start a bot player in its place
                             // only when a game is running
+                            if (GameManager.isRunning())
+                            {
+                                GameManager.addBot(id);
+                            }
                             break;
                         }
                         System.out.printf("Client wants to access gameLogic with <%s>\n", line);
