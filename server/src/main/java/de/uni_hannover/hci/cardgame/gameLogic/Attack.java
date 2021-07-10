@@ -1,7 +1,5 @@
 package de.uni_hannover.hci.cardgame.gameLogic;
 
-import de.uni_hannover.hci.cardgame.gameLogic.Player.Player;
-
 import static de.uni_hannover.hci.cardgame.gameLogic.Cards.Cards.getCard;
 import static de.uni_hannover.hci.cardgame.gameLogic.GameManager.visibleCards_;
 

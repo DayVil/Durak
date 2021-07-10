@@ -2,7 +2,6 @@ package de.uni_hannover.hci.cardgame.gameLogic.Player;
 
 import de.uni_hannover.hci.cardgame.gameLogic.Attack;
 import de.uni_hannover.hci.cardgame.gameLogic.Cards.CardStack;
-import de.uni_hannover.hci.cardgame.gameLogic.Cards.Cards;
 import de.uni_hannover.hci.cardgame.gameLogic.Defend;
 import de.uni_hannover.hci.cardgame.gameLogic.GameManager;
 
@@ -20,6 +19,7 @@ public class Player
     private boolean isAttacker_;
     private boolean isDefender_;
     private boolean isActive_;
+    private boolean isBot_;
     private boolean skipped_;
     private volatile String lastAction_;
 
@@ -27,14 +27,24 @@ public class Player
     {
         setId_(id);
         setName_(name);
+        setBot_(false);
         resetFlags();
         handCards_ = new ArrayList<>();
     }
 
+    public void setBot_ (boolean bot_)
+    {
+        isBot_ = bot_;
+    }
+
+    public boolean isBot_ ()
+    {
+        return isBot_;
+    }
+
     public String getLastAction_ ()
     {
-        String returnAction = lastAction_;
-        return returnAction;
+        return lastAction_;
     }
 
     public void setLastAction_ (String lastAction)
@@ -58,7 +68,7 @@ public class Player
         return name_;
     }
 
-    private void setName_(String name_)
+    public void setName_ (String name_)
     {
         this.name_ = name_;
     }
@@ -109,7 +119,7 @@ public class Player
         isActive_ = active_;
     }
 
-    private ArrayList<Integer> getHandCards_()
+    public ArrayList<Integer> getHandCards_ ()
     {
         return handCards_;
     }

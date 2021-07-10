@@ -22,8 +22,6 @@ public class GameManager
     private static CardColor trump_;
     public static int firstAttacker;
 
-
-    // TODO: on playCard check for total cards that are able to be played as defender might not always have 6 cards
     public static void initGameManager(int[] IDs, String[] names)
     {
         drawPile_ = new CardStack();
@@ -72,6 +70,10 @@ public class GameManager
             String lastAction;
             do
             {
+                if (Objects.requireNonNull(activePlayer).isBot_())
+                {
+                    botAction(activePlayer);
+                }
                 lastAction = Objects.requireNonNull(activePlayer).getLastAction_();
             } while (lastAction.equals("no action"));
 
@@ -216,9 +218,11 @@ public class GameManager
             sendGameStateToAll();
             if (players[0].getAmountOfHandCards() == 0)     switchAttacker(players);
             System.out.printf("ThrowIN waiting for action ID %d\n", players[0].getId_());
+
             String lastAction;
             do
             {
+                if (players[0].isBot_())    botAction(players[0]);
                 lastAction = Objects.requireNonNull(players[0]).getLastAction_();
             } while (lastAction.equals("no action"));
             players[0].setLastAction_("no action");
@@ -332,7 +336,7 @@ public class GameManager
 
     public static void switchAttacker(Player[] activePlayers)
     {
-        if (activePlayers[2].getAmountOfHandCards() == 0)
+        if (activePlayers.length > 2 && activePlayers[2].getAmountOfHandCards() == 0)
         {
             activePlayers[2].setSkipped_(true);
             activePlayers[0].setSkipped_(true);
@@ -423,13 +427,160 @@ public class GameManager
     {
         for (Player p : players_)
         {
-            ServerNetwork.sendMessage(p.getId_(), gameBoardStateToString(p.getId_(), true));
+            if (!p.isBot_())
+            {
+                ServerNetwork.sendMessage(p.getId_(), gameBoardStateToString(p.getId_(), true));
+            }
         }
         for (Player p : viewers_)
         {
-            ServerNetwork.sendMessage(p.getId_(), gameBoardStateToString(p.getId_(), true));
+            if (!p.isBot_())
+            {
+                ServerNetwork.sendMessage(p.getId_(), gameBoardStateToString(p.getId_(), true));
+            }
         }
     }
 
+    public static boolean isRunning()
+    {
+        return drawPile_ != null;
+    }
 
+    public static void addBot(int id)
+    {
+        int botCount = 0;
+        Player bot = null;
+        for (Player p : players_)
+        {
+            if (p.getName_().contains("Bot_"))
+            {
+                botCount++;
+            }
+            if (p.getId_() == id)
+            {
+                bot = p;
+                break;
+            }
+        }
+        Objects.requireNonNull(bot).setName_("Bot_" + botCount + 1);
+        bot.setBot_(true);
+    }
+
+    public static void botAction (Player bot)
+    {
+        //setAction(int card)
+        ArrayList<Integer> possibleActions = new ArrayList<>();
+        ArrayList<Integer> botHandCards = bot.getHandCards_();
+        if(bot.isAttacker_())
+        {
+            //determine Attack-card
+            //lowest playable card, trump only if nothing else can be played
+
+            //getting all playable cards from the hand-cards
+            for (int card : botHandCards)
+            {
+                if (visibleCards_.size() > 0)
+                {
+                    for (int[] visible : visibleCards_)
+                    {
+                        if (Cards.getCard(card) == Cards.getCard(visible[0]) || Cards.getCard(card) == Cards.getCard(visible[1]))
+                        {
+                            if (!possibleActions.contains(card))  possibleActions.add(card);
+                        }
+                    }
+                }
+                else
+                {
+                    possibleActions.add(card);
+                }
+
+            }
+            //passing if there is no card that is able to be played
+            if (possibleActions.size() == 0)
+            {
+                bot.setLastAction_("pass");
+                return;
+            }
+
+            //Collecting all trumps of all the playable cards
+            ArrayList<Integer> trumps = new ArrayList<>();
+            for (int possible : possibleActions)
+            {
+                if (Cards.getColor(possible).equals(trump_))
+                {
+                    trumps.add(possible);
+                }
+            }
+
+            //removing all trumps if there is at least one more card to play
+            if (trumps.size() < possibleActions.size())
+            {
+                for (int trump : trumps)
+                {
+                    possibleActions.remove(trump);
+                }
+            }
+
+            //Trying to sort all cards now from lowest to highest
+            Collections.sort(possibleActions);
+
+            //playing lowest card
+            bot.setLastAction_(possibleActions.get(0).toString());
+        }
+        else
+        {
+            //determine Defend-card
+            //trump only if needed, cards whose worth is already on visible field if possible, else lowest card
+
+            ArrayList<Integer> sameWorth = new ArrayList<>();
+            //getting all playable cards from the hand-cards
+            for (int card : botHandCards)
+            {
+                for (int[] visible : visibleCards_)
+                {
+                    if (Cards.getCard(card) == Cards.getCard(visible[0]) || Cards.getCard(card) == Cards.getCard(visible[1]))
+                    {
+                        if (!sameWorth.contains(card))  sameWorth.add(card);
+                    }
+                }
+            }
+
+            //Now getting Same Worth cards that are playable
+            for (int card : sameWorth)
+            {
+                if (Cards.compareCards(trump_, visibleCards_.get(visibleCards_.size() - 1)[0], card) < 0)
+                {
+                    possibleActions.add(card);
+                }
+            }
+            //if there is a card that is able to be played with its worth already on the field play it
+            if (possibleActions.size() > 0)
+            {
+                Collections.sort(possibleActions);
+                bot.setLastAction_(possibleActions.get(0).toString());
+                return;
+            }
+
+            //Now getting all playable cards for the bot. We know he can't play a card whose worth is already on the field
+            for (int card : botHandCards)
+            {
+                if (Cards.compareCards(trump_, visibleCards_.get(visibleCards_.size() - 1)[0], card) < 0)
+                {
+                    possibleActions.add(card);
+                }
+            }
+
+            //If he is able to play a card he will play the lowest possible card
+            if (possibleActions.size() > 0)
+            {
+                Collections.sort(possibleActions);
+                bot.setLastAction_(possibleActions.get(0).toString());
+            }
+            else
+            {
+                //If he has no card to play he will take all cards
+                bot.setLastAction_("take");
+            }
+        }
+    }
 }
