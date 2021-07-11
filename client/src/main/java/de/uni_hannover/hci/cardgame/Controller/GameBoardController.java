@@ -131,16 +131,29 @@ public class GameBoardController implements ControllerInterface
         //PLAYERLIST
         int playerStart = 60;
         int playerEnd = 460;
+        int playerVerticalTop = 5;
+        int playerVerticalBottom = playerVerticalTop + 35;
 
         int playerCount = parsedServerMessage.getPlayers_().size();
 
-        int playerSpace = (playerEnd - playerStart) / playerCount;
+        int playerSpace = (playerEnd - playerStart) / (playerCount / 2);
 
         for (int i = 0; i < playerCount; i++)
         {
-            int x = playerStart + i * playerSpace;
-            int y = 30;
-            drawPlayer(parsedServerMessage.getPlayers_().get(i), x, y, playerSpace * 0.95);
+            int x;
+            int y;
+            if(i < 4)
+            {
+                x = playerStart + i * playerSpace;
+                y = playerVerticalTop;
+            }
+            else
+            {
+                x = playerStart + (i - 4) * playerSpace;
+                y = playerVerticalBottom;
+            }
+
+            drawPlayer(parsedServerMessage.getPlayers_().get(i), x, y, (playerSpace * 0.95));
         }
 
         //VISIBLECARDS
