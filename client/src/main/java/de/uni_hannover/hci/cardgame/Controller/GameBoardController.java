@@ -130,7 +130,7 @@ public class GameBoardController implements ControllerInterface
 
         //PLAYERLIST
         int playerStart = 60;
-        int playerEnd = 480;
+        int playerEnd = 460;
 
         int playerCount = parsedServerMessage.getPlayers_().size();
 
@@ -140,7 +140,7 @@ public class GameBoardController implements ControllerInterface
         {
             int x = playerStart + i * playerSpace;
             int y = 30;
-            drawPlayer(parsedServerMessage.getPlayers_().get(i), x, y);
+            drawPlayer(parsedServerMessage.getPlayers_().get(i), x, y, playerSpace * 0.95);
         }
 
         //VISIBLECARDS
@@ -195,7 +195,7 @@ public class GameBoardController implements ControllerInterface
         }
     }
 
-    private void drawPlayer(ParsedServerMessage.Player player, int x, int y)
+    private void drawPlayer(ParsedServerMessage.Player player, int x, int y, double width)
     {
         int cards = player.getHandCardAmount_();
         String name = player.getName_();
@@ -205,6 +205,7 @@ public class GameBoardController implements ControllerInterface
         Label playerLable = new Label();
         playerLable.setLayoutX(x);
         playerLable.setLayoutY(y);
+        playerLable.setPrefWidth(width);
         playerLable.setText(playerString);
         Image image;
         if (player.isAttacker_())
