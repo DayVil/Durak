@@ -132,24 +132,24 @@ public class GameBoardController implements ControllerInterface
         int playerStart = 60;
         int playerEnd = 460;
         int playerVerticalTop = 5;
-        int playerVerticalBottom = playerVerticalTop + 35;
+        int playerVerticalBottom = playerVerticalTop + 40;
 
         int playerCount = parsedServerMessage.getPlayers_().size();
 
-        int playerSpace = (playerEnd - playerStart) / (playerCount / 2);
+        int playerSpace = (playerEnd - playerStart) / ((playerCount + 1) / 2);
 
         for (int i = 0; i < playerCount; i++)
         {
             int x;
             int y;
-            if(i < playerCount / 2)
+            if(i < (playerCount + 1) / 2)
             {
                 x = playerStart + i * playerSpace;
                 y = playerVerticalTop;
             }
             else
             {
-                x = playerStart + (i - 4) * playerSpace;
+                x = playerStart + (i - (playerCount + 1) / 2) * playerSpace;
                 y = playerVerticalBottom;
             }
 
