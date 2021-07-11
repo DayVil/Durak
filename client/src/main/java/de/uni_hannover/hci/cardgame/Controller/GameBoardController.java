@@ -215,7 +215,7 @@ public class GameBoardController implements ControllerInterface
         int cards = player.getHandCardAmount_();
         String name = player.getName_();
 
-        String playerString = String.format(" %s    %d ", name, cards);
+        String playerString = String.format(" %d    %s ", cards, name);
 
         Label playerLable = new Label();
         playerLable.setLayoutX(x);
