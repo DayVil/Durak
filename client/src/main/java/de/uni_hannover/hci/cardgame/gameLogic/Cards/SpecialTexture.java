@@ -15,4 +15,5 @@ public enum SpecialTexture
     BlancCard,
     SwordIcon,
     ShieldIcon,
+    NullIcon,
 }

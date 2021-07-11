@@ -90,6 +90,7 @@ public class Cards
                     // 63
                     "/textures/icons/sword.png",
                     "/textures/icons/shield.png",
+                    "/textures/icons/null.png",
             };
 
     private static final javafx.scene.image.Image[] imageBuffer = new javafx.scene.image.Image[textures.length];
@@ -124,6 +125,7 @@ public class Cards
         if (specialTexture == SpecialTexture.BlancCard) return imageBuffer[10];
         if (specialTexture == SpecialTexture.SwordIcon) return imageBuffer[63];
         if (specialTexture == SpecialTexture.ShieldIcon) return imageBuffer[64];
+        if (specialTexture == SpecialTexture.NullIcon) return imageBuffer[65];
         return null;
     }
 

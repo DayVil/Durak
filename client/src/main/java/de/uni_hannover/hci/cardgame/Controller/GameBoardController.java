@@ -200,29 +200,30 @@ public class GameBoardController implements ControllerInterface
         int cards = player.getHandCardAmount_();
         String name = player.getName_();
 
-        String playerString = String.format("%s\t%d", name, cards);
+        String playerString = String.format(" %s    %d ", name, cards);
 
         Label playerLable = new Label();
         playerLable.setLayoutX(x);
         playerLable.setLayoutY(y);
         playerLable.setText(playerString);
-
+        Image image;
         if (player.isAttacker_())
         {
-            Image image = Cards.getSpecialImage(SpecialTexture.SwordIcon);
-            ImageView imageView = new ImageView(image);
-            imageView.setPreserveRatio(true);
-            imageView.setFitHeight(30);
-            playerLable.setGraphic(imageView);
+            image = Cards.getSpecialImage(SpecialTexture.SwordIcon);
+
         }
-        if (player.isDefender_())
+        else if (player.isDefender_())
         {
-            Image image = Cards.getSpecialImage(SpecialTexture.ShieldIcon);
-            ImageView imageView = new ImageView(image);
-            imageView.setPreserveRatio(true);
-            imageView.setFitHeight(30);
-            playerLable.setGraphic(imageView);
+            image = Cards.getSpecialImage(SpecialTexture.ShieldIcon);
         }
+        else
+        {
+            image = Cards.getSpecialImage(SpecialTexture.NullIcon);
+        }
+        ImageView imageView = new ImageView(image);
+        imageView.setPreserveRatio(true);
+        imageView.setFitHeight(30);
+        playerLable.setGraphic(imageView);
 
         if (player.isActive_()) playerLable.setStyle("-fx-background-color: #a0f0a0");
 
