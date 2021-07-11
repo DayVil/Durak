@@ -142,7 +142,7 @@ public class GameBoardController implements ControllerInterface
         {
             int x;
             int y;
-            if(i < 4)
+            if(i < playerCount / 2)
             {
                 x = playerStart + i * playerSpace;
                 y = playerVerticalTop;
