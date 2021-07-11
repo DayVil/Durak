@@ -202,10 +202,12 @@ public class GameBoardController implements ControllerInterface
 
     private void undrawOldNodes()
     {
+        System.out.printf("Memory: %d\n", Runtime.getRuntime().freeMemory());
         for (Node n:addedNodesArrayList)
         {
             GameBoard.getChildren().remove(n);
         }
+        addedNodesArrayList.clear();
     }
 
     private void drawPlayer(ParsedServerMessage.Player player, int x, int y, double width)
@@ -224,20 +226,28 @@ public class GameBoardController implements ControllerInterface
         if (player.isAttacker_())
         {
             image = Cards.getSpecialImage(SpecialTexture.SwordIcon);
+            ImageView imageView = new ImageView(image);
+            imageView.setPreserveRatio(true);
+            imageView.setFitHeight(30);
+            playerLable.setGraphic(imageView);
 
         }
         else if (player.isDefender_())
         {
             image = Cards.getSpecialImage(SpecialTexture.ShieldIcon);
+            ImageView imageView = new ImageView(image);
+            imageView.setPreserveRatio(true);
+            imageView.setFitHeight(30);
+            playerLable.setGraphic(imageView);
         }
-        else
+        /*else
         {
             image = Cards.getSpecialImage(SpecialTexture.NullIcon);
         }
         ImageView imageView = new ImageView(image);
         imageView.setPreserveRatio(true);
         imageView.setFitHeight(30);
-        playerLable.setGraphic(imageView);
+        playerLable.setGraphic(imageView);*/
 
         if (player.isActive_()) playerLable.setStyle("-fx-background-color: #a0f0a0");
 
