@@ -90,7 +90,7 @@ public class Cards
                     // 63
                     "/textures/icons/sword.png",
                     "/textures/icons/shield.png",
-                    "/textures/icons/null.png",
+                    "/textures/icons/emptySymbol.png",
             };
 
     private static final javafx.scene.image.Image[] imageBuffer = new javafx.scene.image.Image[textures.length];
