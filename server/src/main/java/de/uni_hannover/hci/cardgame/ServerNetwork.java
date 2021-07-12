@@ -10,16 +10,39 @@ import java.net.Socket;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * Creates a server for the card game. Gets the number of players, server password and connection settings from the user
+ * via system input. When the server is successfully create it instantiates and communicates with the game manager class.
+ *
+ * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
+ * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
+ * @author Patrick Schewe &lt;patrick.schewe@stud.uni-hannover.de&gt;
+ * @author Robert Witteck &lt;robert.witteck@stud.uni-hannover.de&gt;
+ */
 public class ServerNetwork
 {
+    /**
+     * The Server socket.
+     */
     ServerSocket serverSocket;
+    /**
+     * The Server password.
+     */
     String serverPassword;
+    /**
+     * The constant maxPlayerCount.
+     */
     public static int maxPlayerCount;
+    /**
+     * The Names.
+     */
     public String[] names_;
 
+    /**
+     * Run the server.
+     */
     void run()
     {
-        //  This method getStartingArgs() has not been tested but it shouldn't fail. server can't start if this is not answered correctly
         maxPlayerCount = ServerConsoleInput.getMaxPlayers();
         serverPassword = ServerConsoleInput.getServerPassword();
         try
@@ -33,11 +56,10 @@ public class ServerNetwork
         }
 
         names_ = new String[maxPlayerCount];
-
         waitingForClients(maxPlayerCount);
         System.out.println("All clients found");
         int[] IDs = new int[maxPlayerCount];
-        for(int i = 0; i < maxPlayerCount; i++)
+        for (int i = 0; i < maxPlayerCount; i++)
         {
             IDs[i] = ClientManager.getClientList().get(i).getID_();
         }
@@ -48,23 +70,34 @@ public class ServerNetwork
         System.out.println("ServerNetwork after initGameManager");
     }
 
+    /**
+     * Sends a message to the client.
+     *
+     * @param clientID the client id.
+     * @param msg      the message for the client.
+     */
     public static void sendMessage(int clientID, String msg)
     {
-        BufferedWriter bufferOut =  ClientManager.getWriter(clientID);
+        BufferedWriter bufferOut = ClientManager.getWriter(clientID);
         try
         {
             Objects.requireNonNull(bufferOut).write(msg + "\n");
             bufferOut.flush();
         }
-        catch(IOException e)
+        catch (IOException e)
         {
             System.out.printf("Error: could not send message %s to client %d", msg, clientID);
         }
     }
 
+    /**
+     * Waits until the specified number of clients is connected.
+     *
+     * @param maxNumber the number of set clients
+     */
     void waitingForClients(int maxNumber)
     {
-        while(ClientManager.getClientCount() < maxNumber)
+        while (ClientManager.getClientCount() < maxNumber)
         {
             try
             {
@@ -91,17 +124,29 @@ public class ServerNetwork
         }
     }
 
+    /**
+     * Runs the server socket and instantiates buffer reader and output to communicate with the clients. Client commands
+     * can control the game manger and close the server connection.
+     */
     class socketHandler implements Runnable
     {
         private boolean loggedIn;
         private final Socket socket;
 
+        /**
+         * Instantiates a new Socket handler.
+         *
+         * @param socket the socket
+         */
         socketHandler(Socket socket)
         {
             this.loggedIn = false;
             this.socket = socket;
         }
 
+        /**
+         * Run.
+         */
         @Override
         public void run()
         {
@@ -119,7 +164,7 @@ public class ServerNetwork
                     while (!loggedIn)
                     {
                         String line = inputBuffer.readLine();
-                        if(line != null)
+                        if (line != null)
                         {
                             if (line.contains("Password;"))
                             {
@@ -128,7 +173,7 @@ public class ServerNetwork
                                 String u = args[3];
                                 if (p.equals(serverPassword))
                                 {
-                                    if (u!=null && u.length()>0)
+                                    if (u != null && u.length() > 0)
                                     {
                                         for (int i = 0; i < names_.length; i++)
                                         {
@@ -163,7 +208,7 @@ public class ServerNetwork
                     {
                         socket.close();
                     }
-                    catch(IOException ex)
+                    catch (IOException ex)
                     {
                         System.out.println("Could not close socket, but it's no problem.");
                     }
@@ -174,11 +219,11 @@ public class ServerNetwork
                 {
                     //System.out.printf("Waiting for message from Client: %d\n", id);
                     String line = inputBuffer.readLine();
-                    if(line != null)
+                    if (line != null)
                     {
                         System.out.printf("Got Message %s from Client %d\n", line, id);
 
-                        if(line.equals("disconnect"))
+                        if (line.equals("disconnect"))
                         {
                             names_[index] = null;
                             if (GameManager.isRunning())
@@ -188,11 +233,11 @@ public class ServerNetwork
                             break;
                         }
                         System.out.printf("Client wants to access gameLogic with <%s>\n", line);
-                        if(line.equals("take") || line.equals("pass") || line.matches("^(1[1-9]|[2-5]\\d?|6[0-2])$"))
+                        if (line.equals("take") || line.equals("pass") || line.matches("^(1[1-9]|[2-5]\\d?|6[0-2])$"))
                         {
                             System.out.println(line);
                             GameManager.takeAction(line, id);
-                            System.out.printf("Client <%d> is accessing gameLogic with <%s>\n", id,  line);
+                            System.out.printf("Client <%d> is accessing gameLogic with <%s>\n", id, line);
                         }
                     }
                 }

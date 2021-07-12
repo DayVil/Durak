@@ -14,27 +14,52 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
- * gameClient
+ * This is the main method to control the game client
+ * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
+ * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
+ * @author Patrick Schewe &lt;patrick.schewe@stud.uni-hannover.de&gt;
+ * @author Robert Witteck &lt;robert.witteck@stud.uni-hannover.de&gt;
  */
 public class gameClient extends Application
 {
-	
+	/**
+	 * The main stage for the GUI
+	 */
 	public static Stage stage_;
+	/**
+	 * The constant stageMinWidth_.
+	 */
 	public static final double stageMinWidth_ = 600.0;
+	/**
+	 * The constant stageMinHeight_.
+	 */
 	public static final double stageMinHeight_ = 400.0;
-
-
+	/**
+	 * Stage title.
+	 *
+	 * @param title the title
+	 */
 	public void stageTitle(String title)
 	{
 		stage_.setTitle(title);
 	}
-	
-    public static void main(String[] args)
+	/**
+	 * The entry point of application.
+	 *
+	 * @param args the input arguments
+	 */
+	public static void main(String[] args)
 	{
         launch(args);
     }
-
-    @Override
+	/**
+	 * Start the main application.
+	 * Sets the geometry of the stage, titles and loads the scene.
+	 * On Linux Systems Javafx has problems showing the icon symbol. Hence, the method distinguishes between OS.
+	 *
+	 * @param stage Main stage to show.s
+	 */
+	@Override
     public void start(Stage stage)
 	{
 		gameClient.stage_ = stage;
@@ -65,7 +90,11 @@ public class gameClient extends Application
 
 		stage_.show();
     }
-    
+	/**
+	 * Load the main pane.
+	 *
+	 * @return the pane
+	 */
 	public Pane loadMainPane()
 	{
 		try
@@ -100,37 +129,50 @@ public class gameClient extends Application
 
     	return new Pane();
     }
-	
+	/**
+	 * Sets the main scene.
+	 *
+	 * @param scene The main scene of the stage.
+	 */
 	public static void setScene(Scene scene)
 	{
 		stage_.setScene(scene);
 	}
-
+	/**
+	 * Eventlistener listening to window size properties to enable scaled resizing of the window.
+	 *
+	 * @param scene The main scene of the stage.
+	 */
 	private void setEventListener ()
 	{
 		Scene scene = stage_.getScene();
-
 		scene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> changeSize(newSceneWidth, false));
-
 		scene.heightProperty().addListener((observableValue, oldSceneHeight, newSceneHeight) -> changeSize(newSceneHeight, true));
 	}
-
+	/**
+	 * Method to change the size of the window.
+	 * @param newValue New Size of the windows
+	 * @param isHeight Distinguish between height and width values.
+	 */
 	private void changeSize(Number newValue, Boolean isHeight)
 	{
 		PaneResizer.resizePane(newValue, isHeight);
 	}
-
+	/**
+	 * Shut down the application
+	 */
 	public static void shutDown()
 	{
 		ClientNetwork.stopConnection();
 		stage_.close();
 		System.exit(0);
 	}
-
+	/**
+	 * Stops the application in case the user pushes "x" button of the window.
+	 */
 	@Override
 	public void stop()
 	{
-		//wird aufgerufen, wenn man mit dem X von der Stage das Programm beendet
 		ClientNetwork.stopConnection();
 		stage_.close();
 	}
