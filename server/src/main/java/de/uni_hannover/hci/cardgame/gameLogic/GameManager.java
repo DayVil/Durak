@@ -1,5 +1,6 @@
 package de.uni_hannover.hci.cardgame.gameLogic;
 
+import de.uni_hannover.hci.cardgame.Clients.ClientManager;
 import de.uni_hannover.hci.cardgame.ServerNetwork;
 import de.uni_hannover.hci.cardgame.gameLogic.Cards.CardColor;
 import de.uni_hannover.hci.cardgame.gameLogic.Cards.CardStack;
@@ -174,6 +175,14 @@ public class GameManager
             endTurn(activePlayers, defWon);
         } while (clearPlayers());
         //Game END
+        for (Player p : players_)
+        {
+            if (!p.isBot_()) ServerNetwork.sendMessage(p.getId_(), "GameEnded");
+        }
+        for (Player v : viewers_)
+        {
+            if (!v.isBot_()) ServerNetwork.sendMessage(v.getId_(), "GameEnded");
+        }
         System.out.println("The Game has now officially ended!");
         drawPile_ = null;
     }
@@ -472,7 +481,7 @@ public class GameManager
         Player bot = null;
         for (Player p : players_)
         {
-            if (p.getName_().contains("Bot"))
+            if (p.isBot_())
             {
                 botCount++;
             }

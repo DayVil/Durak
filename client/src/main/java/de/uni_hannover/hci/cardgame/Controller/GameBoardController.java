@@ -111,6 +111,17 @@ public class GameBoardController implements ControllerInterface
             alert.showAndWait();
             return;
         }
+        if (line.equals("GameEnded"))
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Message from Server");
+            alert.setHeaderText("Game Ended");
+            alert.setContentText("The Game has ended ynd you will automatically be disconnected.");
+            alert.setResizable(true);
+            alert.onShownProperty().addListener(ebox -> Platform.runLater(() -> alert.setResizable(false)));
+            alert.showAndWait();
+            return;
+        }
         ParsedServerMessage parsedServerMessage = new ParsedServerMessage(line);
         draw(parsedServerMessage);
         PaneResizer.resizePane(gameClient.stage_.getScene().getHeight(), true);
@@ -319,9 +330,11 @@ public class GameBoardController implements ControllerInterface
                     Platform.runLater(() -> executeLine(line));
                     if (line.equals("disconnect")) break;
                     if (line.equals("error")) break;
+                    if (line.equals("GameEnded")) break;
                 }
             }
             ClientNetwork.stopConnection();
+            System.out.println("Connection now stopped");
         }
     }
 }

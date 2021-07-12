@@ -45,6 +45,7 @@ public class ServerNetwork
         System.out.println("We Are FULL");
 
         GameManager.initGameManager(IDs, names_);
+        System.out.println("ServerNetwork after initGameManager");
     }
 
     public static void sendMessage(int clientID, String msg)
