@@ -16,7 +16,7 @@ import java.util.Objects;
  *
  * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
  * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
- * @author Patrick Schewe &lt;patrick.schewe@stud.uni-hannover.de&gt;
+ * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
  * @author Robert Witteck &lt;robert.witteck@stud.uni-hannover.de&gt;
  */
 public class ServerNetwork
@@ -68,6 +68,15 @@ public class ServerNetwork
 
         GameManager.initGameManager(IDs, names_);
         System.out.println("ServerNetwork after initGameManager");
+        try
+        {
+            serverSocket.close();
+            System.exit(0);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     /**

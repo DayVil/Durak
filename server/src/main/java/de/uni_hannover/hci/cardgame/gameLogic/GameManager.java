@@ -147,10 +147,22 @@ public class GameManager
                                 else
                                 {
                                     activePlayers[1].setActive_(false);
-                                    if (activePlayers[0].getAmountOfHandCards() == 0 && activePlayers[2].getAmountOfHandCards() == 0)
+                                    if (activePlayers[0].getAmountOfHandCards() == 0)
                                     {
-                                        defWon = true;
-                                        turnEnded = true;
+                                        if (activePlayers.length > 2)
+                                        {
+                                            if (activePlayers[2].getAmountOfHandCards() == 0)
+                                            {
+                                                defWon = true;
+                                                turnEnded = true;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            defWon = true;
+                                            turnEnded = true;
+                                        }
+
                                     }
                                     else
                                     {

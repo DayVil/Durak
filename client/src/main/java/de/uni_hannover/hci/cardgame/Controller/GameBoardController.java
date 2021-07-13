@@ -120,6 +120,7 @@ public class GameBoardController implements ControllerInterface
             alert.setResizable(true);
             alert.onShownProperty().addListener(ebox -> Platform.runLater(() -> alert.setResizable(false)));
             alert.showAndWait();
+            fxmlNavigator.loadFxml(fxmlNavigator.HOME);
             return;
         }
         ParsedServerMessage parsedServerMessage = new ParsedServerMessage(line);

@@ -7,7 +7,7 @@ import java.util.Scanner;
  *
  * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
  * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
- * @author Patrick Schewe &lt;patrick.schewe@stud.uni-hannover.de&gt;
+ * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
  * @author Robert Witteck &lt;robert.witteck@stud.uni-hannover.de&gt;
  */
 public class ServerConsoleInput
