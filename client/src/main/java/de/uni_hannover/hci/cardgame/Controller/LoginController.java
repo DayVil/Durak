@@ -133,6 +133,7 @@ public class LoginController implements ControllerInterface
 
         UserName = (TextField) scene.lookup("#UserName");
         String user = UserName.getText();
+        user = user.replace(' ', '_');
 
         Password = (PasswordField) scene.lookup("#Password");
         String password = Password.getText();
