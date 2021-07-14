@@ -75,12 +75,12 @@ public class gameClient extends Application
         if (os.contains("win"))
         {
             //This is windows os
-            stage_.getIcons().add(new Image("/textures/game_symbol.png", 32, 32, true, true, false)); // does not work on linux version
+            stage_.getIcons().add(new Image("textures/game_symbol.PNG", 32, 32, true, true, false)); // does not work on linux version
         }
         else if (os.contains("osx"))
         {
             //this is apple
-            stage_.getIcons().add(new Image("/textures/game_symbol.png", 32, 32, true, true, false)); // does not work on linux version
+            stage_.getIcons().add(new Image("textures/game_symbol.PNG", 32, 32, true, true, false)); // does not work on linux version
         }
         else if (os.contains("nix") || os.contains("aix") || os.contains("nux"))
         {
