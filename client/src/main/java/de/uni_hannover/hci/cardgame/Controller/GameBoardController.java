@@ -42,7 +42,6 @@ public class GameBoardController implements ControllerInterface
     {
         Stage stage = gameClient.stage_;
         Scene scene = stage.getScene();
-        //GameBoard.setStyle("-fx-background-color: #0000ff");
 
         leftoverDeck = (ImageView) scene.lookup("#leftoverDeck");
         Image image = Cards.getSpecialImage(SpecialTexture.BackLowsat);

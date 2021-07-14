@@ -147,8 +147,6 @@ public class gameClient extends Application
 
     /**
      * Eventlistener listening to window size properties to enable scaled resizing of the window.
-     *
-     * @param scene The main scene of the stage.
      */
     private void setEventListener()
     {

@@ -5,15 +5,12 @@ import de.uni_hannover.hci.cardgame.Network.ClientNetwork;
 import de.uni_hannover.hci.cardgame.PaneResizer;
 import de.uni_hannover.hci.cardgame.fxmlNavigator;
 import de.uni_hannover.hci.cardgame.gameClient;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
 
 /**
  * Controls the login screen and login of the client to the server. Gets the user given network settings, checks those on consistency and starts the connection on button click.
@@ -26,16 +23,6 @@ import java.util.ArrayList;
 
 public class LoginController implements ControllerInterface
 {
-
-    @FXML
-    private Pane Login;
-
-    private static ArrayList<Node> nodeRescaleArrayList_;
-    private static ArrayList<Node> nodeArrayList_;
-
-    @FXML
-    private Pane Content;
-
     @FXML
     private TextField IPAddress;
 
@@ -51,72 +38,11 @@ public class LoginController implements ControllerInterface
     @Override
     public void init()
     {
-        nodeRescaleArrayList_ = new ArrayList<>();
-        nodeArrayList_ = new ArrayList<>();
-
         Stage stage = gameClient.stage_;
         Scene scene = stage.getScene();
-
-        nodeRescaleArrayList_.add(scene.lookup("#IPAddress"));
-        nodeRescaleArrayList_.add(scene.lookup("#Port"));
-        nodeRescaleArrayList_.add(scene.lookup("#Password"));
-        nodeRescaleArrayList_.add(scene.lookup("#UserName"));
-        nodeRescaleArrayList_.add(scene.lookup("#label"));
-        nodeRescaleArrayList_.add(scene.lookup("#Back"));
-        nodeRescaleArrayList_.add(scene.lookup("#PlayButton"));
 
         PaneResizer.resizePane(scene.getHeight(), true);
-
-/*
-        PauseTransition pause = new PauseTransition(Duration.millis(100));
-        pause.setOnFinished
-                (
-                        pauseFinishedEvent -> resize(scene.getHeight(), true)
-                );
-        pause.play();
- */
     }
-
-/*
-    @Override
-    public void resize(Number newValue, Boolean isHeight)
-    {
-        Stage stage = gameClient.stage_;
-        Scene scene = stage.getScene();
-
-        double sceneWidth = scene.getWidth();
-        double sceneHeight = scene.getHeight();
-
-        if (isHeight)
-        {
-            sceneHeight = (double) newValue;
-        }
-        else
-        {
-            sceneWidth = (double) newValue;
-        }
-
-        if (sceneHeight <= 0.0 || sceneWidth <= 0.0)
-        {
-            return;
-        }
-
-        Login = (Pane) scene.lookup("#Login");
-        Login.setPrefWidth(sceneWidth);
-        Login.setPrefHeight(sceneHeight);
-
-        Content = (Pane) scene.lookup("#Content");
-        Content.setPrefHeight(sceneHeight);
-        Content.setPrefWidth(sceneWidth / 3.0);
-
-        if (nodeRescaleArrayList_ != null) PaneResizer.resizeNodeList(sceneWidth, sceneHeight, nodeRescaleArrayList_, true);
-
-        if (nodeArrayList_ != null) PaneResizer.resizeNodeList(sceneWidth, sceneHeight, nodeArrayList_, false);
-
-        PaneResizer.oldSceneWidth = sceneWidth;
-        PaneResizer.oldSceneHeight = sceneHeight;
-    }
-*/
 
     @FXML
     private void goToHome()
@@ -195,7 +121,6 @@ public class LoginController implements ControllerInterface
      */
     private static boolean validateIP(String ip)
     {
-        String PATTERN = "^(([01]\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}([01]\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
-        return ip.matches(PATTERN);
+        return ip.matches("^(([01]\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}([01]\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$");
     }
 }

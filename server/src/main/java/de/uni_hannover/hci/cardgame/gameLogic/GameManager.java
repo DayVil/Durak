@@ -523,7 +523,6 @@ public class GameManager
         {
             e.printStackTrace();
         }
-        //setAction(int card)
         ArrayList<Integer> possibleActions = new ArrayList<>();
         ArrayList<Integer> botHandCards = bot.getHandCards_();
         if(bot.isAttacker_())

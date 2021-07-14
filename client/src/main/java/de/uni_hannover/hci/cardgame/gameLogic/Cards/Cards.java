@@ -13,13 +13,11 @@ import javafx.scene.image.Image;
  */
 public class Cards
 {
+    /**
+     * An array containing the paths to the texture resources
+     */
     private static final String[] textures =
             {
-
-                    /**
-                     * Path the card images
-                    */
-
                     // 00
                     "/textures/cards/clubs/club_symbol.png",
                     "/textures/cards/clubs/club_blank_card.png",

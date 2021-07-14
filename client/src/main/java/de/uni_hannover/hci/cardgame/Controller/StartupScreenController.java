@@ -4,8 +4,8 @@ import de.uni_hannover.hci.cardgame.ControllerInterface;
 import de.uni_hannover.hci.cardgame.fxmlNavigator;
 import de.uni_hannover.hci.cardgame.gameClient;
 import de.uni_hannover.hci.cardgame.gameLogic.Cards.Cards;
+
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -20,10 +20,6 @@ public class StartupScreenController implements ControllerInterface
     @Override
     public void init()
     {
-
-        Stage stage = gameClient.stage_;
-        Scene scene = stage.getScene();
-
         ImageView iv1 = new ImageView();
         Image image = Cards.getImage(36); //Ace of Diamonds
         iv1.setImage(image);
@@ -67,16 +63,6 @@ public class StartupScreenController implements ControllerInterface
         iv4.setFitWidth(75);
         iv4.setRotate(30.0);
         Startup.getChildren().add(iv4);
-
-/*
-		// no need to resize the startupScreen at the beginning, because it has always the right (beginning) size
-		PauseTransition pause = new PauseTransition(Duration.millis(100));
- 		pause.setOnFinished
-				(
-						pauseFinishedEvent -> resize(scene.getHeight(), true)
-				);
-		pause.play();
-*/
     }
 
     @FXML

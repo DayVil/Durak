@@ -5,19 +5,15 @@ import de.uni_hannover.hci.cardgame.PaneResizer;
 import de.uni_hannover.hci.cardgame.fxmlNavigator;
 import de.uni_hannover.hci.cardgame.gameClient;
 import de.uni_hannover.hci.cardgame.gameLogic.Cards.Cards;
+
 import javafx.animation.PauseTransition;
-import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class LoadingScreenController implements ControllerInterface
 {
-    @FXML
-    private Pane Loading;
-
     double progressBarValue;
     int imageNumber;
 

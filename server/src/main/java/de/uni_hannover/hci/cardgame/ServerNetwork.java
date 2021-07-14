@@ -25,14 +25,19 @@ public class ServerNetwork
      * The Server socket.
      */
     ServerSocket serverSocket;
+
     /**
      * The Server password.
      */
     String serverPassword;
+
     /**
      * The constant maxPlayerCount.
      */
     public static int maxPlayerCount;
+
+    public static int serverPort;
+
     /**
      * The Names.
      */
@@ -45,9 +50,10 @@ public class ServerNetwork
     {
         maxPlayerCount = ServerConsoleInput.getMaxPlayers();
         serverPassword = ServerConsoleInput.getServerPassword();
+        serverPort = ServerConsoleInput.getServerPort();
         try
         {
-            serverSocket = new ServerSocket(ServerConsoleInput.getServerPort());
+            serverSocket = new ServerSocket(serverPort);
             System.out.print("Server started at " + new Date() + '\n');
         }
         catch (IOException ex)

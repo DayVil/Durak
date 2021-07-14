@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class Player
 {
-    private int id_; //is Equal to Client ID
+    private int id_; //is equal to Client ID
     private String name_;
     private final ArrayList<Integer> handCards_;
     private boolean isAttacker_;
