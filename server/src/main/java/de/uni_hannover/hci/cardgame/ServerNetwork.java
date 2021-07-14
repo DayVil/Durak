@@ -24,36 +24,30 @@ public class ServerNetwork
     /**
      * The Server socket.
      */
-    ServerSocket serverSocket;
+    ServerSocket serverSocket_;
 
     /**
      * The Server password.
      */
-    String serverPassword;
+    String serverPassword_;
 
     /**
      * The constant maxPlayerCount.
      */
-    public static int maxPlayerCount;
-
-    public static int serverPort;
+    public int maxPlayerCount_;
 
     /**
      * The Names.
      */
     public String[] names_;
 
-    /**
-     * Run the server.
-     */
-    void run()
+    public ServerNetwork(int maxPlayerCount, String serverPassword, int serverPort)
     {
-        maxPlayerCount = ServerConsoleInput.getMaxPlayers();
-        serverPassword = ServerConsoleInput.getServerPassword();
-        serverPort = ServerConsoleInput.getServerPort();
+        maxPlayerCount_ = maxPlayerCount; //ServerConsoleInput.getMaxPlayers();
+        serverPassword_ = serverPassword; //ServerConsoleInput.getServerPassword();
         try
         {
-            serverSocket = new ServerSocket(serverPort);
+            serverSocket_ = new ServerSocket(serverPort);
             System.out.print("Server started at " + new Date() + '\n');
         }
         catch (IOException ex)
@@ -62,10 +56,17 @@ public class ServerNetwork
         }
 
         names_ = new String[maxPlayerCount];
-        waitingForClients(maxPlayerCount);
+    }
+
+    /**
+     * Run the server.
+     */
+    void run()
+    {
+        waitingForClients(maxPlayerCount_);
         System.out.println("All clients found");
-        int[] IDs = new int[maxPlayerCount];
-        for (int i = 0; i < maxPlayerCount; i++)
+        int[] IDs = new int[maxPlayerCount_];
+        for (int i = 0; i < maxPlayerCount_; i++)
         {
             IDs[i] = ClientManager.getClientList().get(i).getID_();
         }
@@ -73,16 +74,19 @@ public class ServerNetwork
         System.out.println("We Are FULL");
 
         GameManager.initGameManager(IDs, names_);
+        /*
         System.out.println("ServerNetwork after initGameManager");
         try
         {
-            serverSocket.close();
+            serverSocket_.close();
             System.exit(0);
         }
         catch (IOException e)
         {
             e.printStackTrace();
         }
+
+         */
     }
 
     /**
@@ -117,7 +121,7 @@ public class ServerNetwork
             try
             {
                 System.out.println("Server waiting for clients" + String.format("%d", ClientManager.getClientCount()));
-                Socket socket = serverSocket.accept();
+                Socket socket = serverSocket_.accept();
                 InetAddress inetAddress = socket.getInetAddress();
 
                 System.out.print("host name: " + inetAddress.getHostName() + "\n\tIP address " + inetAddress.getHostAddress() + "\n\n");
@@ -186,7 +190,7 @@ public class ServerNetwork
                                 String[] args = line.split(";");
                                 String p = args[1];
                                 String u = args[3];
-                                if (p.equals(serverPassword))
+                                if (p.equals(serverPassword_))
                                 {
                                     if (u != null && u.length() > 0)
                                     {

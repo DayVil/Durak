@@ -48,4 +48,11 @@ public class ClientManager
     {
         return clientList.size();
     }
+
+    public static void reset()
+    {
+        clientList.clear();
+        newID = 0;
+        hasHandledClient = false;
+    }
 }

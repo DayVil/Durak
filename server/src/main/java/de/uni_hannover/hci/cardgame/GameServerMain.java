@@ -1,5 +1,7 @@
 package de.uni_hannover.hci.cardgame;
 
+import de.uni_hannover.hci.cardgame.Clients.ClientManager;
+
 /**
  * The main class for the server.
  *  @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
@@ -12,11 +14,27 @@ public class GameServerMain
 {
     public static void main(String[] args)
     {
-        // TODO: Add a server initializer
+        int maxPlayerCount = 2;
+        String serverPassword = "";
+        int serverPort = 8000;
 
-        ServerNetwork serverNetwork = new ServerNetwork();
-        serverNetwork.run();
+        String selector = "n";
 
-        // TODO: Add a restart option
+        while (!selector.equals("q"))
+        {
+            if(selector.equals("n"))
+            {
+                maxPlayerCount = ServerConsoleInput.getMaxPlayers();
+                serverPassword = ServerConsoleInput.getServerPassword();
+                serverPort = ServerConsoleInput.getServerPort();
+            }
+
+            ServerNetwork serverNetwork = new ServerNetwork(maxPlayerCount, serverPassword, serverPort);
+            serverNetwork.run();
+
+            ClientManager.reset();
+            selector = ServerConsoleInput.restartSelector();
+        }
+        System.exit(0);
     }
 }

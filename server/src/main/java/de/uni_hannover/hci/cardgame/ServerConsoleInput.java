@@ -17,6 +17,34 @@ public class ServerConsoleInput
      */
     public static Scanner sc;
 
+    public static String restartSelector()
+    {
+        System.out.println("The Game is finished how do you want to proceed?\n");
+        System.out.println("Enter:");
+        System.out.println("n to start another game with new settings");
+        System.out.println("r to start another game with same settings");
+        System.out.println("q to quit");
+
+        sc = new Scanner(System.in);
+        String input = null;
+        boolean validInput = false;
+        do
+        {
+            String s = sc.nextLine();
+            if (s.equals("n") || s.equals("r") || s.equals("q"))
+            {
+                input = s;
+                validInput = true;
+            }
+            else
+            {
+                System.out.println("Your input of " + s + " is invalid, enter either n, r or q to proceed!");
+            }
+        }
+        while (!validInput);
+        return input;
+    }
+
     /**
      * Gets maximum number of players for the server. Limited for 2 to 8 players.
      *
