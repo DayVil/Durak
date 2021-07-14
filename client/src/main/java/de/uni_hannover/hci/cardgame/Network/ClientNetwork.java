@@ -8,36 +8,71 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Optional;
 
+/**
+ * Controls the network settings of the client
+ *
+ * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
+ * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
+ * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
+ * @author Robert Witteck &lt;robert.witteck@stud.uni-hannover.de&gt;
+ */
 public class ClientNetwork
 {
-
-
     private static Socket clientSocket_ = null;
     private static BufferedWriter bufferOut_ = null;
     private static BufferedReader bufferIn_ = null;
 
     private static boolean loggedIn_ = false;
 
+    /**
+     * Getter for client socket
+     *
+     * @return the client socket
+     */
     public static Socket getClientSocket_()
     {
         return clientSocket_;
     }
 
+    /**
+     * Getter of buffer out.
+     *
+     * @return the buffer out
+     */
     public static BufferedWriter getBufferOut_()
     {
         return bufferOut_;
     }
 
+    /**
+     * Getter buffer in.
+     *
+     * @return the buffer in
+     */
     public static BufferedReader getBufferIn_()
     {
         return bufferIn_;
     }
 
+    /**
+     * Check whether the client is logged in
+     *
+     * @return true if logged in
+     */
     public static boolean isLoggedIn_()
     {
         return loggedIn_;
     }
 
+    /**
+     * Start connection to server
+     *
+     * @param ip       the ip of the server
+     * @param port     the port of the server
+     * @param password the password of the server
+     * @param user     the user user name of the client
+     * @return true if connection was successful
+     */
     public static boolean startConnection(String ip, String port, String password, String user)
     {
         if (loggedIn_)
@@ -128,6 +163,12 @@ public class ClientNetwork
         return true;
     }
 
+    /**
+     * Send message to the server.
+     *
+     * @param msg the message to send
+     * @return return true if send was successful
+     */
     public static boolean sendMessage(String msg)
     {
         try
@@ -150,13 +191,18 @@ public class ClientNetwork
         return true;
     }
 
+    /**
+     * Gets messages from the server.
+     *
+     * @return the message of the server
+     */
     public static String getMessage()
     {
         if (bufferIn_ == null) return "error";
         String answer = null;
         try
         {
-            while(answer == null)
+            while (answer == null)
             {
                 answer = bufferIn_.readLine();
                 if (answer != null && answer.equals("disconnect"))
@@ -174,6 +220,9 @@ public class ClientNetwork
         return answer;
     }
 
+    /**
+     * Stop connection to the server, close all buffers and socket
+     */
     public static void stopConnection()
     {
         loggedIn_ = false;

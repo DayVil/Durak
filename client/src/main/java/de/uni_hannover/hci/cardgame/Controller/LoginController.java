@@ -15,9 +15,17 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
+/**
+ * Controls the login screen and login of the client to the server. Gets the user given network settings, checks those on consistency and starts the connection on button click.
+ *
+ * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
+ * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
+ * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
+ * @author Robert Witteck &lt;robert.witteck@stud.uni-hannover.de&gt;
+ */
+
 public class LoginController implements ControllerInterface
 {
-
 
     @FXML
     private Pane Login;

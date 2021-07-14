@@ -2,10 +2,24 @@ package de.uni_hannover.hci.cardgame.gameLogic.Cards;
 
 import javafx.scene.image.Image;
 
+
+/**
+ * Control the appearance of the cards
+ *
+ * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
+ * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
+ * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
+ * @author Robert Witteck &lt;robert.witteck@stud.uni-hannover.de&gt;
+ */
 public class Cards
 {
     private static final String[] textures =
             {
+
+                    /**
+                     * Path the card images
+                    */
+
                     // 00
                     "/textures/cards/clubs/club_symbol.png",
                     "/textures/cards/clubs/club_blank_card.png",
@@ -95,11 +109,22 @@ public class Cards
 
     private static final javafx.scene.image.Image[] imageBuffer = new javafx.scene.image.Image[textures.length];
 
+    /**
+     * Getter image buffer size.
+     *
+     * @return the image buffer size
+     */
     public static int getImageBufferSize()
     {
         return imageBuffer.length;
     }
 
+    /**
+     * Creates a card image according to the number which identifies each card
+     *
+     * @param nr the number of the image
+     * @return the image file path
+     */
     public static javafx.scene.image.Image getImage(int nr)
     {
         if (imageBuffer[nr] == null)
@@ -110,6 +135,12 @@ public class Cards
         return imageBuffer[nr];
     }
 
+    /**
+     * Getter of the card image texture.
+     *
+     * @param specialTexture enumerator of the cards
+     * @return the card image texture
+     */
     public static Image getSpecialImage(SpecialTexture specialTexture)
     {
         if (specialTexture == SpecialTexture.ClubsSymbol) return imageBuffer[0];
@@ -129,6 +160,12 @@ public class Cards
         return null;
     }
 
+    /**
+     * Getter card image color
+     *
+     * @param color the color of the card
+     * @return the color symbol of the card image
+     */
     public static Image getColorSymbolImage(CardColor color)
     {
         if (color == CardColor.Clubs) return getSpecialImage(SpecialTexture.ClubsSymbol);

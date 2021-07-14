@@ -15,6 +15,7 @@ import javafx.util.Duration;
 
 /**
  * This is the main method to control the game client
+ *
  * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
  * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
  * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
@@ -22,158 +23,168 @@ import javafx.util.Duration;
  */
 public class gameClient extends Application
 {
-	/**
-	 * The main stage for the GUI
-	 */
-	public static Stage stage_;
-	/**
-	 * The constant stageMinWidth_.
-	 */
-	public static final double stageMinWidth_ = 600.0;
-	/**
-	 * The constant stageMinHeight_.
-	 */
-	public static final double stageMinHeight_ = 400.0;
-	/**
-	 * Stage title.
-	 *
-	 * @param title the title
-	 */
-	public void stageTitle(String title)
-	{
-		stage_.setTitle(title);
-	}
-	/**
-	 * The entry point of application.
-	 *
-	 * @param args the input arguments
-	 */
-	public static void main(String[] args)
-	{
+    /**
+     * The main stage for the GUI
+     */
+    public static Stage stage_;
+    /**
+     * The constant stageMinWidth_.
+     */
+    public static final double stageMinWidth_ = 600.0;
+    /**
+     * The constant stageMinHeight_.
+     */
+    public static final double stageMinHeight_ = 400.0;
+
+    /**
+     * Stage title.
+     *
+     * @param title the title
+     */
+    public void stageTitle(String title)
+    {
+        stage_.setTitle(title);
+    }
+
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
+    public static void main(String[] args)
+    {
         launch(args);
     }
-	/**
-	 * Start the main application.
-	 * Sets the geometry of the stage, titles and loads the scene.
-	 * On Linux Systems Javafx has problems showing the icon symbol. Hence, the method distinguishes between OS.
-	 *
-	 * @param stage Main stage to show.s
-	 */
-	@Override
+
+    /**
+     * Start the main application.
+     * Sets the geometry of the stage, titles and loads the scene.
+     * On Linux Systems Javafx has problems showing the icon symbol. Hence, the method distinguishes between OS.
+     *
+     * @param stage Main stage to show.s
+     */
+    @Override
     public void start(Stage stage)
-	{
-		gameClient.stage_ = stage;
-		stage_.setResizable(true);
-		stage_.setMinWidth(stageMinWidth_);
-		stage_.setMinHeight(stageMinHeight_);
-		stageTitle("Cardgame");
-		String os = System.getProperty("os.name").toLowerCase();
-		if (os.contains("win"))
-		{
-			//This is windows os
-			stage_.getIcons().add(new Image("/textures/game_symbol.png", 32, 32, true, true, false)); // does not work on linux version
-		}
-		else if (os.contains("osx"))
-		{
-			//this is apple
-			stage_.getIcons().add(new Image("/textures/game_symbol.png", 32, 32, true, true, false)); // does not work on linux version
-		}
-		else if (os.contains("nix") || os.contains("aix") || os.contains("nux"))
-		{
-			//this is any linux/unix/*aix os
-			System.out.println("I am working on any Unix, Linux or *AIX OS");
-		}
+    {
+        gameClient.stage_ = stage;
+        stage_.setResizable(true);
+        stage_.setMinWidth(stageMinWidth_);
+        stage_.setMinHeight(stageMinHeight_);
+        stageTitle("Cardgame");
+        String os = System.getProperty("os.name").toLowerCase();
+        if (os.contains("win"))
+        {
+            //This is windows os
+            stage_.getIcons().add(new Image("/textures/game_symbol.png", 32, 32, true, true, false)); // does not work on linux version
+        }
+        else if (os.contains("osx"))
+        {
+            //this is apple
+            stage_.getIcons().add(new Image("/textures/game_symbol.png", 32, 32, true, true, false)); // does not work on linux version
+        }
+        else if (os.contains("nix") || os.contains("aix") || os.contains("nux"))
+        {
+            //this is any linux/unix/*aix os
+            System.out.println("I am working on any Unix, Linux or *AIX OS");
+        }
 
-		setScene(new Scene(loadMainPane()));
-		fxmlNavigator.loadFxml(fxmlNavigator.STARTUP);
-		setEventListener();
+        setScene(new Scene(loadMainPane()));
+        fxmlNavigator.loadFxml(fxmlNavigator.STARTUP);
+        setEventListener();
 
-		stage_.show();
+        stage_.show();
     }
-	/**
-	 * Load the main pane.
-	 *
-	 * @return the pane
-	 */
-	public Pane loadMainPane()
-	{
-		try
-		{
-			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.MAIN));
-			Pane mainPane = loader.load();
-			MainController mainController = loader.getController();
-			fxmlNavigator.setMainController(mainController);
 
-			PauseTransition pause = new PauseTransition(Duration.millis(4000));
-			pause.setOnFinished
-			(
-				pauseFinishedEvent ->
-				{
-					try
-					{
-						fxmlNavigator.loadFxml(fxmlNavigator.LOADING);
-					}
-					catch (Exception e)
-					{
-						e.printStackTrace();
-					}
-				}
-			);
-			//pause.play();
-			return mainPane;
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
+    /**
+     * Load the main pane.
+     *
+     * @return the pane
+     */
+    public Pane loadMainPane()
+    {
+        try
+        {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlNavigator.MAIN));
+            Pane mainPane = loader.load();
+            MainController mainController = loader.getController();
+            fxmlNavigator.setMainController(mainController);
 
-    	return new Pane();
+            PauseTransition pause = new PauseTransition(Duration.millis(4000));
+            pause.setOnFinished
+                    (
+                            pauseFinishedEvent ->
+                            {
+                                try
+                                {
+                                    fxmlNavigator.loadFxml(fxmlNavigator.LOADING);
+                                }
+                                catch (Exception e)
+                                {
+                                    e.printStackTrace();
+                                }
+                            }
+                    );
+            //pause.play();
+            return mainPane;
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        return new Pane();
     }
-	/**
-	 * Sets the main scene.
-	 *
-	 * @param scene The main scene of the stage.
-	 */
-	public static void setScene(Scene scene)
-	{
-		stage_.setScene(scene);
-	}
-	/**
-	 * Eventlistener listening to window size properties to enable scaled resizing of the window.
-	 *
-	 * @param scene The main scene of the stage.
-	 */
-	private void setEventListener ()
-	{
-		Scene scene = stage_.getScene();
-		scene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> changeSize(newSceneWidth, false));
-		scene.heightProperty().addListener((observableValue, oldSceneHeight, newSceneHeight) -> changeSize(newSceneHeight, true));
-	}
-	/**
-	 * Method to change the size of the window.
-	 * @param newValue New Size of the windows
-	 * @param isHeight Distinguish between height and width values.
-	 */
-	private void changeSize(Number newValue, Boolean isHeight)
-	{
-		PaneResizer.resizePane(newValue, isHeight);
-	}
-	/**
-	 * Shut down the application
-	 */
-	public static void shutDown()
-	{
-		ClientNetwork.stopConnection();
-		stage_.close();
-		System.exit(0);
-	}
-	/**
-	 * Stops the application in case the user pushes "x" button of the window.
-	 */
-	@Override
-	public void stop()
-	{
-		ClientNetwork.stopConnection();
-		stage_.close();
-	}
+
+    /**
+     * Sets the main scene.
+     *
+     * @param scene The main scene of the stage.
+     */
+    public static void setScene(Scene scene)
+    {
+        stage_.setScene(scene);
+    }
+
+    /**
+     * Eventlistener listening to window size properties to enable scaled resizing of the window.
+     *
+     * @param scene The main scene of the stage.
+     */
+    private void setEventListener()
+    {
+        Scene scene = stage_.getScene();
+        scene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> changeSize(newSceneWidth, false));
+        scene.heightProperty().addListener((observableValue, oldSceneHeight, newSceneHeight) -> changeSize(newSceneHeight, true));
+    }
+
+    /**
+     * Method to change the size of the window.
+     *
+     * @param newValue New Size of the windows
+     * @param isHeight Distinguish between height and width values.
+     */
+    private void changeSize(Number newValue, Boolean isHeight)
+    {
+        PaneResizer.resizePane(newValue, isHeight);
+    }
+
+    /**
+     * Shut down the application
+     */
+    public static void shutDown()
+    {
+        ClientNetwork.stopConnection();
+        stage_.close();
+        System.exit(0);
+    }
+
+    /**
+     * Stops the application in case the user pushes "x" button of the window.
+     */
+    @Override
+    public void stop()
+    {
+        ClientNetwork.stopConnection();
+        stage_.close();
+    }
 }

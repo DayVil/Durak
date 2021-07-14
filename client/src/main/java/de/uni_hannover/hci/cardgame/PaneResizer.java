@@ -5,8 +5,22 @@ import javafx.scene.layout.Pane;
 
 import java.util.Objects;
 
+/**
+ * Resizes each pane in the active scene
+ *
+ * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
+ * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
+ * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
+ * @author Robert Witteck &lt;robert.witteck@stud.uni-hannover.de&gt;
+ */
 public class PaneResizer
 {
+    /**
+     * Main method to resize pane
+     *
+     * @param newValue the new size value
+     * @param isHeight distinguish between height and width scaling
+     */
     public static void resizePane(Number newValue, Boolean isHeight)
     {
         Scene scene = gameClient.stage_.getScene();
