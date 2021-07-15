@@ -8,6 +8,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
+
+/**
+ * The main controller starting the main stage
+ *
+ * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
+ * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
+ * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
+ * @author Robert Witteck &lt;robert.witteck@stud.uni-hannover.de&gt;
+ */
+
 public class MainController implements ControllerInterface
 {
 	@FXML

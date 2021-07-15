@@ -13,16 +13,36 @@ import java.util.Objects;
 
 /**
  * This contains every function to execute the game and manage it.
+ *
+ * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
+ * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
+ * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
+ * @author Robert Witteck &lt;robert.witteck@stud.uni-hannover.de&gt;
  */
 public class GameManager
 {
+    /**
+     * The constant drawPile_.
+     */
     public static CardStack drawPile_;
+    /**
+     * The constant visibleCards_.
+     */
     public static final ArrayList<int[]> visibleCards_ = new ArrayList<>();
     private static final ArrayList<Player> players_ = new ArrayList<>();
     private static final ArrayList<Player> viewers_ = new ArrayList<>();
     private static CardColor trump_;
+    /**
+     * The constant firstAttacker.
+     */
     public static int firstAttacker;
 
+    /**
+     * Init game manager.
+     *
+     * @param IDs   the ds
+     * @param names the names
+     */
     public static void initGameManager(int[] IDs, String[] names)
     {
         drawPile_ = new CardStack();
@@ -46,9 +66,13 @@ public class GameManager
         newTurn();
     }
 
-    public static void newTurn ()
+    /**
+     * New turn. Sends the game state to each client and listens to turns from the clients to set a new game state.
+     */
+    public static void newTurn()
     {
-        do{
+        do
+        {
             Player[] activePlayers = getActivePlayers(firstAttacker);
             activePlayers[0].setActive_(true);
             activePlayers[0].setAttacker_(true);
@@ -68,7 +92,7 @@ public class GameManager
                         break;
                     }
                 }
-                if(activePlayer == null)
+                if (activePlayer == null)
                 {
                     defWon = true;
                     break;
@@ -82,7 +106,8 @@ public class GameManager
                         botAction(activePlayer);
                     }
                     lastAction = Objects.requireNonNull(activePlayer).getLastAction_();
-                } while (lastAction.equals("no action"));
+                }
+                while (lastAction.equals("no action"));
 
                 System.out.printf("Action %s in new Turn\n", lastAction);
                 activePlayer.setLastAction_("no action");
@@ -92,7 +117,7 @@ public class GameManager
                 {
                     case "pass":
                     {
-                        if(activePlayer.isAttacker_())
+                        if (activePlayer.isAttacker_())
                         {
                             if (activePlayers.length > 2 && !activePlayers[2].hasSkipped_() && activePlayers[2].getAmountOfHandCards() != 0)
                             {
@@ -106,13 +131,14 @@ public class GameManager
                         }
                         else
                         {
-                            if (!activePlayer.isBot_()) ServerNetwork.sendMessage(activePlayer.getId_(), gameBoardStateToString(activePlayer.getId_(), false));
+                            if (!activePlayer.isBot_())
+                                ServerNetwork.sendMessage(activePlayer.getId_(), gameBoardStateToString(activePlayer.getId_(), false));
                         }
                         break;
                     }
                     case "take":
                     {
-                        if(activePlayer.isDefender_())
+                        if (activePlayer.isDefender_())
                         {
                             throwIn(activePlayers);
 
@@ -121,7 +147,8 @@ public class GameManager
                         }
                         else
                         {
-                            if (!activePlayer.isBot_()) ServerNetwork.sendMessage(activePlayer.getId_(), gameBoardStateToString(activePlayer.getId_(), false));
+                            if (!activePlayer.isBot_())
+                                ServerNetwork.sendMessage(activePlayer.getId_(), gameBoardStateToString(activePlayer.getId_(), false));
                         }
                         break;
                     }
@@ -131,13 +158,15 @@ public class GameManager
                         if (activePlayer.playCard(card))
                         {
                             if (activePlayer.isAttacker_())
+                                for each player
                             {
                                 activePlayers[0].setActive_(false);
                                 activePlayers[1].setActive_(true);
                             }
                             else
                             {
-                                if (activePlayers.length > 2 && activePlayers[2].getAmountOfHandCards() != 0)   activePlayers[2].setSkipped_(false);
+                                if (activePlayers.length > 2 && activePlayers[2].getAmountOfHandCards() != 0)
+                                    activePlayers[2].setSkipped_(false);
 
                                 if (activePlayer.getAmountOfHandCards() == 0 || visibleCards_.size() == 6)
                                 {
@@ -173,7 +202,8 @@ public class GameManager
                         }
                         else
                         {
-                            if (!activePlayer.isBot_()) ServerNetwork.sendMessage(activePlayer.getId_(), gameBoardStateToString(activePlayer.getId_(), false));
+                            if (!activePlayer.isBot_())
+                                ServerNetwork.sendMessage(activePlayer.getId_(), gameBoardStateToString(activePlayer.getId_(), false));
                         }
                         break;
                     }
@@ -185,23 +215,32 @@ public class GameManager
                 sendGameStateToAll();
             }
             endTurn(activePlayers, defWon);
-        } while (clearPlayers());
+        }
+        while (clearPlayers());
         //Game END
         for (Player p : players_)
         {
-            if (!p.isBot_()) ServerNetwork.sendMessage(p.getId_(), "GameEnded");
+            if (!p.isBot_())
+                ServerNetwork.sendMessage(p.getId_(), "GameEnded");
         }
         for (Player v : viewers_)
         {
-            if (!v.isBot_()) ServerNetwork.sendMessage(v.getId_(), "GameEnded");
+            if (!v.isBot_())
+                ServerNetwork.sendMessage(v.getId_(), "GameEnded");
         }
         System.out.println("The Game has now officially ended!");
         drawPile_ = null;
     }
 
+    /**
+     * Ends turn if no further action is possble/rejected from clients.
+     *
+     * @param activePlayers the active players
+     * @param defenseWon    the defense won
+     */
     public static void endTurn(Player[] activePlayers, boolean defenseWon)
     {
-        for (Player p:activePlayers)
+        for (Player p : activePlayers)
         {
             p.resetFlags();
         }
@@ -240,14 +279,20 @@ public class GameManager
         }
     }
 
+    /**
+     * Lists player who have played a card/thrown a card and assigns attacker and defender states.
+     *
+     * @param players the active players
+     */
     private static void throwIn(Player[] players)
     {
         players[0].setActive_(true);
         players[1].setActive_(false);
 
-        while(visibleCards_.size() < 6)
+        while (visibleCards_.size() < 6)
         {
-            if (players.length > 2 && players[0].getAmountOfHandCards() == 0)     switchAttacker(players, true);
+            if (players.length > 2 && players[0].getAmountOfHandCards() == 0)
+                switchAttacker(players, true);
             System.out.printf("ThrowIN waiting for action ID %d\n", players[0].getId_());
             sendGameStateToAll();
             String lastAction;
@@ -258,10 +303,11 @@ public class GameManager
                     botAction(players[0]);
                 }
                 lastAction = Objects.requireNonNull(players[0]).getLastAction_();
-            } while (lastAction.equals("no action"));
+            }
+            while (lastAction.equals("no action"));
             players[0].setLastAction_("no action");
 
-            if(lastAction.equals("pass"))
+            if (lastAction.equals("pass"))
             {
                 if (players.length > 2 && !players[2].hasSkipped_())
                 {
@@ -269,13 +315,15 @@ public class GameManager
                 }
                 else
                 {
-                   break;
+                    break;
                 }
-                if (players[0].getAmountOfHandCards() == 0)     break;
+                if (players[0].getAmountOfHandCards() == 0)
+                    break;
             }
             else if (lastAction.equals("take"))
             {
-                if (!players[0].isBot_())   ServerNetwork.sendMessage(players[0].getId_(), gameBoardStateToString(players[0].getId_(), false));
+                if (!players[0].isBot_())
+                    ServerNetwork.sendMessage(players[0].getId_(), gameBoardStateToString(players[0].getId_(), false));
             }
             else
             {
@@ -287,7 +335,10 @@ public class GameManager
             }
         }
     }
-
+    /**
+     * Clear players that finished the game.
+     *     *
+     */
     private static boolean clearPlayers()
     {
         int index = 0;
@@ -311,7 +362,7 @@ public class GameManager
             }
             index++;
         }
-        for (Player p:viewers_)
+        for (Player p : viewers_)
         {
             players_.remove(p);
         }
@@ -319,6 +370,12 @@ public class GameManager
         return players_.size() >= 2;
     }
 
+    /**
+     * Handles take action of a player.
+     *
+     * @param action the action
+     * @param id     the id
+     */
     public static void takeAction(String action, int id)
     {
         for (Player p : players_)
@@ -336,15 +393,24 @@ public class GameManager
         }
     }
 
+    /**
+     * Get active players.
+     *
+     * @param idFirstPlayer the id of the first player
+     * @return the active player
+     */
     public static Player[] getActivePlayers(int idFirstPlayer)
     {
         Player[] returnArray;
-        if (players_.size() < 3)    returnArray = new Player[2];
-        else                        returnArray = new Player[3];
+        if (players_.size() < 3)
+            returnArray = new Player[2];
+        else
+            returnArray = new Player[3];
         int index = 0;
         for (Player p : players_)
         {
-            if (p.getId_() == idFirstPlayer)  break;
+            if (p.getId_() == idFirstPlayer)
+                break;
             index++;
         }
         returnArray[0] = players_.get(index++);
@@ -368,6 +434,12 @@ public class GameManager
         return returnArray;
     }
 
+    /**
+     * Switch attacker state.
+     *
+     * @param activePlayers the active players
+     * @param isInThrowIn   If player has played a card
+     */
     public static void switchAttacker(Player[] activePlayers, boolean isInThrowIn)
     {
         activePlayers[0].setActive_(false);
@@ -384,11 +456,17 @@ public class GameManager
         activePlayers[0] = activePlayers[2];
         activePlayers[2] = helper;
 
-        if(isInThrowIn || activePlayers[2].getAmountOfHandCards() > 0) activePlayers[0].setActive_(true);
+        if (isInThrowIn || activePlayers[2].getAmountOfHandCards() > 0)
+            activePlayers[0].setActive_(true);
         activePlayers[0].setAttacker_(true);
     }
 
-    public static CardColor getTrump_ ()
+    /**
+     * Gets trump color.
+     *
+     * @return the trump
+     */
+    public static CardColor getTrump_()
     {
         return trump_;
     }
@@ -398,6 +476,11 @@ public class GameManager
         trump_ = Cards.getColor(drawPile_.getLastCard());
     }
 
+    /**
+     * Count visible cards int.
+     *
+     * @return nr of visible cards
+     */
     public static int countVisibleCards()
     {
         return visibleCards_.size() * 2;
@@ -417,7 +500,8 @@ public class GameManager
     /**
      * The format that the client can process.
      *
-     * @param playerId id of the current player.
+     * @param playerId      id of the current player.
+     * @param wasSuccessful the was successful
      * @return returns the state of the game.
      */
     public static String gameBoardStateToString(int playerId, boolean wasSuccessful)
@@ -430,7 +514,7 @@ public class GameManager
         returnString.append(String.format("%s ", Cards.getColorInt(trump_)));                   // Trump color as Int
         returnString.append(String.format("%s ", players_.size()));                             // Player count
 
-        for (Player p: players_)
+        for (Player p : players_)
         {
             returnString.append(String.format("%s ", p.getId_()));                              // Player id
             returnString.append(String.format("%s ", p.getName_()));                            // Player name
@@ -454,16 +538,21 @@ public class GameManager
                 break;
             }
         }
-        if(!found)
+        if (!found)
         {
             returnString.append("0 ");                                                          // If the player is not a player he is a viewer so he has no handcards
         }
 
-        if (wasSuccessful) returnString.append(String.format("%s", 1));
-        else returnString.append(String.format("%s", 0));                                       // Was successful
+        if (wasSuccessful)
+            returnString.append(String.format("%s", 1));
+        else
+            returnString.append(String.format("%s", 0));                                       // Was successful
         return returnString.toString();
     }
 
+    /**
+     * Send game state to all clients.
+     */
     public static void sendGameStateToAll()
     {
         for (Player p : players_)
@@ -482,11 +571,21 @@ public class GameManager
         }
     }
 
+    /**
+     * Checks if the game is still running.
+     *
+     * @return the boolean
+     */
     public static boolean isRunning()
     {
         return drawPile_ != null;
     }
 
+    /**
+     * Add bot if player disconnected from running game.
+     *
+     * @param id the id of player who left.
+     */
     public static void addBot(int id)
     {
         int botCount = 0;
@@ -513,7 +612,12 @@ public class GameManager
         bot.setBot_(true);
     }
 
-    public static void botAction (Player bot)
+    /**
+     * Bot action.
+     *
+     * @param bot the bot that shell act.
+     */
+    public static void botAction(Player bot)
     {
         try
         {
@@ -525,7 +629,7 @@ public class GameManager
         }
         ArrayList<Integer> possibleActions = new ArrayList<>();
         ArrayList<Integer> botHandCards = bot.getHandCards_();
-        if(bot.isAttacker_())
+        if (bot.isAttacker_())
         {
             //determine Attack-card
             //lowest playable card, trump only if nothing else can be played
@@ -539,7 +643,8 @@ public class GameManager
                     {
                         if (Cards.getCard(card) == Cards.getCard(visible[0]) || Cards.getCard(card) == Cards.getCard(visible[1]))
                         {
-                            if (!possibleActions.contains(card))  possibleActions.add(card);
+                            if (!possibleActions.contains(card))
+                                possibleActions.add(card);
                         }
                     }
                 }
@@ -571,7 +676,7 @@ public class GameManager
             {
                 for (int trump : trumps)
                 {
-                    possibleActions.remove((Object)trump);
+                    possibleActions.remove((Object) trump);
                 }
             }
 
@@ -594,7 +699,8 @@ public class GameManager
                 {
                     if (Cards.getCard(card) == Cards.getCard(visible[0]) || Cards.getCard(card) == Cards.getCard(visible[1]))
                     {
-                        if (!sameWorth.contains(card))  sameWorth.add(card);
+                        if (!sameWorth.contains(card))
+                            sameWorth.add(card);
                     }
                 }
             }
@@ -624,7 +730,7 @@ public class GameManager
                 {
                     for (int trump : trumps)
                     {
-                        possibleActions.remove((Object)trump);
+                        possibleActions.remove((Object) trump);
                     }
                 }
 
@@ -659,7 +765,7 @@ public class GameManager
                 {
                     for (int trump : trumps)
                     {
-                        possibleActions.remove((Object)trump);
+                        possibleActions.remove((Object) trump);
                     }
                 }
 

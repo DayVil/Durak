@@ -11,12 +11,23 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+/**
+ * The startup screen of the card game showing some teaser card layouts.
+ *
+ * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
+ * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
+ * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
+ * @author Robert Witteck &lt;robert.witteck@stud.uni-hannover.de&gt;
+ */
 public class StartupScreenController implements ControllerInterface
 {
 
     @FXML
     private Pane Startup;
 
+    /**
+     * Initialize
+     */
     @Override
     public void init()
     {

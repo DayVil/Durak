@@ -12,11 +12,27 @@ import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * Loading screen with progress bar loading/resizing all card images.
+ *
+ * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
+ * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
+ * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
+ * @author Robert Witteck &lt;robert.witteck@stud.uni-hannover.de&gt;
+ */
 public class LoadingScreenController implements ControllerInterface
 {
+    /**
+     * The Progress bar value.
+     */
     double progressBarValue;
+    /**
+     * The card image number.
+     */
     int imageNumber;
-
+    /**
+     * Initialize screen.
+     */
     @Override
     public void init()
     {

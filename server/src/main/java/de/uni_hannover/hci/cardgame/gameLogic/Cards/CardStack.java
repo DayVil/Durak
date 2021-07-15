@@ -6,10 +6,17 @@ import java.util.List;
 
 /**
  * Creates a card stack between the values: int 11 - 63
+ *
+ * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
+ * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
+ * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
+ * @author Robert Witteck &lt;robert.witteck@stud.uni-hannover.de&gt;
  */
 public class CardStack
 {
-    /** The stack of the  cards. */
+    /**
+     * The stack of the  cards.
+     */
     private final List<Integer> stack;
 
     /**
@@ -21,7 +28,7 @@ public class CardStack
         int cardEnd = 62;
 
         this.stack = new ArrayList<>();
-        for(int i = cardStart; i <= cardEnd; i++)
+        for (int i = cardStart; i <= cardEnd; i++)
         {
             this.stack.add(i);
         }
@@ -31,6 +38,7 @@ public class CardStack
 
     /**
      * Creates a readable string of the deck.
+     *
      * @return the described string.
      */
     @Override
@@ -70,14 +78,18 @@ public class CardStack
      */
     public Integer getFirstCard()
     {
-        if(!stack.isEmpty()) return stack.get(0);
-        else return null;
+        if (!stack.isEmpty())
+            return stack.get(0);
+        else
+            return null;
     }
 
     public Integer getLastCard()
     {
-        if(!stack.isEmpty()) return stack.get(stack.size() - 1);
-        else return null;
+        if (!stack.isEmpty())
+            return stack.get(stack.size() - 1);
+        else
+            return null;
     }
 
     /**
@@ -85,6 +97,7 @@ public class CardStack
      */
     public void popFirstCard()
     {
-        if(!stack.isEmpty()) stack.remove(0);
+        if (!stack.isEmpty())
+            stack.remove(0);
     }
 }

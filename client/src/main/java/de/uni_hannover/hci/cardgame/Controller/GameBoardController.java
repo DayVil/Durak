@@ -22,21 +22,44 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 
+/**
+ * Controls loading of css themes to the main stage. find css themes at resources/styles/
+ *
+ * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
+ * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
+ * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
+ * @author Robert Witteck &lt;robert.witteck@stud.uni-hannover.de&gt;
+ */
 public class GameBoardController implements ControllerInterface
 {
+    /**
+     * The Draw pile counter.
+     */
     @FXML
     public Label DrawPileCounter;
 
+    /**
+     * Gameboard pane
+     */
     @FXML
     private Pane GameBoard;
 
+    /**
+     * The card draw pile image.
+     */
     @FXML
     private ImageView leftoverDeck;
 
     private final ArrayList<Node> addedNodesArrayList = new ArrayList<>();
 
+    /**
+     * Controls whether to kill the client on error or disconnect.
+     */
     boolean killClientNetworkHandler;
 
+    /**
+     * Instantiates the gameboard pane and the draw pile of cards.
+     */
     @Override
     public void init()
     {
@@ -54,6 +77,9 @@ public class GameBoardController implements ControllerInterface
         new Thread(task).start();
     }
 
+    /**
+     * Disconnect client from server and kill client socket. Afterwards sends user to home screen.
+     */
     public void disconnect()
     {
         if (ClientNetwork.isLoggedIn_())
@@ -66,21 +92,38 @@ public class GameBoardController implements ControllerInterface
         fxmlNavigator.loadFxml(fxmlNavigator.HOME);
     }
 
+    /**
+     * Sends the id of the clicked card to the server.
+     *
+     * @param nr the nr
+     */
     public void cardClicked(int nr)
     {
         ClientNetwork.sendMessage(String.format("%d", nr));
     }
 
+    /**
+     * Sends pass command to the server if pass button is clicked.
+     */
     public void pass()
     {
         ClientNetwork.sendMessage("pass");
     }
 
+    /**
+     * * Sends take command to the server if take button is clicked..
+     */
     public void take()
     {
         ClientNetwork.sendMessage("take");
     }
 
+    /**
+     * Execute a message/command received from the server. If the message is the game state, this message is parsed to
+     * redraw the current state on the game board
+     *
+     * @param line command line to execute.
+     */
     public void executeLine(String line)
     {
         System.out.println("Message from server:" + line);
@@ -115,7 +158,7 @@ public class GameBoardController implements ControllerInterface
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Message from Server");
             alert.setHeaderText("Game Ended");
-            alert.setContentText("The Game has ended ynd you will automatically be disconnected.");
+            alert.setContentText("The Game has ended and you will automatically be disconnected.");
             alert.setResizable(true);
             alert.onShownProperty().addListener(ebox -> Platform.runLater(() -> alert.setResizable(false)));
             alert.showAndWait();
@@ -128,6 +171,11 @@ public class GameBoardController implements ControllerInterface
     }
 
 
+    /**
+     * Draw the current game state on the game board.
+     *
+     * @param parsedServerMessage the parsed server message with the game state.
+     */
     public void draw(ParsedServerMessage parsedServerMessage)
     {
         undrawOldNodes();
@@ -153,7 +201,7 @@ public class GameBoardController implements ControllerInterface
         {
             int x;
             int y;
-            if(i < (playerCount + 1) / 2)
+            if (i < (playerCount + 1) / 2)
             {
                 x = playerStart + i * playerSpace;
                 y = playerVerticalTop;
@@ -211,16 +259,29 @@ public class GameBoardController implements ControllerInterface
         }
     }
 
+
+    /**
+     * Clean game board from old game state i.e. remove all cards, player states etc.
+     */
     private void undrawOldNodes()
     {
         System.out.printf("Memory: %d\n", Runtime.getRuntime().freeMemory());
-        for (Node n:addedNodesArrayList)
+        for (Node n : addedNodesArrayList)
         {
             GameBoard.getChildren().remove(n);
         }
         addedNodesArrayList.clear();
     }
 
+
+    /**
+     * Draw the player state i.e. hard cars, attack/defender state etc.
+     *
+     * @param parsedServerMessage.Player the player state obtained from the server.
+     * @param x                          x-position of the player label
+     * @param y                          y-position of the player label
+     * @param width                      of the player label
+     */
     private void drawPlayer(ParsedServerMessage.Player player, int x, int y, double width)
     {
         int cards = player.getHandCardAmount_();
@@ -260,16 +321,23 @@ public class GameBoardController implements ControllerInterface
         imageView.setFitHeight(30);
         playerLable.setGraphic(imageView);*/
 
-        if (player.isActive_()) playerLable.setStyle("-fx-background-color: #a0f0a0");
+        if (player.isActive_())
+            playerLable.setStyle("-fx-background-color: #a0f0a0");
 
         GameBoard.getChildren().add(playerLable);
         addedNodesArrayList.add(playerLable);
     }
 
 
+    /**
+     * Draw current trup color to game board.
+     *
+     * @param trump the trump color.
+     */
     public void drawTrump(CardColor trump)
     {
-        if (trump == null) return;
+        if (trump == null)
+            return;
         ImageView imageView = new ImageView();
         Image image = Cards.getColorSymbolImage(trump);
         imageView.setImage(image);
@@ -282,6 +350,14 @@ public class GameBoardController implements ControllerInterface
         addedNodesArrayList.add(imageView);
     }
 
+    /**
+     * Draw the coards on the game board, either hand cards or player cards in the table center.
+     *
+     * @param cardNumber the card number/Id
+     * @param x          the x-positon
+     * @param y          the y-positon
+     * @param isHandCard hand card or played card
+     */
     public void drawCard(int cardNumber, int x, int y, boolean isHandCard)
     {
         ImageView imageView = new ImageView();
@@ -294,20 +370,33 @@ public class GameBoardController implements ControllerInterface
         imageView.setFitWidth(55);
         if (isHandCard)
         {
-            imageView.setOnMouseClicked(event -> cardClicked(cardNumber));
+            imageView.setOnMouseClicked(event -> cardClicked(cardNumber)); //Lister for card click
         }
         GameBoard.getChildren().add(imageView);
         addedNodesArrayList.add(imageView);
     }
 
-
-
+    /**
+     * The network handler which runs the client network connection to the server.
+     */
     class networkHandler implements Runnable
     {
+        /**
+         * The client socket.
+         */
         Socket socket_;
+        /**
+         * The Input buffer.
+         */
         BufferedReader inputBuffer_;
+        /**
+         * The Output buffer.
+         */
         BufferedWriter outputBuffer_;
 
+        /**
+         * Instantiates a new client network handler.
+         */
         networkHandler()
         {
             socket_ = ClientNetwork.getClientSocket_();
@@ -315,6 +404,9 @@ public class GameBoardController implements ControllerInterface
             outputBuffer_ = ClientNetwork.getBufferOut_();
         }
 
+        /**
+         * Run the client socket and listen for server messages.
+         */
         @Override
         public void run()
         {
@@ -328,9 +420,12 @@ public class GameBoardController implements ControllerInterface
                 if (line != null)
                 {
                     Platform.runLater(() -> executeLine(line));
-                    if (line.equals("disconnect")) break;
-                    if (line.equals("error")) break;
-                    if (line.equals("GameEnded")) break;
+                    if (line.equals("disconnect"))
+                        break;
+                    if (line.equals("error"))
+                        break;
+                    if (line.equals("GameEnded"))
+                        break;
                 }
             }
             ClientNetwork.stopConnection();

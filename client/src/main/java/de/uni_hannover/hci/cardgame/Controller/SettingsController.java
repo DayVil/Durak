@@ -15,6 +15,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+/**
+ * Loads the settings screen.
+ *
+ * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
+ * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
+ * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
+ * @author Robert Witteck &lt;robert.witteck@stud.uni-hannover.de&gt;
+ */
 public class SettingsController implements ControllerInterface
 {
 
@@ -36,6 +44,9 @@ public class SettingsController implements ControllerInterface
     @FXML
     private MenuItem ThemeRed_;
 
+    /**
+     * Initialize screen.
+     */
     @Override
     public void init()
     {
@@ -53,24 +64,37 @@ public class SettingsController implements ControllerInterface
         PaneResizer.resizePane(scene.getHeight(), true);
     }
 
+    /**
+     * Send user to home screen.
+     */
     @FXML
     private void goToHome()
     {
         fxmlNavigator.loadFxml(fxmlNavigator.HOME);
     }
 
+    /**
+     * Sound slider
+     */
     @FXML
     private void changeSound()
     {
         //TODO: only if sound is ever added: change volume of sound to percentage value of soundslider
     }
-
+    /**
+     * Fullscreen option.
+     */
     @FXML
     private void goFullScreen()
     {
         gameClient.stage_.setFullScreen(!gameClient.stage_.isFullScreen());
     }
 
+    /**
+     * Change resolution.
+     *
+     * @param event changes resolution accrding to user pick from drop down menu.
+     */
     @FXML
     public void ChangeResolution(ActionEvent event)
     {
@@ -94,6 +118,11 @@ public class SettingsController implements ControllerInterface
         }
     }
 
+    /**
+     * Change style.
+     *
+     * @param event Changes the css style.
+     */
     public void changeStyle(ActionEvent event)
     {
         if (event.getSource().equals(ThemeBlue_))        // If event source (selected button of resolution changer) is res_1 (600 x 400) do following
