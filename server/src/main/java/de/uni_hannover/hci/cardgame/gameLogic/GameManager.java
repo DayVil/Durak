@@ -158,7 +158,6 @@ public class GameManager
                         if (activePlayer.playCard(card))
                         {
                             if (activePlayer.isAttacker_())
-                                for each player
                             {
                                 activePlayers[0].setActive_(false);
                                 activePlayers[1].setActive_(true);
