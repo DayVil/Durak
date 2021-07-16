@@ -73,6 +73,11 @@ public class ServerNetwork
 
         System.out.println("We Are FULL");
 
+        clientRejecter clientReject = new clientRejecter();
+
+        Thread thread = new Thread(clientReject);
+        thread.start();
+
         GameManager.initGameManager(IDs, names_);
         /*
         System.out.println("ServerNetwork after initGameManager");
@@ -87,6 +92,8 @@ public class ServerNetwork
         }
 
          */
+
+
     }
 
     /**
@@ -267,6 +274,36 @@ public class ServerNetwork
             {
                 e.printStackTrace();
                 System.err.println("Something went wrong");
+            }
+        }
+    }
+
+    class clientRejecter implements Runnable
+    {
+        @Override
+        public void run()
+        {
+            while (true)
+            {
+                try
+                {
+                    System.out.println("Rejceting clients");
+                    Socket socket = serverSocket_.accept();
+                    InetAddress inetAddress = socket.getInetAddress();
+
+                    System.out.print("reject client: " + inetAddress.getHostName() + "\n\tIP address " + inetAddress.getHostAddress() + "\n\n");
+
+
+
+                    BufferedWriter tempWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+                    tempWriter.write("full\n");
+                    tempWriter.flush();
+                    socket.close();
+                }
+                catch (IOException ex)
+                {
+                    ex.printStackTrace();
+                }
             }
         }
     }

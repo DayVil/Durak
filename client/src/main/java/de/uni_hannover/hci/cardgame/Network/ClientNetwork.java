@@ -147,6 +147,18 @@ public class ClientNetwork
             alert.showAndWait();
             return false;
         }
+        if (answer.equals("full"))
+        {
+            stopConnection();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Connecting To Server");
+            alert.setHeaderText("Server is full");
+            alert.setContentText("Try another server");
+            alert.setResizable(true);
+            alert.onShownProperty().addListener(e -> Platform.runLater(() -> alert.setResizable(false)));
+            alert.showAndWait();
+            return false;
+        }
         if (!answer.equals("logged in"))
         {
             stopConnection();
