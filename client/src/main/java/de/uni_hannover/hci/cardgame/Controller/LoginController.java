@@ -13,9 +13,10 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 /**
- * Controls the login screen and login of the client to the server. Gets the user given network settings, checks those
- * on consistency and starts the connection on button click.
+ * Controls the login screen and login of the client to the server. Gets the users given network settings, checks those
+ * for consistencies and starts the connection on button press.
  *
+ * @version 18.07.2021
  * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
  * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
  * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
@@ -23,20 +24,32 @@ import javafx.stage.Stage;
  */
 public class LoginController implements ControllerInterface
 {
+    /**
+     * The Textfield to hold the IPAddress
+     */
     @FXML
     private TextField IPAddress;
 
+    /**
+     *The Textfield to hold the Port
+     */
     @FXML
     private TextField Port;
 
+    /**
+     * The Passwordfield to hold the Password
+     */
     @FXML
     private PasswordField Password;
 
+    /**
+     * The Textfield to hold the Username
+     */
     @FXML
     private TextField UserName;
 
     /**
-     * Initalize login screen.
+     * This method automatically resizes the content pane to the current stages size on its initial load
      */
     @Override
     public void init()
@@ -47,6 +60,9 @@ public class LoginController implements ControllerInterface
         PaneResizer.resizePane(scene.getHeight(), true);
     }
 
+    /**
+     * This method will load the Home Screen
+     */
     @FXML
     private void goToHome()
     {
@@ -104,7 +120,7 @@ public class LoginController implements ControllerInterface
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Login");
             alert.setHeaderText("Invalid Server Password");
-            alert.setContentText("PLease enter the servers password");
+            alert.setContentText("Please enter the servers password");
             alert.setResizable(true);
             alert.onShownProperty().addListener(e -> Platform.runLater(() -> alert.setResizable(false)));
             alert.showAndWait();

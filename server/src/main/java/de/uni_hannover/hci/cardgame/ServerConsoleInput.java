@@ -5,6 +5,7 @@ import java.util.Scanner;
 /**
  * Controls the server console input.
  *
+ * @version 18.07.2021
  * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
  * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
  * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
@@ -17,6 +18,11 @@ public class ServerConsoleInput
      */
     public static Scanner sc;
 
+    /**
+     * Will ask the Server hoster if he wants to start a new game with given settings, with new settings or if he wants to quit the server
+     *
+     * @return  A String representation of a valid input from the Server hoster
+     */
     public static String restartSelector()
     {
         System.out.println("The Game is finished how do you want to proceed?\n");
@@ -124,8 +130,8 @@ public class ServerConsoleInput
     /**
      * Checks if string value is an integer.
      *
-     * @param toCheck String to check
-     * @return true if it is integer.
+     * @param toCheck   String to check
+     * @return          true if it is integer.
      */
     public static boolean isInt(String toCheck)
     {

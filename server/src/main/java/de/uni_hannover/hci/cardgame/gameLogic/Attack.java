@@ -4,21 +4,21 @@ import static de.uni_hannover.hci.cardgame.gameLogic.Cards.Cards.getCard;
 import static de.uni_hannover.hci.cardgame.gameLogic.GameManager.visibleCards_;
 
 /**
- * Attack action of the bot.
+ * Attack action of the player.
  *
+ * @version 18.07.2021
  * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
  * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
  * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
  * @author Robert Witteck &lt;robert.witteck@stud.uni-hannover.de&gt;
  */
-
 public class Attack
 {
     /**
-     * Attack boolean.
+     * Tries to play a given Card for the offense
      *
-     * @param card the card
-     * @return true if card was played
+     * @param card  the id of card
+     * @return      true if card was played
      */
     public static boolean attack(int card)
     {

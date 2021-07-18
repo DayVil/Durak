@@ -3,6 +3,7 @@ package de.uni_hannover.hci.cardgame.gameLogic.Cards;
 /**
  * The type Cards.
  *
+ * @version 18.07.2021
  * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
  * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
  * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
@@ -13,8 +14,8 @@ public class Cards
     /**
      * Gets color.
      *
-     * @param Nr The Nr (index in the textures Array) of a Card
-     * @return One of the four Card-Colors or Undefined if the function is not called correctly
+     * @param Nr        The Nr (index in the textures Array) of a Card
+     * @return          One of the four Card-Colors or Undefined if the function is not called correctly
      */
     public static CardColor getColor(int Nr)
     {
@@ -44,8 +45,8 @@ public class Cards
     /**
      * Gets color int.
      *
-     * @param color the color
-     * @return the color int
+     * @param color     the color
+     * @return          the color int
      */
     public static int getColorInt(CardColor color)
     {
@@ -64,10 +65,8 @@ public class Cards
     /**
      * Gets card.
      *
-     * @param Nr The Nr (index in the textures Array) of a Card
-     * @return The card Number in increasing order ignoring the color, so ace of clubs and ace of hearts will both
-     * return 12  If the method is not called correctly (card number lower than 11 or higher than 63) -1 will be
-     * returned
+     * @param Nr    The id of a Card
+     * @return      The card Number in increasing order ignoring the color, so ace of clubs and ace of hearts will both return 12 If the method is not called correctly (card number lower than 11 or higher than 63) -1 will be returned
      */
     public static int getCard(int Nr)
     {
@@ -80,11 +79,10 @@ public class Cards
     /**
      * Compare cards int.
      *
-     * @param Trump        The Trump color
-     * @param attackerCard The Nr (index in the textures Array) of the first Card
-     * @param defenderCard The Nr (index in the textures Array) of the second Card
-     * @return 1 if Card1 will beat Nr2, -1 if Card2 will beat Card 1, 0 if both cards are equal (this should not
-     * happen)
+     * @param Trump             The Trump color
+     * @param attackerCard      The Nr (index in the textures Array) of the first Card
+     * @param defenderCard      The Nr (index in the textures Array) of the second Card
+     * @return                  1 if Card1 will beat Nr2, -1 if Card2 will beat Card 1, 0 if both cards are equal (this should not happen)
      */
     public static int compareCards(CardColor Trump, int attackerCard, int defenderCard)
     {

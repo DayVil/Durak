@@ -10,6 +10,12 @@ import java.util.Objects;
 
 /**
  * The type Css controller.
+ *
+ * @version 18.07.2021
+ * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
+ * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
+ * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
+ * @author Robert Witteck &lt;robert.witteck@stud.uni-hannover.de&gt;
  */
 public class CSSController
 {
@@ -18,10 +24,6 @@ public class CSSController
      * Controls loading of css themes to the main stage.
      *
      * @param theme the css theme to load. Find css themes at resources/styles/
-     * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
-     * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
-     * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
-     * @author Robert Witteck &lt;robert.witteck@stud.uni-hannover.de&gt;
      */
     public static void changeTheme(String theme)
     {

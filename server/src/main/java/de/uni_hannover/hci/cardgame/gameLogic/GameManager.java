@@ -14,6 +14,7 @@ import java.util.Objects;
 /**
  * This contains every function to execute the game and manage it.
  *
+ * @version 18.07.2021
  * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
  * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
  * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
@@ -25,23 +26,29 @@ public class GameManager
      * The constant drawPile_.
      */
     public static CardStack drawPile_;
+
     /**
      * The constant visibleCards_.
      */
     public static final ArrayList<int[]> visibleCards_ = new ArrayList<>();
     private static final ArrayList<Player> players_ = new ArrayList<>();
     private static final ArrayList<Player> viewers_ = new ArrayList<>();
+
+    /**
+     *  The constant Color of the Trump, won't change throughout the game
+     */
     private static CardColor trump_;
+
     /**
      * The constant firstAttacker.
      */
     public static int firstAttacker;
 
     /**
-     * Init game manager.
+     * creates a new drawpile, gets the color of the lowest card and sets it as trump, creates new players for every id and name in their array, shuffles the players, draws 6 cards for each of them, sets the first attacker to player 0, starts a newturn
      *
-     * @param IDs   the ds
-     * @param names the names
+     * @param IDs   the ids of the players
+     * @param names the usernames of the players
      */
     public static void initGameManager(int[] IDs, String[] names)
     {
@@ -279,7 +286,7 @@ public class GameManager
     }
 
     /**
-     * Lists player who have played a card/thrown a card and assigns attacker and defender states.
+     * Lists player who have played a card/thrown a card and assigns attacker states.
      *
      * @param players the active players
      */
@@ -335,8 +342,7 @@ public class GameManager
         }
     }
     /**
-     * Clear players that finished the game.
-     *     *
+     * Clear players that finished the game and add them to a viewers list
      */
     private static boolean clearPlayers()
     {
@@ -455,8 +461,7 @@ public class GameManager
         activePlayers[0] = activePlayers[2];
         activePlayers[2] = helper;
 
-        if (isInThrowIn || activePlayers[2].getAmountOfHandCards() > 0)
-            activePlayers[0].setActive_(true);
+        if (isInThrowIn || activePlayers[2].getAmountOfHandCards() > 0)     activePlayers[0].setActive_(true);
         activePlayers[0].setAttacker_(true);
     }
 
@@ -470,6 +475,9 @@ public class GameManager
         return trump_;
     }
 
+    /**
+     * Gets the last card of the drawpile and sets its color as the trump color
+     */
     private static void createTrump()
     {
         trump_ = Cards.getColor(drawPile_.getLastCard());
@@ -485,6 +493,11 @@ public class GameManager
         return visibleCards_.size() * 2;
     }
 
+    /**
+     * The toString method for only the cards from the middle
+     *
+     * @return  A complete Stringrepresentation of all cards in the middle
+     */
     private static String visibleCardsToString()
     {
         StringBuilder returnString = new StringBuilder();
@@ -501,7 +514,7 @@ public class GameManager
      *
      * @param playerId      id of the current player.
      * @param wasSuccessful the was successful
-     * @return returns the state of the game.
+     * @return              returns the state of the game as a String to send it to each client.
      */
     public static String gameBoardStateToString(int playerId, boolean wasSuccessful)
     {
@@ -542,10 +555,8 @@ public class GameManager
             returnString.append("0 ");                                                          // If the player is not a player he is a viewer so he has no handcards
         }
 
-        if (wasSuccessful)
-            returnString.append(String.format("%s", 1));
-        else
-            returnString.append(String.format("%s", 0));                                       // Was successful
+        if (wasSuccessful)  returnString.append(String.format("%s", 1));
+        else                returnString.append(String.format("%s", 0));                                       // Was successful
         return returnString.toString();
     }
 
@@ -612,7 +623,7 @@ public class GameManager
     }
 
     /**
-     * Bot action.
+     * Handles all actions for the bot, will attack if bot is attacker, will defend if bot is defender
      *
      * @param bot the bot that shell act.
      */

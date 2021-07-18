@@ -13,8 +13,9 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
- * Loading screen with progress bar loading/resizing all card images.
+ * Loading screen with progress bar that shows the status of caching all card images.
  *
+ * @version 18.07.2021
  * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
  * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
  * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
@@ -31,7 +32,8 @@ public class LoadingScreenController implements ControllerInterface
      */
     int imageNumber;
     /**
-     * Initialize screen.
+     * This method automatically resizes the content pane to the current stages size on its initial load
+     * This method also starts the progress Bar which shows the progress of caching all card-images
      */
     @Override
     public void init()

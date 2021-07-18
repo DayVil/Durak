@@ -3,8 +3,9 @@ package de.uni_hannover.hci.cardgame.gameLogic;
 import de.uni_hannover.hci.cardgame.gameLogic.Cards.Cards;
 
 /**
- * Defend action of the bot.
+ * Defend action of the player.
  *
+ * @version 18.07.2021
  * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
  * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
  * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
@@ -13,10 +14,10 @@ import de.uni_hannover.hci.cardgame.gameLogic.Cards.Cards;
 public class Defend
 {
     /**
-     * Defend boolean.
+     * Tries to play a given card for the defense
      *
-     * @param card the card
-     * @return true if card was played
+     * @param card      the id of the card
+     * @return          true if card was played
      */
     public static boolean defend(int card)
     {

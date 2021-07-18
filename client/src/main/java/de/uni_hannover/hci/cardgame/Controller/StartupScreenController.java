@@ -12,8 +12,9 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
- * The startup screen of the card game showing some teaser card layouts.
+ * The startup screen of the card game showing 4 different cards.
  *
+ * @version 18.07.2021
  * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
  * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
  * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
@@ -21,12 +22,15 @@ import javafx.stage.Stage;
  */
 public class StartupScreenController implements ControllerInterface
 {
-
+    /**
+     * The Content-holding pane
+     */
     @FXML
     private Pane Startup;
 
     /**
-     * Initialize
+     * This method will set the 4 different Cards into the pane
+     * Nothing is resized here as this pane is the starting pane and is always the same height and width
      */
     @Override
     public void init()
@@ -76,6 +80,9 @@ public class StartupScreenController implements ControllerInterface
         Startup.getChildren().add(iv4);
     }
 
+    /**
+     * This method will load the Loading Screen
+     */
     @FXML
     private void goToLoading()
     {

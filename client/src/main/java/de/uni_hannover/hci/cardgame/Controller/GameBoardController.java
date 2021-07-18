@@ -25,6 +25,7 @@ import java.util.ArrayList;
 /**
  * Controls loading of css themes to the main stage. find css themes at resources/styles/
  *
+ * @version 18.07.2021
  * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
  * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
  * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
@@ -58,7 +59,7 @@ public class GameBoardController implements ControllerInterface
     boolean killClientNetworkHandler;
 
     /**
-     * Instantiates the gameboard pane and the draw pile of cards.
+     * Instantiates the gameboard pane and the draw pile of cards Pane and counter.
      */
     @Override
     public void init()
@@ -95,7 +96,7 @@ public class GameBoardController implements ControllerInterface
     /**
      * Sends the id of the clicked card to the server.
      *
-     * @param nr the nr
+     * @param nr    the id of the card
      */
     public void cardClicked(int nr)
     {
@@ -111,7 +112,7 @@ public class GameBoardController implements ControllerInterface
     }
 
     /**
-     * * Sends take command to the server if take button is clicked..
+     * Sends take command to the server if take button is clicked..
      */
     public void take()
     {
@@ -122,7 +123,7 @@ public class GameBoardController implements ControllerInterface
      * Execute a message/command received from the server. If the message is the game state, this message is parsed to
      * redraw the current state on the game board
      *
-     * @param line command line to execute.
+     * @param line      command line to execute, that was gotten from the clientsockets bufferIn.
      */
     public void executeLine(String line)
     {
@@ -174,7 +175,7 @@ public class GameBoardController implements ControllerInterface
     /**
      * Draw the current game state on the game board.
      *
-     * @param parsedServerMessage the parsed server message with the game state.
+     * @param parsedServerMessage   the parsed server message with the game state.
      */
     public void draw(ParsedServerMessage parsedServerMessage)
     {
@@ -275,9 +276,9 @@ public class GameBoardController implements ControllerInterface
 
 
     /**
-     * Draw the player state i.e. hard cars, attack/defender state etc.
+     * Draw the player state i.e. hand cards, attack/defender state etc.
      *
-     * @param parsedServerMessage.Player the player state obtained from the server.
+     * @param player                     the player state obtained from the server.
      * @param x                          x-position of the player label
      * @param y                          y-position of the player label
      * @param width                      of the player label
@@ -330,9 +331,9 @@ public class GameBoardController implements ControllerInterface
 
 
     /**
-     * Draw current trup color to game board.
+     * Draw current trump color to game board.
      *
-     * @param trump the trump color.
+     * @param trump     the trump color.
      */
     public void drawTrump(CardColor trump)
     {
@@ -351,12 +352,12 @@ public class GameBoardController implements ControllerInterface
     }
 
     /**
-     * Draw the coards on the game board, either hand cards or player cards in the table center.
+     * Draw the cards on the game board, either hand cards or the cards in the table center.
      *
-     * @param cardNumber the card number/Id
-     * @param x          the x-positon
-     * @param y          the y-positon
-     * @param isHandCard hand card or played card
+     * @param cardNumber    the card number/Id
+     * @param x             the x-positon
+     * @param y             the y-positon
+     * @param isHandCard    hand card or played card
      */
     public void drawCard(int cardNumber, int x, int y, boolean isHandCard)
     {
@@ -378,6 +379,12 @@ public class GameBoardController implements ControllerInterface
 
     /**
      * The network handler which runs the client network connection to the server.
+     *
+     * @version 18.07.2021
+     * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
+     * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
+     * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
+     * @author Robert Witteck &lt;robert.witteck@stud.uni-hannover.de&gt;
      */
     class networkHandler implements Runnable
     {

@@ -12,8 +12,9 @@ import java.util.Objects;
 
 /**
  * Creates a server for the card game. Gets the number of players, server password and connection settings from the user
- * via system input. When the server is successfully create it instantiates and communicates with the game manager class.
+ * via system input. When the server is successfully created it instantiates and communicates with the game manager class.
  *
+ * @version 18.07.2021
  * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
  * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
  * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
@@ -41,6 +42,13 @@ public class ServerNetwork
      */
     public String[] names_;
 
+    /**
+     * Constructor for the servernetwork
+     *
+     * @param maxPlayerCount    The number of players that are needed, can't be greater than 8 or lesser than 2
+     * @param serverPassword    The Password of the Server, can be empty
+     * @param serverPort        The Port the Server is listening and running on
+     */
     public ServerNetwork(int maxPlayerCount, String serverPassword, int serverPort)
     {
         maxPlayerCount_ = maxPlayerCount; //ServerConsoleInput.getMaxPlayers();
@@ -59,7 +67,8 @@ public class ServerNetwork
     }
 
     /**
-     * Run the server.
+     * Runs the server.
+     * Will get all clients, will start a new game after all clients are online
      */
     void run()
     {
@@ -153,9 +162,18 @@ public class ServerNetwork
     /**
      * Runs the server socket and instantiates buffer reader and output to communicate with the clients. Client commands
      * can control the game manger and close the server connection.
+     *
+     * @version 18.07.2021
+     * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
+     * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
+     * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
+     * @author Robert Witteck &lt;robert.witteck@stud.uni-hannover.de&gt;
      */
     class socketHandler implements Runnable
     {
+        /**
+         * Truth value if the client if logged in or not
+         */
         private boolean loggedIn;
         private final Socket socket;
 
@@ -171,7 +189,7 @@ public class ServerNetwork
         }
 
         /**
-         * Run.
+         * Handles all actions coming from a client and going to a client, will try to log him onto the server, if that fails he will get a message saying 'failed'
          */
         @Override
         public void run()
@@ -278,8 +296,20 @@ public class ServerNetwork
         }
     }
 
+    /**
+     * This class will automatically reject ever client that tries to connect to the server after all players are gotten
+     *
+     * @version 18.07.2021
+     * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
+     * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
+     * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
+     * @author Robert Witteck &lt;robert.witteck@stud.uni-hannover.de&gt;
+     */
     class clientRejecter implements Runnable
     {
+        /**
+         * Rejects all clients that are now trying to connect to the server
+         */
         @Override
         public void run()
         {
@@ -287,7 +317,7 @@ public class ServerNetwork
             {
                 try
                 {
-                    System.out.println("Rejceting clients");
+                    System.out.println("Rejecting clients");
                     Socket socket = serverSocket_.accept();
                     InetAddress inetAddress = socket.getInetAddress();
 

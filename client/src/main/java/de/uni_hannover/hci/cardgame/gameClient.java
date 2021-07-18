@@ -16,6 +16,7 @@ import javafx.util.Duration;
 /**
  * This is the main method to control the game client
  *
+ * @version 18.07.2021
  * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
  * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
  * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
@@ -57,11 +58,11 @@ public class gameClient extends Application
     }
 
     /**
-     * Start the main application.
-     * Sets the geometry of the stage, titles and loads the scene.
-     * On Linux Systems Javafx has problems showing the icon symbol. Hence, the method distinguishes between OS.
+     * Starts the application
+     * Sets the geometry of the stage, titles and loads the scene
+     * On Linux Systems Javafx has problems showing the icon symbol. Hence, the method distinguishes between OS for setting the applications icon
      *
-     * @param stage Main stage to show.s
+     * @param stage Main stage to show
      */
     @Override
     public void start(Stage stage)
@@ -75,12 +76,12 @@ public class gameClient extends Application
         if (os.contains("win"))
         {
             //This is windows os
-            stage_.getIcons().add(new Image("textures/game_symbol.PNG", 32, 32, true, true, false)); // does not work on linux version
+            stage_.getIcons().add(new Image("textures/game_symbol.png", 32, 32, true, true, false)); // does not work on linux version
         }
         else if (os.contains("osx"))
         {
             //this is apple
-            stage_.getIcons().add(new Image("textures/game_symbol.PNG", 32, 32, true, true, false)); // does not work on linux version
+            stage_.getIcons().add(new Image("textures/game_symbol.png", 32, 32, true, true, false)); // does not work on linux version
         }
         else if (os.contains("nix") || os.contains("aix") || os.contains("nux"))
         {
@@ -96,9 +97,9 @@ public class gameClient extends Application
     }
 
     /**
-     * Load the main pane.
+     * Loads the main pane
      *
-     * @return the pane
+     * @return the newly generated Pane
      */
     public Pane loadMainPane()
     {
@@ -167,7 +168,7 @@ public class gameClient extends Application
     }
 
     /**
-     * Shut down the application
+     * Shuts down the application
      */
     public static void shutDown()
     {

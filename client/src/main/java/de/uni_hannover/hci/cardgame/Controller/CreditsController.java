@@ -10,8 +10,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * A controller in charge of the credits screen
+ * This Controller is managing the initial load of this pane and a button-click-event called goBack()
  *
+ * @version 18.07.2021
  * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
  * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
  * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
@@ -20,7 +21,7 @@ import javafx.stage.Stage;
 public class CreditsController implements ControllerInterface
 {
     /**
-     * This method initializes the credits screen when the screen is opened
+     * This method automatically resizes the content pane to the current stages size on its initial load
      */
     @Override
     public void init()
@@ -32,7 +33,7 @@ public class CreditsController implements ControllerInterface
     }
 
     /**
-     * A method activated by a button press that sends one back to the main menu
+     * This method will load the Home Screen
      */
     @FXML
     private void goBack()

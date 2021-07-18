@@ -10,134 +10,266 @@ import java.util.ArrayList;
 
 /**
  * This represents one of the 8 possible players.
+ *
+ * @version 18.07.2021
+ * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
+ * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
+ * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
+ * @author Robert Witteck &lt;robert.witteck@stud.uni-hannover.de&gt;
  */
 public class Player
 {
-    private int id_; //is equal to Client ID
+    private final int id_; //is equal to Client ID
+
+    /**
+     * The username of the player
+     */
     private String name_;
     private final ArrayList<Integer> handCards_;
+
+    /**
+     * Truth Value if player is attacker
+     */
     private boolean isAttacker_;
+
+    /**
+     * Truth Value if player is defender
+     */
     private boolean isDefender_;
+
+    /**
+     * Truth Value if player is active
+     */
     private boolean isActive_;
+
+    /**
+     * Truth Value if player is a bot
+     */
     private boolean isBot_;
+
+    /**
+     * Truth Value if player has skipped
+     */
     private boolean skipped_;
+
+    /**
+     * The String representation of the last action
+     */
     private volatile String lastAction_;
 
+    /**
+     * The constructor of the player
+     *
+     * @param id        The id of the player
+     * @param name      The username of the player
+     */
     public Player(int id, String name)
     {
-        setId_(id);
-        setName_(name);
+        id_ = id;
+        name_ = name;
         setBot_(false);
         resetFlags();
         handCards_ = new ArrayList<>();
     }
 
+    /**
+     * Setter for isBot_
+     *
+     * @param bot_ Truth value if player is bot
+     */
     public void setBot_ (boolean bot_)
     {
         isBot_ = bot_;
     }
 
+    /**
+     * Getter for isBot_
+     *
+     * @return Truth value if player is bot
+     */
     public boolean isBot_ ()
     {
         return isBot_;
     }
 
+    /**
+     * Getter for lastAction_
+     *
+     * @return The String representation of the last action
+     */
     public String getLastAction_ ()
     {
         return lastAction_;
     }
 
+    /**
+     * Setter for lastAction_
+     *
+     * @param lastAction    The String representation of the last action
+     */
     public void setLastAction_ (String lastAction)
     {
         System.out.printf("Action: %s, ID: %d\n", lastAction, id_);
         lastAction_ = lastAction;
     }
 
+    /**
+     * Getter for id_
+     *
+     * @return The id of the player
+     */
     public int getId_()
     {
         return id_;
     }
 
-    private void setId_(int id_)
-    {
-        this.id_ = id_;
-    }
-
+    /**
+     * Getter for name_
+     *
+     * @return The username of the player
+     */
     public String getName_()
     {
         return name_;
     }
 
-    public void setName_ (String name_)
+    /**
+     * Setter for name_
+     *
+     * @param name  The new username of the the player (only accessed by bots)
+     */
+    public void setName_(String name)
     {
-        this.name_ = name_;
+        name_ = name;
     }
 
+    /**
+     * Getter for isAttacker_
+     *
+     * @return Truth value if player is attacker
+     */
     public boolean isAttacker_()
     {
         return isAttacker_;
     }
 
+    /**
+     * Setter for isAttacker_
+     *
+     * @param attacker  Truth value if player is attacker
+     */
     public void setAttacker_(boolean attacker)
     {
         isAttacker_ = attacker;
     }
 
+    /**
+     * Setter for skipped_
+     *
+     * @param played    Truth value if player has skipped
+     */
     public void setSkipped_ (boolean played)
     {
         skipped_ = played;
     }
 
+    /**
+     * Getter for skipped_
+     *
+     * @return  Truth value if player has skipped_
+     */
     public boolean hasSkipped_ ()
     {
         return skipped_;
     }
 
+    /**
+     * Getter for isDefender_
+     *
+     * @return  Truth value if player is defender
+     */
     public boolean isDefender_()
     {
         return isDefender_;
     }
 
+    /**
+     * Setter for isDefender_
+     *
+     * @param defender_ Truth value if player is defender
+     */
     public void setDefender_(boolean defender_)
     {
         isDefender_ = defender_;
     }
 
+    /**
+     * Getter for isActive_
+     *
+     * @return  Truth value if player is active
+     */
     public boolean isActive_()
     {
         return isActive_;
     }
 
+    /**
+     * Getter for isActive_ as an int
+     *
+     * @return  Truth value if player is active as an int, 1 if true, 0 if false
+     */
     public int isActiveInt_()
     {
-        if (isActive_) return 1;
-        return 0;
+        if (isActive_)  return 1;
+                        return 0;
     }
 
+    /**
+     * Setter for isActive_
+     *
+     * @param active_   Truth value if player is active
+     */
     public void setActive_(boolean active_)
     {
         isActive_ = active_;
     }
 
+    /**
+     * Getter for handCards_
+     *
+     * @return  The Arraylist of handcards of the player
+     */
     public ArrayList<Integer> getHandCards_ ()
     {
         return handCards_;
     }
 
+    /**
+     * Getter for handCards_.size()
+     *
+     * @return  amount of handcards in a players hand
+     */
     public int getAmountOfHandCards()
     {
         return this.handCards_.size();
     }
 
+    /**
+     * Getter for isAttacker_ as an int
+     *
+     * @return  Truth value if player is attacker as an int, 1 if true, 0 if false
+     */
     public int isAttackerInt_()
     {
-        if (isAttacker_)
-        {
-            return 1;
-        }
-        return 0;
+        if (isAttacker_)    return 1;
+                            return 0;
     }
 
+    /**
+     * Getter for isDefender_ as an int
+     *
+     * @return  Truth value if player is defender as an int, 1 if true, 0 if false
+     */
     public int isDefenderInt_()
     {
         if (isDefender_)
@@ -147,6 +279,9 @@ public class Player
         return 0;
     }
 
+    /**
+     * Resets Attacker, Defender, Active and skipped boolean to false, sets lastAction to 'no action'
+     */
     public void resetFlags()
     {
         setAttacker_(false);
@@ -186,6 +321,9 @@ public class Player
         }
     }
 
+    /**
+     * Takes all visible cards from the middle
+     */
     public void takeCards()
     {
         for (int[] intArr : GameManager.visibleCards_)
@@ -198,6 +336,12 @@ public class Player
         GameManager.visibleCards_.clear();
     }
 
+    /**
+     * Tries to play a clicked card from the handcards of the player
+     *
+     * @param card  The id of the card to play
+     * @return      Truth value if player was able to play card or not
+     */
     public boolean playCard(int card)
     {
         if(!isActive_) return false;
@@ -244,6 +388,11 @@ public class Player
         return false;
     }
 
+    /**
+     * The toString method of only a players handcards
+     *
+     * @return A complete String representation of all cards in the hand of the player
+     */
     public String handCardsToString()
     {
         StringBuilder returnString = new StringBuilder();
@@ -254,6 +403,11 @@ public class Player
         return returnString.toString();
     }
 
+    /**
+     * The toString method of the player.
+     *
+     * @return A complete String representation of all relevant information of the player
+     */
     @Override
     public String toString()
     {

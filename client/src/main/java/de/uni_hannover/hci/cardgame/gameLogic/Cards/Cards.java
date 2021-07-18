@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 /**
  * Control the appearance of the cards
  *
+ * @version 18.07.2021
  * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
  * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
  * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
@@ -105,6 +106,9 @@ public class Cards
                     "/textures/icons/emptySymbol.png",
             };
 
+    /**
+     * This member resembles all images that can be used throughout the game
+     */
     private static final javafx.scene.image.Image[] imageBuffer = new javafx.scene.image.Image[textures.length];
 
     /**
@@ -118,10 +122,10 @@ public class Cards
     }
 
     /**
-     * Creates a card image according to the number which identifies each card
+     * Creates a card image according to the number which identifies each card so it will be cached or will just return the card if it already created and cached
      *
-     * @param nr the number of the image
-     * @return the image file path
+     * @param nr    the id of the image
+     * @return      the newly cached image
      */
     public static javafx.scene.image.Image getImage(int nr)
     {
@@ -136,8 +140,8 @@ public class Cards
     /**
      * Getter of the card image texture.
      *
-     * @param specialTexture enumerator of the cards
-     * @return the card image texture
+     * @param specialTexture    enumerator of the cards
+     * @return                  the card image texture
      */
     public static Image getSpecialImage(SpecialTexture specialTexture)
     {
@@ -161,8 +165,8 @@ public class Cards
     /**
      * Getter card image color
      *
-     * @param color the color of the card
-     * @return the color symbol of the card image
+     * @param color     the color of the card
+     * @return          the color symbol of the card image
      */
     public static Image getColorSymbolImage(CardColor color)
     {
@@ -177,8 +181,8 @@ public class Cards
     /**
      * Used to convert the servers Color ID into a usable SpecialTexture Enum
      *
-     * @param id the id of the Color used by the server to distinguish card colors
-     * @return The enum corresponding to a SpecialTexture
+     * @param id        the id of the Color used by the server to distinguish card colors
+     * @return          The enum corresponding to a SpecialTexture
      */
     public static CardColor intToCardColor(int id)
     {

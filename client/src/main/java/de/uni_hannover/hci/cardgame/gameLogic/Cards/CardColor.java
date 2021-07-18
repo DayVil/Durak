@@ -4,6 +4,7 @@ package de.uni_hannover.hci.cardgame.gameLogic.Cards;
 /**
  * Enumerator of the card color
  *
+ * @version 18.07.2021
  * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
  * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
  * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;

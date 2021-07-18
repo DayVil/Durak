@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 /**
  * Loads all fxml elements for the home screen, e.g. Settings, Play, Quit, Credits etc.
  *
+ * @version 18.07.2021
  * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
  * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
  * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
@@ -20,33 +21,44 @@ import javafx.stage.Stage;
  */
 public class HomeScreenController implements ControllerInterface
 {
+    /**
+     * This method will load the Settings Screen
+     */
     @FXML
     private void goToSettings()
     {
         fxmlNavigator.loadFxml(fxmlNavigator.SETTINGS);
     }
 
+    /**
+     * This method will load the Credits Screen
+     */
     @FXML
     private void goToCredits()
     {
         fxmlNavigator.loadFxml(fxmlNavigator.CREDITS);
     }
 
+    /**
+     * This method will load the Login Screen
+     */
     @FXML
     private void goToLogin()
     {
         fxmlNavigator.loadFxml(fxmlNavigator.LOGIN);
     }
 
+    /**
+     * This method will shut down the application when the Button Quit was pressed
+     */
     @FXML
     private void shutDown()
     {
-
         gameClient.shutDown();
     }
 
     /**
-     * Initialize home screen on main stage.
+     * This method automatically resizes the content pane to the current stages size on its initial load
      */
     @Override
     public void init()

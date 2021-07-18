@@ -16,8 +16,9 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 /**
- * Loads the settings screen.
+ * This class holds various options like a FullScreen option, a Sound-slider which is not implemented and a theme changer
  *
+ * @version 18.07.2021
  * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
  * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
  * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
@@ -26,26 +27,45 @@ import javafx.stage.Stage;
 public class SettingsController implements ControllerInterface
 {
 
+    /**
+     * The MenuItem which holds information about the resolution change that will be done with it. In this case its 600x400
+     */
     @FXML
     private MenuItem res_1;
 
+    /**
+     * The MenuItem which holds information about the resolution change that will be done with it. In this case its 1200x800
+     */
     @FXML
     private MenuItem res_2;
 
+    /**
+     * The ImageView whose picture will be set on its initial load
+     */
     @FXML
     private ImageView picture;
 
+    /**
+     * The checkbox which can be ticked to go into Fullscreen
+     */
     @FXML
     private CheckBox FullScreenCheckBox;
 
+    /**
+     * The MenuItem which holds information about the Theme change that will be done with it. In this case its blue
+     */
     @FXML
     private MenuItem ThemeBlue_;
 
+    /**
+     * The MenuItem which holds information about the Theme change that will be done with it. In this case its red
+     */
     @FXML
     private MenuItem ThemeRed_;
 
     /**
-     * Initialize screen.
+     * This method automatically resizes the content pane to the current stages size on its initial load
+     * This method also sets a picture inside an imageview
      */
     @Override
     public void init()
@@ -65,7 +85,7 @@ public class SettingsController implements ControllerInterface
     }
 
     /**
-     * Send user to home screen.
+     * This method will load the Home Screen
      */
     @FXML
     private void goToHome()
@@ -74,15 +94,16 @@ public class SettingsController implements ControllerInterface
     }
 
     /**
-     * Sound slider
+     * This method would change the volume of the sound effects according to the value, that was selected by the user. It is empty as there currently is no sound in the game
      */
     @FXML
     private void changeSound()
     {
         //TODO: only if sound is ever added: change volume of sound to percentage value of soundslider
     }
+
     /**
-     * Fullscreen option.
+     * This method will set the Application to Fullscreen whether the box is ticked or not
      */
     @FXML
     private void goFullScreen()
@@ -91,9 +112,10 @@ public class SettingsController implements ControllerInterface
     }
 
     /**
-     * Change resolution.
+     * This method changes the resolution of the application according to the selected MenuItem
+     * It does not set the resolution when in Fullscreen
      *
-     * @param event changes resolution accrding to user pick from drop down menu.
+     * @param event     holds the information about what resolution menuItem was clicked
      */
     @FXML
     public void ChangeResolution(ActionEvent event)
@@ -119,9 +141,9 @@ public class SettingsController implements ControllerInterface
     }
 
     /**
-     * Change style.
+     * This method changes the theme/style of the application according to the selected MenuItem
      *
-     * @param event Changes the css style.
+     * @param event     holds the information about what theme/style menuItem was clicked
      */
     public void changeStyle(ActionEvent event)
     {

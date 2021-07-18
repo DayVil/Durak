@@ -6,6 +6,7 @@ import java.util.Scanner;
 /**
  * Evaluates the message from the server.
  *
+ * @version 18.07.2021
  * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
  * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
  * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
@@ -100,6 +101,12 @@ public class ParsedServerMessage
 
     /**
      * Player class which controls the id, name, hancards and status (attacker, defender, active) of the player.
+     *
+     * @version 18.07.2021
+     * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
+     * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
+     * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
+     * @author Robert Witteck &lt;robert.witteck@stud.uni-hannover.de&gt;
      */
     public class Player
     {
@@ -209,7 +216,7 @@ public class ParsedServerMessage
     }
 
     /**
-     * Instantiates a scanner to evaluate the server message with the other players, handcards and visible cards on the table
+     * Instantiates a scanner to evaluate the server message with all relevant information for that player
      *
      * @param serverMsg the server message
      */

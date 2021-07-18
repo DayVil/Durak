@@ -11,6 +11,7 @@ import java.util.Optional;
 /**
  * Controls the network settings of the client
  *
+ * @version 18.07.2021
  * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
  * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
  * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
@@ -18,10 +19,24 @@ import java.util.Optional;
  */
 public class ClientNetwork
 {
+    /**
+     * The socket of this client
+     */
     private static Socket clientSocket_ = null;
+
+    /**
+     * The bufferedwriter of the socket
+     */
     private static BufferedWriter bufferOut_ = null;
+
+    /**
+     * The bufferedreader of the socket
+     */
     private static BufferedReader bufferIn_ = null;
 
+    /**
+     * The loggedIn status of the socket-connection
+     */
     private static boolean loggedIn_ = false;
 
     /**
@@ -67,11 +82,11 @@ public class ClientNetwork
     /**
      * Start connection to server
      *
-     * @param ip       the ip of the server
-     * @param port     the port of the server
-     * @param password the password of the server
-     * @param user     the user user name of the client
-     * @return true if connection was successful
+     * @param ip        the ip of the server
+     * @param port      the port of the server
+     * @param password  the password of the server
+     * @param user      the user user name of the client
+     * @return          true if connection was successful
      */
     public static boolean startConnection(String ip, String port, String password, String user)
     {
@@ -178,8 +193,8 @@ public class ClientNetwork
     /**
      * Send message to the server.
      *
-     * @param msg the message to send
-     * @return return true if send was successful
+     * @param msg   the message to send
+     * @return      return true if send was successful
      */
     public static boolean sendMessage(String msg)
     {
