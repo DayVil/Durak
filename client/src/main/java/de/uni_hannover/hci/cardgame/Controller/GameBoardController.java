@@ -23,7 +23,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 /**
- * Controls loading of css themes to the main stage. find css themes at resources/styles/
+ * Controls the GameBoard and with that the heart components of the clients part in the game
  *
  * @version 18.07.2021
  * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
@@ -40,7 +40,7 @@ public class GameBoardController implements ControllerInterface
     public Label DrawPileCounter;
 
     /**
-     * Gameboard pane
+     * This is the main pain that contains every other node and is the onlything that gets rescaled
      */
     @FXML
     private Pane GameBoard;
@@ -94,7 +94,7 @@ public class GameBoardController implements ControllerInterface
     }
 
     /**
-     * Sends the id of the clicked card to the server.
+     * Sends a string containing the clicked card to the server.
      *
      * @param nr    the id of the card
      */
@@ -112,7 +112,7 @@ public class GameBoardController implements ControllerInterface
     }
 
     /**
-     * Sends take command to the server if take button is clicked..
+     * Sends take command to the server if take button is clicked.
      */
     public void take()
     {
@@ -174,6 +174,7 @@ public class GameBoardController implements ControllerInterface
 
     /**
      * Draw the current game state on the game board.
+     * Expects the message String to be a valid Gamestate
      *
      * @param parsedServerMessage   the parsed server message with the game state.
      */
@@ -276,7 +277,7 @@ public class GameBoardController implements ControllerInterface
 
 
     /**
-     * Draw the player state i.e. hand cards, attack/defender state etc.
+     * Draws the player state i.e. hand cards, attack/defender state etc.
      *
      * @param player                     the player state obtained from the server.
      * @param x                          x-position of the player label
@@ -352,7 +353,7 @@ public class GameBoardController implements ControllerInterface
     }
 
     /**
-     * Draw the cards on the game board, either hand cards or the cards in the table center.
+     * Draws a card on the game board, if its a handcard adds a click event that tells the server that the caard was clicked
      *
      * @param cardNumber    the card number/Id
      * @param x             the x-positon
@@ -392,10 +393,12 @@ public class GameBoardController implements ControllerInterface
          * The client socket.
          */
         Socket socket_;
+
         /**
          * The Input buffer.
          */
         BufferedReader inputBuffer_;
+
         /**
          * The Output buffer.
          */
@@ -412,7 +415,7 @@ public class GameBoardController implements ControllerInterface
         }
 
         /**
-         * Run the client socket and listen for server messages.
+         * Runs the networkHandler thread and listes for server messages.
          */
         @Override
         public void run()
