@@ -12,3 +12,5 @@ https://drive.google.com/drive/folders/1b0BuUSW8oziFcLShbK5VqnpWM5SP5IAs?usp=sha
 
 Link to all board assets:\
 https://drive.google.com/drive/folders/1mWZhKgiqs9js2wJF4kRbQ4JmMIYVauue?usp=sharing
+
+The report can be found under the folder ./doc/
