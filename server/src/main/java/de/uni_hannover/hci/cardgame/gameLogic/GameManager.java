@@ -522,7 +522,7 @@ public class GameManager
 
         StringBuilder returnString = new StringBuilder();
 
-        returnString.append(String.format("%s ", drawPile_.remainingCards()));                 // StackSize
+        returnString.append(String.format("%s ", drawPile_.remainingCards()));                  // StackSize
         returnString.append(String.format("%s ", Cards.getColorInt(trump_)));                   // Trump color as Int
         returnString.append(String.format("%s ", players_.size()));                             // Player count
 

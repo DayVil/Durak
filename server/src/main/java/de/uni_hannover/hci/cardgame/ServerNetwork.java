@@ -15,7 +15,7 @@ import java.util.Objects;
  * via system input. When the server is successfully created it instantiates and communicates with the game manager class.
  *
  * @version 18.07.2021
- * @author Yann Bernhard &lt;yann.bernhard@stud.uni-hannover.de&gt;
+ * @author Yann Bernhard &lt;yann.pablo.bernard@stud.uni-hannover.de&gt;
  * @author Sebastian Kiel &lt;sebastian.kiel@stud.uni-hannover.de&gt;
  * @author Patrick Schewe &lt;p.schewe@stud.uni-hannover.de&gt;
  * @author Robert Witteck &lt;robert.witteck@stud.uni-hannover.de&gt;

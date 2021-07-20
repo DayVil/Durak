@@ -1,0 +1,7 @@
+de.uni_hannover.hci.cardgame
+de.uni_hannover.hci.cardgame.Clients
+de.uni_hannover.hci.cardgame.Controller
+de.uni_hannover.hci.cardgame.gameLogic
+de.uni_hannover.hci.cardgame.gameLogic.Cards
+de.uni_hannover.hci.cardgame.gameLogic.Player
+de.uni_hannover.hci.cardgame.Network
