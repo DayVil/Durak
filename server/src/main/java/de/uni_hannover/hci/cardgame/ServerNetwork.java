@@ -88,21 +88,15 @@ public class ServerNetwork
         thread.start();
 
         GameManager.initGameManager(IDs, names_);
-        /*
-        System.out.println("ServerNetwork after initGameManager");
+
         try
         {
             serverSocket_.close();
-            System.exit(0);
         }
         catch (IOException e)
         {
             e.printStackTrace();
         }
-
-         */
-
-
     }
 
     /**
@@ -317,6 +311,7 @@ public class ServerNetwork
             {
                 try
                 {
+                    if (serverSocket_.isClosed())  break;
                     System.out.println("Rejecting clients");
                     Socket socket = serverSocket_.accept();
                     InetAddress inetAddress = socket.getInetAddress();
