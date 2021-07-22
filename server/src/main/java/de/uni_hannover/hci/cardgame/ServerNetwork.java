@@ -4,9 +4,7 @@ import de.uni_hannover.hci.cardgame.Clients.ClientManager;
 import de.uni_hannover.hci.cardgame.gameLogic.GameManager;
 
 import java.io.*;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
 import java.util.Date;
 import java.util.Objects;
 
@@ -88,21 +86,17 @@ public class ServerNetwork
         thread.start();
 
         GameManager.initGameManager(IDs, names_);
-        /*
-        System.out.println("ServerNetwork after initGameManager");
+
+        clientReject.killRejecter();
+
         try
         {
             serverSocket_.close();
-            System.exit(0);
         }
         catch (IOException e)
         {
             e.printStackTrace();
         }
-
-         */
-
-
     }
 
     /**
@@ -307,17 +301,27 @@ public class ServerNetwork
      */
     class clientRejecter implements Runnable
     {
+        private boolean runRejecter = true;
         /**
          * Rejects all clients that are now trying to connect to the server
          */
         @Override
         public void run()
         {
-            while (true)
+            try
+            {
+                serverSocket_.setSoTimeout(1000);
+            }
+            catch (SocketException e)
+            {
+                System.out.println("time out");
+            }
+            while (runRejecter)
             {
                 try
                 {
-                    System.out.println("Rejecting clients");
+                    if (serverSocket_.isClosed())  break;
+//                    System.out.println("Rejecting clients");
                     Socket socket = serverSocket_.accept();
                     InetAddress inetAddress = socket.getInetAddress();
 
@@ -330,11 +334,20 @@ public class ServerNetwork
                     tempWriter.flush();
                     socket.close();
                 }
+                catch ( SocketTimeoutException et )
+                {
+                    // ignore timeout
+                }
                 catch (IOException ex)
                 {
-                    ex.printStackTrace();
+//                    ex.printStackTrace();
+                    // ignore empty socket when breaking socket.accept()
                 }
             }
         }
+        public void killRejecter(){
+            runRejecter = false;
+        }
+
     }
 }

@@ -226,16 +226,16 @@ public class GameManager
         //Game END
         for (Player p : players_)
         {
-            if (!p.isBot_())
-                ServerNetwork.sendMessage(p.getId_(), "GameEnded");
+            if (!p.isBot_())    ServerNetwork.sendMessage(p.getId_(), "GameEnded");
         }
         for (Player v : viewers_)
         {
-            if (!v.isBot_())
-                ServerNetwork.sendMessage(v.getId_(), "GameEnded");
+            if (!v.isBot_())    ServerNetwork.sendMessage(v.getId_(), "GameEnded");
         }
         System.out.println("The Game has now officially ended!");
         drawPile_ = null;
+        players_.clear();
+        viewers_.clear();
     }
 
     /**
