@@ -122,3 +122,12 @@
     -fx-box-border: -bright;
     -fx-accent: -standard;
 }
+
+.cardToResize {
+}
+
+.cardToResize:hover{
+    position:relative;
+    -fx-scale-x:1.2;
+    -fx-scale-y:1.2;
+}

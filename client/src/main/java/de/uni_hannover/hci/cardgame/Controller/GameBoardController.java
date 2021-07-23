@@ -15,7 +15,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -53,10 +52,6 @@ public class GameBoardController implements ControllerInterface
     private ImageView leftoverDeck;
 
     private final ArrayList<Node> addedNodesArrayList = new ArrayList<>();
-
-    private final ArrayList<Node> addedHandCards = new ArrayList<>();
-
-    private ParsedServerMessage originalMessage;
 
     /**
      * Controls whether to kill the client on error or disconnect.
@@ -185,13 +180,18 @@ public class GameBoardController implements ControllerInterface
      */
     public void draw(ParsedServerMessage parsedServerMessage)
     {
-        undrawOldNodes();
 
-        originalMessage = parsedServerMessage;
+        undrawOldNodes();
 
         //CARDSTACKCOUNT
         String drawPileText = String.format("%d", parsedServerMessage.getDrawPileHeight_());
         DrawPileCounter.setText(drawPileText);
+        if (parsedServerMessage.getDrawPileHeight_() == 0)
+        {
+            Stage stage = gameClient.stage_;
+            Scene scene = stage.getScene();
+            GameBoard.getChildren().remove(scene.lookup("#leftoverDeck"));
+        }
 
         //TRUMP
         drawTrump(parsedServerMessage.getTrumpColor_());
@@ -274,13 +274,12 @@ public class GameBoardController implements ControllerInterface
      */
     private void undrawOldNodes()
     {
-        System.out.printf("Memory: %d\n", Runtime.getRuntime().freeMemory());
+
         for (Node n : addedNodesArrayList)
         {
             GameBoard.getChildren().remove(n);
         }
         addedNodesArrayList.clear();
-        addedHandCards.clear();
     }
 
 
@@ -382,55 +381,11 @@ public class GameBoardController implements ControllerInterface
         if (isHandCard)
         {
             imageView.setOnMouseClicked(event -> cardClicked(cardNumber)); //Listener for card click
-            //imageView.setOnMouseEntered(this::cardOnHover);         //Listener for onHoverEntered
-            //imageView.setOnMouseExited(event -> draw(originalMessage));     //Listener for onHoverExited //For fast travel across all cards: exit is always before entrance, confirmed in testing
-            addedHandCards.add(imageView);
+            imageView.getStyleClass().add("cardToResize");
         }
         GameBoard.getChildren().add(imageView);
         addedNodesArrayList.add(imageView);
     }
-
-    /*
-    /**
-     * This method will show the complete card that the mouse is hovering above
-     *
-     * @param event     The complete information about the event, here only used to get its source node
-     */
-    /*public void cardOnHover (MouseEvent event)
-    {
-        boolean found = false;
-        Node foundNode = null;
-        int helpCounter = 0;
-        ArrayList<Node> afterFound = new ArrayList<>();
-        for (Node n : addedHandCards)
-        {
-            if (found)      afterFound.add(n);
-            else            helpCounter++;
-            if (event.getSource().equals(n))
-            {
-                found = true;
-                foundNode = n;
-            }
-        }
-
-        if (foundNode == null)      return;
-
-
-        for (Node n : afterFound)
-        {
-            GameBoard.getChildren().remove(n);
-            addedNodesArrayList.remove(n);
-        }
-
-        int i = 0;
-        for (Node n : afterFound)
-        {
-            drawCard(originalMessage.getHandCards_().get(helpCounter), (int)foundNode.getLayoutX() + 55 + (i * (480 - (int)foundNode.getLayoutX() - 55) / originalMessage.getHandCards_().size()), 315, true);
-            i++;
-            helpCounter++;
-        }
-        afterFound.clear();
-    }*/
 
     /**
      * The network handler which runs the client network connection to the server.
